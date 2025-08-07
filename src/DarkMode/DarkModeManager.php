@@ -1,0 +1,18 @@
+<?php
+
+namespace App\DarkMode;
+
+use SchulIT\CommonBundle\DarkMode\DarkModeManagerInterface;
+
+readonly class DarkModeManager implements DarkModeManagerInterface {
+
+    public function __construct() { }
+
+    public function enableDarkMode(): void {  }
+
+    public function disableDarkMode(): void { }
+
+    public function isDarkModeEnabled(): bool {
+        return false;
+    }
+}
