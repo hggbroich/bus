@@ -2,16 +2,14 @@
 
 namespace App\Menu;
 
-use App\Security\Voter\BookVoter;
-use App\Security\Voter\BorrowerVoter;
-use App\Security\Voter\CheckoutVoter;
+use App\Security\Voter\OrderVoter;
+use App\Security\Voter\ProfileVoter;
 use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
-use SchulIT\CommonBundle\Helper\DateHelper;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 readonly class Builder {
-    public function __construct(private FactoryInterface $factory, private readonly AuthorizationCheckerInterface $authorizationChecker)
+    public function __construct(private FactoryInterface $factory, private AuthorizationCheckerInterface $authorizationChecker)
     {
     }
 
@@ -24,40 +22,18 @@ readonly class Builder {
         ])
             ->setExtra('icon', 'fa fa-home');
 
-        if($this->authorizationChecker->isGranted(CheckoutVoter::CHECKOUT)) {
-            $menu->addChild('checkout.label', [
-                'route' => 'checkout'
+        if($this->authorizationChecker->isGranted(ProfileVoter::ViewList)) {
+            $menu->addChild('profile.label', [
+                'route' => 'profile'
             ])
-                ->setExtra('icon', 'fa fa-shopping-cart');
+                ->setExtra('icon', 'fa-solid fa-address-card');
         }
 
-        if($this->authorizationChecker->isGranted(CheckoutVoter::RETURN)) {
-            $menu->addChild('return.label', [
-                'route' => 'return'
+        if($this->authorizationChecker->isGranted(OrderVoter::ANY)) {
+            $menu->addChild('orders.label', [
+                'route' => 'orders',
             ])
-                ->setExtra('icon', 'fa fa-reply');
-        }
-
-
-        if($this->authorizationChecker->isGranted('ROLE_BOOKS_ADMIN')) {
-            $menu->addChild('books.label', [
-                'route' => 'books'
-            ])
-                ->setExtra('icon', 'fas fa-book');
-        }
-
-        if($this->authorizationChecker->isGranted(BorrowerVoter::SHOW_ANY)) {
-            $menu->addChild('borrowers.label', [
-                'route' => 'borrowers'
-            ])
-                ->setExtra('icon', 'fas fa-users');
-        }
-
-        if($this->authorizationChecker->isGranted('ROLE_BOOKS_ADMIN')) {
-            $menu->addChild('labels.label', [
-                    'route' => 'labels'
-                ])
-                ->setExtra('icon', 'fa fa-barcode');
+                ->setExtra('icon', 'fa fa-shopping-basket');
         }
 
         return $menu;

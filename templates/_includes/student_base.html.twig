@@ -1,0 +1,76 @@
+{% set violations = profileChecker(student) %}
+{% set showFooter = showFooter ?? true %}
+{% set showViolations = showViolations ?? false %}
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">
+            {{ student.lastname }}, {{ student.firstname }}
+            <span class="badge text-bg-primary">{{ student.grade }}</span>
+
+            {% if violations.hasViolations %}
+                <span class="badge text-bg-warning">{{ violations.messageKey|trans(violations.messageParameters) }}</span>
+            {% else %}
+                <span class="badge text-bg-success">{{ violations.messageKey|trans(violations.messageParameters) }}</span>
+            {% endif %}
+        </h5>
+
+        <div class="container-fluid px-0">
+            <div class="row row-cols-xl-6 row-cols-lg-3 row-cols-md-2 row-cols-1">
+                <div class="col">
+                    <dt class="text-uppercase text-muted">{{ 'label.status'|trans }}</dt>
+                    <dd>{{ student.status }}</dd>
+                </div>
+
+                <div class="col">
+                    <dt class="text-uppercase text-muted">{{ 'label.birthday'|trans }}</dt>
+                    <dd>{{ student.birthday|format_date }}</dd>
+                </div>
+
+                <div class="col">
+                    <dt class="text-uppercase text-muted">{{ 'label.street'|trans }}</dt>
+                    <dd>{{ student.street }}</dd>
+                </div>
+
+                <div class="col">
+                    <dt class="text-uppercase text-muted">{{ 'label.house_number'|trans }}</dt>
+                    <dd>{{ student.houseNumber }}</dd>
+                </div>
+
+                <div class="col">
+                    <dt class="text-uppercase text-muted">{{ 'label.plz'|trans }}</dt>
+                    <dd>{{ student.plz }}</dd>
+                </div>
+
+                <div class="col">
+                    <dt class="text-uppercase text-muted">{{ 'label.city'|trans }}</dt>
+                    <dd>{{ student.city }}</dd>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if showViolations %}
+        <div class="list-group list-group-flush">
+            {% for violation in violations.violations %}
+                <li class="list-group-item list-group-item-danger">
+                    <i class="fas fa-exclamation-triangle"></i> {{ violation.messageKey|trans(violation.messageParameters) }}
+                </li>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% if showFooter %}
+    <div class="card-footer">
+        {% if violations.hasViolations %}
+            <a href="{{ path('update_profile', { uuid: student.uuid }) }}" class="btn btn-primary btn-sm">
+                {{ 'profile.checks.button.complete'|trans }}
+            </a>
+        {% else %}
+            <a href="{{ path('update_profile', { uuid: student.uuid }) }}" class="btn btn-primary btn-sm">
+                {{ 'profile.checks.button.change'|trans }}
+            </a>
+        {% endif %}
+    </div>
+    {% endif %}
+</div>

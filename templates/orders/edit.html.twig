@@ -1,0 +1,64 @@
+{% extends "main.html.twig" %}
+
+{% block title %}{{ 'orders.edit.label'|trans }}{% endblock %}
+
+{% block post_javascript %}
+    <script src="{{ asset('build/collection.js') }}"></script>
+{% endblock %}
+
+{% block breadcrumb %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('dashboard') }}">{{ 'dashboard.label'|trans }}</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('orders') }}">{{ 'orders.label'|trans }}</a></li>
+        <li class="breadcrumb-item active">{{ block('title') }}</li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+    {{ form_start(form) }}
+
+    {% include "_includes/student_base.html.twig" with { student: student, showFooter: false } only %}
+
+    <div class="card">
+        <div class="card-header">{{ 'label.general'|trans }}</div>
+
+        <div class="card-body">
+            {{ form_row(form.country) }}
+            {{ form_row(form.phoneNumber) }}
+            {{ form_row(form.email) }}
+            {{ form_row(form.iban) }}
+            {{ form_row(form.bic) }}
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">{{ 'orders.siblings.label'|trans }}</div>
+        <div class="card-body">
+            <div class="siblings" data-collection="siblings" data-prototype="{{ form_widget(form.siblings.vars.prototype)|e('html_attr') }}" data-id="{{ form.siblings.vars.id }}">
+                {% for sibling in form.siblings %}
+                    {{ form_widget(sibling) }}
+                {% endfor %}
+            </div>
+
+            {{ form_errors(form.siblings) }}
+            {% do form.siblings.setRendered %}
+
+        </div>
+
+        <div class="card-footer">
+            <button class="btn btn-outline-primary btn-sm btn-add" type="button" data-collection="siblings">
+                <i class="fa fa-plus"></i> {{ 'actions.add'|trans }}
+            </button>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-sm">
+        <i class="fas fa-save"></i> {{ 'orders.edit.submit'|trans }}
+    </button>
+
+    <a href="{{ path('show_order', { uuid: order.uuid }) }}" class="btn btn-secondary btn-sm">
+        <i class="fas fa-arrow-left"></i> {{ 'actions.cancel'|trans }}
+    </a>
+
+    {{ form_end(form) }}
+{% endblock %}

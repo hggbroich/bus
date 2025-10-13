@@ -1,0 +1,35 @@
+{% extends "main.html.twig" %}
+
+{% block title %}{{ 'dashboard.label'|trans }}{% endblock %}
+
+{% block breadcrumb %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('dashboard') }}">{{ 'dashboard.label'|trans }}</a></li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+    {% if app.user.associatedStudents|length == 0 %}
+        <div class="bs-callout bs-callout-info">
+            <h5>{{ 'info.label'|trans }}</h5>
+            <p>{{ 'dashboard.students.empty'|trans }}</p>
+            <a href="" class="btn btn-primary btn-sm" target="_blank">
+                <i class="fas fa-external-link"></i> {{ 'dashboard.students.add.button'|trans }}
+            </a>
+        </div>
+    {% endif %}
+
+    {% for student in app.user.associatedStudents %}
+        {% include "_includes/student_base.html.twig" %}
+    {% endfor %}
+
+    {% if app.user.associatedStudents|length > 0 %}
+        <div class="bs-callout bs-callout-info">
+            <h5>{{ 'info.label'|trans }}</h5>
+            <p>{{ 'dashboard.students.add.info'|trans }}</p>
+            <a href="" class="btn btn-primary btn-sm" target="_blank">
+                <i class="fas fa-external-link"></i> {{ 'dashboard.students.add.button'|trans }}
+            </a>
+        </div>
+    {% endif %}
+{% endblock %}

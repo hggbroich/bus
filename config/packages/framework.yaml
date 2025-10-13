@@ -9,6 +9,11 @@ framework:
     #esi: true
     #fragments: true
 
+    http_client:
+        default_options:
+            headers:
+                'User-Agent': "%env(APP_NAME)%/%version%"
+
 when@test:
     framework:
         test: true

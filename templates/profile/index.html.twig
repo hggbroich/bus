@@ -1,0 +1,16 @@
+{% extends "main.html.twig" %}
+
+{% block title %}{{ 'dashboard.label'|trans }}{% endblock %}
+
+{% block breadcrumb %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('dashboard') }}">{{ 'dashboard.label'|trans }}</a></li>
+        <li class="breadcrumb-item active">{{ 'profile.label'|trans }}</li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+    {% for student in app.user.associatedStudents %}
+        {% include "_includes/student_base.html.twig" with { showFooter: true, showViolations: true } %}
+    {% endfor %}
+{% endblock %}

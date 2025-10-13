@@ -1,0 +1,49 @@
+{% extends "main.html.twig" %}
+
+{% block title %}{{ 'profile.update.label'|trans }}{% endblock %}
+
+{% block breadcrumb %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('dashboard') }}">{{ 'dashboard.label'|trans }}</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('profile') }}">{{ 'profile.label'|trans }}</a></li>
+        <li class="breadcrumb-item active">{{ 'profile.update.label'|trans }}</li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+    {{ form_start(form) }}
+    <div class="card">
+        <div class="card-header">{{ 'label.general'|trans }}</div>
+        <div class="card-body">
+            <div class="bs-callout bs-callout-info">
+                <h5>{{ 'info.label'|trans }}</h5>
+                <p>{{ 'profile.update.info'|trans }}</p>
+            </div>
+
+            {{ form_row(form.firstname) }}
+            {{ form_row(form.lastname) }}
+            {{ form_row(form.email) }}
+            {{ form_row(form.birthday) }}
+            {{ form_row(form.street) }}
+            {{ form_row(form.houseNumber) }}
+            {{ form_row(form.plz) }}
+            {{ form_row(form.city) }}
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">{{ 'orders.show.travel.label'|trans }}</div>
+
+        <div class="card-body">
+            {{ form_row(form.stop) }}
+            {{ form_row(form.publicSchool) }}
+            {{ form_row(form.distanceToPublicSchool) }}
+            {{ form_row(form.distanceToSchool) }}
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-sm">
+        <i class="fas fa-save"></i> {{ 'actions.save'|trans }}
+    </button>
+    {{ form_end(form) }}
+{% endblock %}

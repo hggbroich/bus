@@ -1,0 +1,157 @@
+actions:
+    save: Speichern
+    add: Hinzufügen
+
+settings:
+    success: Einstellungen erfolgreich gespeichert
+
+    app:
+        label: Allgemeine Einstellungen
+        custom_css:
+            label: Benutzerdefiniertes CSS
+            help: Hier kann benutzerdefiniertes CSS eingebunden werden, um die Software nach eigenen Wünschen einzufärben.
+
+    import:
+        label: Import-Einstellungen
+        schools:
+            url:
+                label: URL für Schulen-Import
+                help: URL zur Schulen.csv im GitHub-Repository des SVWS-Servers
+        stops:
+            url:
+                label: URL für Haltestellen-Import
+                help: Die URL muss auf eine ZIP-Datei zeigen mit Daten im GTFS-Format.
+
+    orders:
+        label: Bestellungen-Einstellungen
+        status:
+            label: Schüler-Status
+            help: Es können nur Bestellungen für Schülerinnen und Schüler mit den hier definierten Status ein Ticket bestellen.
+        school:
+            label: Schule
+            help: Legt die eigene Schule fest.
+        window:
+            start:
+                label: Beginn Bestellungs-Zeitfenster
+                help: Ab diesem Tag (inklusive) können Bustickets gebucht werden.
+            end:
+                label: Ende Bestellungs-Zeitfenster
+                help: Bis zu diesem Tag (exklusive) können Bustickets gebucht, bearbeitet und gelöscht werden. Nach diesem Stichtag ist das Bearbeiten und Löschen von Bestellungen durch Eltern nicht mehr möglich.
+
+filter:
+    choose:
+        student: Kind auswählen
+
+label:
+    general: Allgemeine Informationen
+    student: Kind
+    country: Land
+    phone: Telefonnummer
+    email: E-Mail-Adresse
+    iban: IBAN
+    bic: BIC
+    ticket: Ticket
+
+    status: Status
+    birthday: Geburtsdatum
+    street: Straße
+    house_number: Hausnummer
+    city: Ort
+    plz: PLZ
+    stop: Haltestelle
+    customer_id: Kundennummer
+
+    firstname: Vorname
+    lastname: Nachname
+    school: Schule
+
+    public_school:
+        label: Öffentliche Schule
+        help: Bitte die nächstgelegene öffentliche Schule angeben.
+
+    distance_to_public_school:
+        label: Distanz zur öffentlichen Schule
+        help: Bitte die Distanz (Fußweg) zur angegebenen öffentlichen Schule angeben.
+
+    distance_to_school:
+        label: Distanz zur Schule
+        help: Bitte die Distanz (Fußweg) zur Schule angeben.
+
+dashboard:
+    students:
+        label: Verknüpfte Kinder
+        empty: Aktuell sind keine Kinder verknüpft.
+        add:
+            info: Weitere Kinder können über das Single Sign-On verknüpft werden.
+            button: Zum Single Sign-On
+
+orders:
+    label: Bestellungen
+    empty: Aktuell liegen keine Bestellungen vor.
+    count: "{0} %count% Bestellungen|{1} %count% Bestellung|]1,Inf[ %count% Bestellungen"
+    window:
+        not_set: Aktuell können keine Bestellungen erstellt werden.
+        info: Bestellungen können bis zum %end% erstellt, bearbeitet und gelöscht werden.
+
+    place:
+        label: Neue Bestellung
+        submit: Bestellung abschicken
+        success: Die Bestellung wurde erfolgreich abgeschickt. Sie kann bis zum Stichtag noch bearbeitet werden.
+        applied_from_recent: Die Daten wurden aus der Bestellung für %lastname%, %firstname% vom %date% übernommen. Bitte prüfen und ggf. korrigieren.
+
+    edit:
+        label: Bestellung bearbeiten
+        submit: Bestellung speichern
+        success: Die Bestellung wurde erfolgreich aktualisiert.
+
+    siblings:
+        label: Geschwister
+        info: Bitte hier nur Geschwisterkinder eintragen, für die ebenfalls ein Busticket entweder bereits bestellt wurde oder noch bestellt wird. Geschwisterkinder, die kein Busticket bestellen, dürfen hier nicht aufgelistet werden.
+
+    show:
+        label: Bestellung anzeigen
+        header: Bestellung vom %date%
+
+        created_by: Erstellt von
+        created_at: Erstellt am
+        updated_by: Aktualisiert von
+        updated_at: Aktualisiert am
+
+        travel:
+            label: Bus- und Haltestellendaten
+            customer_id: Kundennummer beim Busunternehmen
+            stop: Haltestelle
+            public_school: Nächste öffentliche Schule
+            public_school_distance: Distanz (öff. Schule)
+            own_school_distance: Distanz (eigene Schule)
+
+
+distance: '%distance% km'
+not_set: N/A
+
+iban:
+    disguise: endet auf %iban%
+
+profile:
+    label: Stammdaten
+
+    update:
+        label: Stammdaten ändern
+        info: Einige Stammdaten müssen in der Schulverwaltung geändert werden.
+        success: Stammdaten erfolgreich aktualisiert.
+
+    checks:
+        ok: Stammdaten vollständig
+        not_ok: Stammdaten nicht vollständig
+        pending: Prüfung durch Schule ausstehend
+
+        button:
+            complete: Stammdaten vervollständigen
+            change: Stammdaten ändern
+
+        public_school: Es wurde keine öffentliche Schule angegeben.
+        distance_public_school: Es wurde keine Distanz zur öffentlichen Schule angegeben.
+        distance_public_school_confirmed: Die Distanz zur öffentlichen Schule wurde noch nicht durch die Schule bestätigt.
+        distance_school: Es wurde keine Distanz zur Schule angegeben.
+        distance_school_confirmed: Die Distanz zur Schule wurde noch nicht durch die Schule bestätigt.
+

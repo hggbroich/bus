@@ -1,0 +1,136 @@
+{% extends "main.html.twig" %}
+
+{% block title %}{{ 'orders.label'|trans }}{% endblock %}
+
+{% block breadcrumb %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('dashboard') }}">{{ 'dashboard.label'|trans }}</a></li>
+        <li class="breadcrumb-item active">{{ block('title') }}</li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-header">
+            <div class="d-flex flex-wrap mt-n2">
+                <div class="flex-fill mt-2">
+                    <form method="get" class="row row-cols-lg-auto g-1 align-items-center">
+                        {% if studentFilter.students|length > 1 %}
+                        <div class="col">
+                            <select class="form-select form-select-sm" data-trigger="submit" name="student">
+                                <option value="">{{ 'filter.choose.student'|trans }}</option>
+                                {% for student in studentFilter.students %}
+                                    <option value="{{ student.uuid }}" {% if studentFilter.currentStudent is not null and studentFilter.currentStudent.id == student.id %}selected{% endif %}>
+                                        {{ student.lastname }}, {{ student.firstname }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        {% endif %}
+                    </form>
+                </div>
+
+                <div class="ms-auto mt-2 d-flex align-items-center">
+                    {% if settings.windowStart is null or settings.windowEnd is null %}
+                        <span class="text-muted align-self-center">{{ 'orders.window.not_set'|trans }}</span>
+                    {% else %}
+                        <span class="text-muted align-self-center">{{ 'orders.window.info'|trans({'%start%': settings.windowStart|format_date, '%end%': settings.windowEnd|format_date}) }}</span>
+                    {% endif %}
+
+                    {% set canPlaceAny = false %}
+                    {% for student in app.user.associatedStudents %}
+                        {% if is_granted('place-order', student) %}
+                            {% set canPlaceAny = true %}
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if canPlaceAny %}
+                        <div class="dropdown ms-2">
+                            <button class="btn btn-primary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                <i class="fas fa-plus"></i> {{ 'orders.place.label'|trans }}
+                            </button>
+
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                {% for student in app.user.associatedStudents %}
+                                    {% if is_granted('place-order', student) %}
+                                        <li><a href="{{ path('place_order', { uuid: student.uuid }) }}" class="dropdown-item">{{ student.lastname }}, {{ student.firstname }}</a></li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        {% if orders|length > 0 %}
+            <div class="list-group list-group-flush">
+                {% for order in orders %}
+                    <div class="list-group-item">
+                        <div class="d-flex flex-wrap">
+                            <div class="flex-fill">
+                                <div>
+                                    {{ order.student.lastname }}, {{ order.student.firstname }}
+
+                                    <span class="badge text-bg-primary">{{ order.student.grade }}</span>
+                                </div>
+
+                                <div class="fw-semibold">
+                                    <i class="fas fa-ticket"></i>
+                                    {{ order.ticket.name }}
+                                </div>
+
+                                <div class="text-muted">
+                                    <i class="far fa-calendar"></i> {{ order.updatedAt|format_datetime }}
+                                </div>
+                            </div>
+
+                            <div class="flex-shrink-0">
+                                {% if is_granted('show', order) %}
+                                    <a href="{{ path('show_order', { uuid: order.uuid }) }}" class="btn btn-primary btn-sm">
+                                        <i class="fas fa-circle-info"></i>
+                                    </a>
+                                {% endif %}
+                                {% if is_granted('edit', order) %}
+                                    <a href="{{ path('edit_order', { uuid: order.uuid }) }}" class="btn btn-primary btn-sm">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                {% endif %}
+                                {% if is_granted('remove', order) %}
+                                    <a href="#" class="btn btn-danger btn-sm">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="card-footer">
+                <div class="d-flex">
+                    <div class="flex-fill align-self-center">
+                        {{ 'orders.count'|trans({'%count%': orders.totalCount}) }}
+                    </div>
+
+                    <div class="ms-auto">
+                        {% include '@Common/includes/pagination.html.twig' with {
+                            currentFilters: { student: studentFilter.currentStudent != null ? studentFilter.currentStudent.uuid : null },
+                            currentPage: orders.page,
+                            lastPage: orders.totalPages,
+                            paginationPath: 'orders',
+                            showAlwaysFirstAndLast: true
+                        } %}
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div class="card-body">
+                <div class="bs-callout bs-callout-info mb-0">
+                    <h5>{{ 'info.label'|trans }}</h5>
+                    <p>{{ 'orders.empty'|trans }}</p>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

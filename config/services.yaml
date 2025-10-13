@@ -75,3 +75,7 @@ services:
     SchulIT\CommonBundle\Menu\Voter:
         tags:
             - { name: knp_menu.voter }
+
+    App\Import\Stops\GtfsStopsImporter:
+        bind:
+            $tempDir: "%kernel.project_dir%/var/tmp"

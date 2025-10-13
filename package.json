@@ -9,7 +9,7 @@
         "axios": "^1.7.3",
         "bootstrap": "5.3.0",
         "browserify-fs": "^1.0.0",
-        "choices.js": "^9.0.0",
+        "choices.js": "^9.1.0",
         "core-js": "^3.31.0",
         "node-polyfill-webpack-plugin": "^2.0.1",
         "postcss-loader": "^7.0",

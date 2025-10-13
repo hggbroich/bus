@@ -1,0 +1,78 @@
+{% extends "main.html.twig" %}
+
+{% block title %}{{ 'orders.show.label'|trans }}{% endblock %}
+
+{% block breadcrumb %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('dashboard') }}">{{ 'dashboard.label'|trans }}</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('orders') }}">{{ 'orders.label'|trans }}</a></li>
+        <li class="breadcrumb-item active">{{ block('title') }}</li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+    {% include "_includes/student_base.html.twig" with { student: order.student } only %}
+    {% include "_includes/student_travel.html.twig" with { student: order.student } only %}
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">
+                {{ 'orders.show.header'|trans({'%date%': order.createdAt|format_datetime }) }}
+            </h5>
+
+            <div class="container-fluid px-0">
+                <div class="row row-cols-xl-6 row-cols-lg-3 row-cols-md-2 row-cols-1">
+                    <div class="col">
+                        <dt class="text-uppercase text-muted">{{ 'label.country'|trans }}</dt>
+                        <dd>{{ order.country.name }}</dd>
+                    </div>
+
+                    <div class="col">
+                        <dt class="text-uppercase text-muted">{{ 'label.phone'|trans }}</dt>
+                        <dd><i class="fas fa-phone"></i> {{ order.phoneNumber }}</dd>
+                    </div>
+
+                    <div class="col">
+                        <dt class="text-uppercase text-muted">{{ 'label.email'|trans }}</dt>
+                        <dd><i class="fas fa-envelope"></i> {{ order.email }}</dd>
+                    </div>
+
+                    <div class="col">
+                        <dt class="text-uppercase text-muted">{{ 'label.iban'|trans }}</dt>
+                        <dd><i class="fa-solid fa-money-check"></i> {{ order.iban|disguise_iban }}</dd>
+                    </div>
+
+                    <div class="col">
+                        <dt class="text-uppercase text-muted">{{ 'label.bic'|trans }}</dt>
+                        <dd><i class="fa-solid fa-building-columns"></i> {{ order.bic }}</dd>
+                    </div>
+
+                    <div class="col">
+                        <dt class="text-uppercase text-muted">{{ 'label.ticket'|trans }}</dt>
+                        <dd class="fw-semibold"><i class="fas fa-ticket"></i> {{ order.ticket.name }}</dd>
+                    </div>
+
+                    <div class="col">
+                        <dt class="text-uppercase text-muted">{{ 'orders.show.created_by'|trans }}</dt>
+                        <dd><i class="fas fa-user"></i> {{ order.createdBy }}</dd>
+                    </div>
+
+                    <div class="col">
+                        <dt class="text-uppercase text-muted">{{ 'orders.show.created_at'|trans }}</dt>
+                        <dd><i class="fas fa-user"></i> {{ order.createdAt|format_datetime }}</dd>
+                    </div>
+
+                    <div class="col">
+                        <dt class="text-uppercase text-muted">{{ 'orders.show.updated_by'|trans }}</dt>
+                        <dd><i class="fas fa-user"></i> {{ order.updatedBy }}</dd>
+                    </div>
+
+                    <div class="col">
+                        <dt class="text-uppercase text-muted">{{ 'orders.show.updated_at'|trans }}</dt>
+                        <dd><i class="fas fa-user"></i> {{ order.updatedAt|format_datetime }}</dd>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

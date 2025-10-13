@@ -1,0 +1,17 @@
+{% set urlOption = constant('App\\Controller\\Admin\\Field\\ButtonField::OPTION_BUTTON_URL') %}
+{% set labelOption = constant('App\\Controller\\Admin\\Field\\ButtonField::OPTION_BUTTON_LABEL') %}
+
+{% set url = field.customOptions.get(urlOption) %}
+{% set url = url|replace({
+    '{street}': entity.instance.street,
+    '{houseNumber}': entity.instance.houseNumber,
+    '{plz}': entity.instance.plz,
+    '{city}': entity.instance.city,
+    '{publicSchool.address}': entity.instance.publicSchool.address,
+    '{publicSchool.plz}': entity.instance.publicSchool.plz,
+    '{publicSchool.city}': entity.instance.publicSchool.city
+}) %}
+
+<a href="{{ url }}" class="btn btn-sm btn-secondary" target="_blank">
+    <i class="fas fa-external-link"></i> {{ field.customOptions.get(labelOption) }}
+</a>
