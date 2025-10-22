@@ -104,6 +104,13 @@ orders:
         submit: Bestellung speichern
         success: Die Bestellung wurde erfolgreich aktualisiert.
 
+    remove:
+        label: Bestellung löschen
+        submit: Bestellung löschen
+        success: Die Bestellung wurde erfolgreich gelöscht.
+        info: Bereits getätigte Bestellungen können bis zum Ende des Bestellzeitraums gelöscht werden. Wird die Bestellung gelöscht, so wird kein Ticket bestellt. Während des Bestellzeitraums kann (bei Bedarf) die Bestellung erneut getätigt werden.
+        confirm: "Soll die Bestellung für %lastname%, %firstname% (%grade%) wirklich gelöscht werden?"
+
     siblings:
         label: Geschwister
         info: Bitte hier nur Geschwisterkinder eintragen, für die ebenfalls ein Busticket entweder bereits bestellt wurde oder noch bestellt wird. Geschwisterkinder, die kein Busticket bestellen, dürfen hier nicht aufgelistet werden.

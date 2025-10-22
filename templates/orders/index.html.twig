@@ -97,7 +97,7 @@
                                     </a>
                                 {% endif %}
                                 {% if is_granted('remove', order) %}
-                                    <a href="#" class="btn btn-danger btn-sm">
+                                    <a href="{{ path('remove_order', { uuid: order.uuid }) }}" class="btn btn-danger btn-sm">
                                         <i class="fas fa-trash"></i>
                                     </a>
                                 {% endif %}
