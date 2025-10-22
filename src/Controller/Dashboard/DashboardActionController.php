@@ -13,7 +13,10 @@ use Symfony\Component\Security\Http\Attribute\CurrentUser;
 
 class DashboardActionController extends AbstractController {
     #[Route('/dashboard', name: 'dashboard')]
-    public function __invoke(#[CurrentUser] User $user, ProfileCompleteChecker $profileChecker): Response {
+    public function __invoke(
+        #[CurrentUser] User $user,
+        ProfileCompleteChecker $profileChecker
+    ): Response {
         $violationLists = [ ];
 
         foreach($user->getAssociatedStudents() as $student) {

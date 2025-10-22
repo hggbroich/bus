@@ -15,7 +15,11 @@ use Symfony\Component\Routing\Attribute\Route;
 class EditOrderAction extends AbstractController {
 
     #[Route('/orders/{uuid}/edit', name: 'edit_order')]
-    public function __invoke(#[MapEntity(mapping: ['uuid' => 'uuid'])] Order $order, Request $request, OrderRepositoryInterface $orderRepository): Response {
+    public function __invoke(
+        #[MapEntity(mapping: ['uuid' => 'uuid'])] Order $order,
+        Request $request,
+        OrderRepositoryInterface $orderRepository
+    ): Response {
         $this->denyAccessUnlessGranted(OrderVoter::EDIT, $order);
 
         $form = $this->createForm(OrderType::class, $order);

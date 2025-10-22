@@ -24,7 +24,11 @@ class PlaceOrderAction extends AbstractController {
 
 
     #[Route('/orders/place/{uuid}', name: 'place_order')]
-    public function __invoke(#[MapEntity(mapping: ['uuid' => 'uuid'])] Student $student, Request $request, #[CurrentUser] User $user): Response {
+    public function __invoke(
+        #[MapEntity(mapping: ['uuid' => 'uuid'])] Student $student,
+        Request $request,
+        #[CurrentUser] User $user
+    ): Response {
         $this->denyAccessUnlessGranted(OrderVoter::PLACE, $student);
 
         $order = new Order();

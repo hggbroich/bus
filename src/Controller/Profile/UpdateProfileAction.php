@@ -14,7 +14,11 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class UpdateProfileAction extends AbstractController {
     #[Route('/profile/{uuid}', name: 'update_profile')]
-    public function __invoke(#[MapEntity(mapping: ['uuid' => 'uuid'])] Student $student, Request $request, StudentRepositoryInterface $studentRepository): Response {
+    public function __invoke(
+        #[MapEntity(mapping: ['uuid' => 'uuid'])] Student $student,
+        Request $request,
+        StudentRepositoryInterface $studentRepository
+    ): Response {
         $this->denyAccessUnlessGranted(ProfileVoter::Update, $student);
 
         $form = $this->createForm(StudentType::class, $student);

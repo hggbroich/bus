@@ -17,12 +17,14 @@ use Symfony\Component\Security\Http\Attribute\CurrentUser;
 class ShowOrdersAction extends AbstractController {
 
     #[Route('/orders', name: 'orders')]
-    public function __invoke(#[CurrentUser] User $user,
-                             OrderRepositoryInterface $orderRepository,
-                             StudentFilter $studentFilter,
-                             Request $request,
-                             OrderSettings $orderSettings,
-                             #[MapQueryParameter] int $page = 1): Response {
+    public function __invoke(
+        #[CurrentUser] User $user,
+        OrderRepositoryInterface $orderRepository,
+        StudentFilter $studentFilter,
+        Request $request,
+        OrderSettings $orderSettings,
+        #[MapQueryParameter] int $page = 1
+    ): Response {
         $studentFilterView = $studentFilter->handle($request, $user);
 
         return $this->render('orders/index.html.twig', [
