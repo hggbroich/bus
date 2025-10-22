@@ -16,10 +16,14 @@ readonly class ProfileCompleteChecker {
 
     }
 
-    public function check(Student $student): ViolationList {
+    public function check(Student $student, array $checkersFqcn = [ ]): ViolationList {
         $results = [ ];
 
         foreach($this->checkers as $checker) {
+            if(!empty($checkersFqcn) && !in_array(get_class($checker), $checkersFqcn)) {
+                continue;
+            }
+
             $result = $checker->check($student);
 
             if($result instanceof Violation) {
