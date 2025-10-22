@@ -3,6 +3,7 @@
 namespace App\Controller\Order;
 
 use App\Entity\User;
+use App\Profile\ProfileCompleteChecker;
 use App\Repository\OrderRepositoryInterface;
 use App\Repository\PaginationQuery;
 use App\Settings\OrderSettings;
@@ -23,13 +24,23 @@ class ShowOrdersAction extends AbstractController {
         StudentFilter $studentFilter,
         Request $request,
         OrderSettings $orderSettings,
-        #[MapQueryParameter] int $page = 1
+        ProfileCompleteChecker $profileCompleteChecker,
+        #[MapQueryParameter] int $page = 1,
     ): Response {
         $studentFilterView = $studentFilter->handle($request, $user);
+
+        $hasProfileThatIsNotCompletedByParents = false;
+
+        foreach($user->getAssociatedStudents() as $student) {
+            if($profileCompleteChecker->isProfileCompletedByParents($student) !== true) {
+                $hasProfileThatIsNotCompletedByParents = true;
+            }
+        }
 
         return $this->render('orders/index.html.twig', [
             'studentFilter' => $studentFilterView,
             'settings' => $orderSettings,
+            'hasProfileThatIsNotCompletedByParents' => $hasProfileThatIsNotCompletedByParents,
             'orders' => $orderRepository->findAllForStudentsPaginated($studentFilterView->getCurrentOrDefault(), new PaginationQuery($page))
         ]);
     }

@@ -93,6 +93,10 @@ orders:
         not_set: Aktuell können keine Bestellungen erstellt werden.
         info: Bestellungen können bis zum %end% erstellt, bearbeitet und gelöscht werden.
 
+    errors:
+        label: Fehler
+        profile_not_completed: Die Stammdaten von mindestens einem Kind sind nicht vollständig. Solange die Stammdaten für ein Kind nicht vollständig sind, kann keine Bestellung für das Kind getätigt werden.
+
     place:
         label: Neue Bestellung
         submit: Bestellung abschicken

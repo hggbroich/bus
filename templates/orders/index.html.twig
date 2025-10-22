@@ -10,6 +10,17 @@
 {% endblock %}
 
 {% block content %}
+
+    {% if hasProfileThatIsNotCompletedByParents %}
+        <div class="bs-callout bs-callout-warning">
+            <h5>{{ 'orders.errors.label'|trans }}</h5>
+            <p>{{ 'orders.errors.profile_not_completed'|trans }}</p>
+            <a href="{{ path('profile') }}" class="btn btn-primary btn-sm">
+                <i class="fa-solid fa-address-card"></i> {{ 'profile.checks.button.complete'|trans }}
+            </a>
+        </div>
+    {% endif %}
+
     <div class="card">
         <div class="card-header">
             <div class="d-flex flex-wrap mt-n2">

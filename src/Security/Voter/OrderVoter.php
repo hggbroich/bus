@@ -5,9 +5,6 @@ namespace App\Security\Voter;
 use App\Entity\Order;
 use App\Entity\Student;
 use App\Entity\User;
-use App\Profile\Checks\DistanceToPublicSchoolChecker;
-use App\Profile\Checks\DistanceToSchoolChecker;
-use App\Profile\Checks\PublicSchoolChecker;
 use App\Profile\ProfileCompleteChecker;
 use App\Repository\OrderRepositoryInterface;
 use App\Settings\OrderSettings;
@@ -15,7 +12,6 @@ use LogicException;
 use Override;
 use Symfony\Component\Clock\ClockInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
 class OrderVoter extends Voter {
@@ -95,16 +91,7 @@ class OrderVoter extends Voter {
             return false;
         }
 
-        $violationList = $this->profileCompleteChecker->check(
-            $student,
-            [
-                DistanceToPublicSchoolChecker::class,
-                DistanceToSchoolChecker::class,
-                PublicSchoolChecker::class,
-            ]
-        );
-
-        if($violationList->hasViolations()) {
+        if($this->profileCompleteChecker->isProfileCompletedByParents($student)) {
             return false;
         }
 

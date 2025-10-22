@@ -3,8 +3,11 @@
 namespace App\Profile;
 
 use App\Entity\Student;
+use App\Profile\Checks\DistanceToPublicSchoolChecker;
 use App\Profile\Checks\DistanceToPublicSchoolConfirmedChecker;
+use App\Profile\Checks\DistanceToSchoolChecker;
 use App\Profile\Checks\DistanceToSchoolConfirmedChecker;
+use App\Profile\Checks\PublicSchoolChecker;
 use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 
 readonly class ProfileCompleteChecker {
@@ -14,6 +17,19 @@ readonly class ProfileCompleteChecker {
      */
     public function __construct(#[AutowireIterator('app.profile.checker')] private iterable $checkers) {
 
+    }
+
+    public function isProfileCompletedByParents(Student $student): bool {
+        $violationList = $this->check(
+            $student,
+            [
+                DistanceToPublicSchoolChecker::class,
+                DistanceToSchoolChecker::class,
+                PublicSchoolChecker::class,
+            ]
+        );
+
+        return $violationList->hasViolations() === false;
     }
 
     public function check(Student $student, array $checkersFqcn = [ ]): ViolationList {
