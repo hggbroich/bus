@@ -4,8 +4,12 @@ namespace App\Order;
 
 use App\Entity\Order;
 use App\Entity\Student;
+use App\Settings\OrderSettings;
 
-class OrderFiller {
+readonly class OrderFiller {
+
+    public function __construct(private OrderSettings $orderSettings) { }
+
     public function copyProfileToOrder(Order $order, Student $student): Order{
         $order->setFirstname($student->getFirstname());
         $order->setLastname($student->getLastname());
@@ -31,5 +35,9 @@ class OrderFiller {
         $order->setIban($recent->getIban());
         $order->setEncryptedIban($recent->getEncryptedIban());
         $order->setPreventEncryptionValue($recent->getIban());
+    }
+
+    public function copyConfirmations(Order $order): void {
+        $order->setConfirmations($this->orderSettings->confirmations);
     }
 }

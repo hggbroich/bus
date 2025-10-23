@@ -32,13 +32,15 @@ class PlaceOrderAction extends AbstractController {
     public function __invoke(
         #[MapEntity(mapping: ['uuid' => 'uuid'])] Student $student,
         Request $request,
-        #[CurrentUser] User $user
+        #[CurrentUser] User $user,
+        OrderSettings $orderSettings
     ): Response {
         $this->denyAccessUnlessGranted(OrderVoter::PLACE, $student);
 
         $order = new Order();
         $order->setStudent($student);
         $this->orderFiller->copyProfileToOrder($order, $student);
+        $this->orderFiller->copyConfirmations($order);
         $this->addSiblings($order, $user, $this->orderSettings->school);
         $orderDataWasTakenFrom = $this->addRecentOrSiblingData($order, $user);
 
@@ -55,7 +57,8 @@ class PlaceOrderAction extends AbstractController {
         return $this->render('orders/place.html.twig', [
             'form' => $form->createView(),
             'student' => $student,
-            'orderDataWasTakenFrom' => $orderDataWasTakenFrom
+            'orderDataWasTakenFrom' => $orderDataWasTakenFrom,
+            'confirmations' => $orderSettings->confirmations
         ]);
     }
 

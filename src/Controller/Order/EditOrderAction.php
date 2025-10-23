@@ -7,6 +7,7 @@ use App\Form\OrderType;
 use App\Order\OrderFiller;
 use App\Repository\OrderRepositoryInterface;
 use App\Security\Voter\OrderVoter;
+use App\Settings\OrderSettings;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,12 +21,14 @@ class EditOrderAction extends AbstractController {
         #[MapEntity(mapping: ['uuid' => 'uuid'])] Order $order,
         Request $request,
         OrderRepositoryInterface $orderRepository,
+        OrderSettings $orderSettings,
         OrderFiller $orderFiller
     ): Response {
         $this->denyAccessUnlessGranted(OrderVoter::EDIT, $order);
 
         // UPDATE PROFILE DATA
         $orderFiller->copyProfileToOrder($order, $order->getStudent());
+        $orderFiller->copyConfirmations($order);
 
         $form = $this->createForm(OrderType::class, $order);
         $form->handleRequest($request);
@@ -42,7 +45,8 @@ class EditOrderAction extends AbstractController {
         return $this->render('orders/edit.html.twig', [
             'form' => $form->createView(),
             'order' => $order,
-            'student' => $order->getStudent()
+            'student' => $order->getStudent(),
+            'confirmations' => $order->getConfirmations()
         ]);
     }
 }

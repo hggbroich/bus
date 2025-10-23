@@ -3,18 +3,25 @@
 namespace App\Form;
 
 use App\Entity\Order;
+use App\Settings\OrderSettings;
 use LogicException;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\IsTrue;
 
 class OrderType extends AbstractType {
+
+    public function __construct(private readonly OrderSettings $orderSettings) {
+
+    }
 
     public function configureOptions(OptionsResolver $resolver): void {
         $resolver->setDefault('validation_groups', function(FormInterface $form): array {
@@ -50,5 +57,17 @@ class OrderType extends AbstractType {
                 'allow_delete' => true,
                 'by_reference' => false,
             ]);
+
+        if(count($this->orderSettings->confirmations) > 0) {
+            $builder
+                ->add('confirm', CheckboxType::class, [
+                    'label' => 'label.confirm_confirmations',
+                    'mapped' => false,
+                    'required' => true,
+                    'constraints' => [
+                        new IsTrue()
+                    ]
+                ]);
+        }
     }
 }

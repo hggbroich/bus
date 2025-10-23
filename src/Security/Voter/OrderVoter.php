@@ -91,7 +91,7 @@ class OrderVoter extends Voter {
             return false;
         }
 
-        if($this->profileCompleteChecker->isProfileCompletedByParents($student)) {
+        if(!$this->profileCompleteChecker->isProfileCompletedByParents($student)) {
             return false;
         }
 

@@ -12,6 +12,18 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 class AppSettings {
     use SettingsTrait;
 
-    #[SettingsParameter(type: StringType::class, label: 'settings.app.custom_css.label', description: 'settings.app.custom_css.help', formType: TextareaType::class, formOptions: [ 'required' => false, 'attr' => ['rows'=> 30, 'class' => 'font-monospace']], nullable: true)]
+    #[SettingsParameter(type: StringType::class, label: 'settings.app.custom_css.label', description: 'settings.app.custom_css.help', formType: TextareaType::class, formOptions:
+        [
+            'required' => false,
+            'attr' =>
+                [
+                    'data-ea-code-editor-field' => 'true',
+                    'data-language' => 'css',
+                    'data-tab-size' => 4,
+                    'data-indent-with-tabs' => 'false',
+                    'data-show-line-numbers' => 'true'
+                ]
+        ],
+        nullable: true)]
     public ?string $customCss = null;
 }

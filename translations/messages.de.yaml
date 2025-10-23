@@ -37,6 +37,9 @@ settings:
             end:
                 label: Ende Bestellungs-Zeitfenster
                 help: Bis zu diesem Tag (exklusive) können Bustickets gebucht, bearbeitet und gelöscht werden. Nach diesem Stichtag ist das Bearbeiten und Löschen von Bestellungen durch Eltern nicht mehr möglich.
+        confirmations:
+            label: Bestätigungen
+            help: Hier können Texte (bspw. Verweise auf AGBs etc.) hinterlegt werden, die bei einer Bestellung von den Eltern bestätigt werden müssen.
 
 filter:
     choose:
@@ -76,6 +79,8 @@ label:
     distance_to_school:
         label: Distanz zur Schule
         help: Bitte die Distanz (Fußweg) zur Schule angeben.
+
+    confirm_confirmations: Ich habe die oben genannten Punkte gelesen und akzeptiere sie.
 
 dashboard:
     students:
@@ -118,6 +123,10 @@ orders:
     siblings:
         label: Geschwister
         info: Bitte hier nur Geschwisterkinder eintragen, für die ebenfalls ein Busticket entweder bereits bestellt wurde oder noch bestellt wird. Geschwisterkinder, die kein Busticket bestellen, dürfen hier nicht aufgelistet werden.
+
+    confirmations:
+        label: Hinweise
+
 
     show:
         label: Bestellung anzeigen

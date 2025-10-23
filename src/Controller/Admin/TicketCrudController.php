@@ -9,6 +9,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Config\KeyValueStore;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\CodeEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
@@ -38,7 +39,7 @@ class TicketCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable {
         return [
             TextField::new('name'),
-            TextField::new('description')
+            CodeEditorField::new('description')
                 ->setLabel('Beschreibung'),
             TextField::new('externalId')
                 ->setLabel('Externe ID')

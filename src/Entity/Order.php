@@ -113,6 +113,9 @@ class Order {
     #[ORM\OneToMany(targetEntity: StudentSibling::class, mappedBy: 'order', cascade: ['persist'], orphanRemoval: true)]
     private Collection $siblings;
 
+    #[ORM\Column(type: Types::JSON)]
+    private array $confirmations = [ ];
+
     use TimestampableOnCreateTrait;
     use TimestampableOnUpdateTrait;
 
@@ -335,4 +338,12 @@ class Order {
         $this->siblings->removeElement($sibling);
     }
 
+    public function getConfirmations(): array {
+        return $this->confirmations;
+    }
+
+    public function setConfirmations(array $confirmations): Order {
+        $this->confirmations = $confirmations;
+        return $this;
+    }
 }

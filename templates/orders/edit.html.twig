@@ -51,6 +51,24 @@
         </div>
     </div>
 
+    {% if confirmations|length > 0 %}
+        <div class="card">
+            <div class="card-header">{{ 'orders.confirmations.label'|trans }}</div>
+
+            <div class="card-body">
+                {% for confirmation in confirmations %}
+                    <div class="bs-callout bs-callout-info">
+                        <h5>{{ 'info.label'|trans }}</h5>
+
+                        {{ confirmation|markdown_to_html  }}
+                    </div>
+                {% endfor %}
+
+                {{ form_widget(form.confirm) }}
+            </div>
+        </div>
+    {% endif %}
+
     <button type="submit" class="btn btn-primary btn-sm">
         <i class="fas fa-save"></i> {{ 'orders.edit.submit'|trans }}
     </button>
