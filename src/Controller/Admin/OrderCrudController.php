@@ -49,7 +49,6 @@ class OrderCrudController extends AbstractCrudController
             FormField::addColumn(6),
             TextField::new('iban', 'IBAN'),
             FormField::addColumn(6),
-            TextField::new('bic', 'BIC'),
             AssociationField::new('ticket', 'Ticket'),
 
             FormField::addColumn(12),
