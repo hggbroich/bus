@@ -21,6 +21,10 @@ class Ticket implements Stringable {
     #[Assert\NotBlank]
     private string $description;
 
+    #[ORM\Column(type: Types::STRING)]
+    #[Assert\NotBlank]
+    private string $externalId;
+
     public function __construct() {
         $this->uuid = Uuid::uuid4();
     }
@@ -40,6 +44,15 @@ class Ticket implements Stringable {
 
     public function setDescription(string $description): Ticket {
         $this->description = $description;
+        return $this;
+    }
+
+    public function getExternalId(): string {
+        return $this->externalId;
+    }
+
+    public function setExternalId(string $externalId): Ticket {
+        $this->externalId = $externalId;
         return $this;
     }
 

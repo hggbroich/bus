@@ -31,7 +31,8 @@ class TicketCrudController extends AbstractCrudController
     public function configureFilters(Filters $filters): Filters {
         return $filters
             ->add('name')
-            ->add('description');
+            ->add('description')
+            ->add('externalId');
     }
 
     public function configureFields(string $pageName): iterable {
@@ -39,6 +40,9 @@ class TicketCrudController extends AbstractCrudController
             TextField::new('name'),
             TextField::new('description')
                 ->setLabel('Beschreibung'),
+            TextField::new('externalId')
+                ->setLabel('Externe ID')
+                ->setHelp('Diese ID wird beim Export in die CSV-Datei geschrieben')
         ];
     }
 }
