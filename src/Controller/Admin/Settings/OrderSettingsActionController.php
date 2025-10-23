@@ -28,9 +28,6 @@ class OrderSettingsActionController extends AbstractController {
     public function __invoke(Request $request): Response {
         $settings = $this->settingsManager->createTemporaryCopy(OrderSettings::class);
         $builder = $this->formFactory->createSettingsFormBuilder($settings);
-        $builder->add('submit', SubmitType::class, [
-            'label' => 'actions.save',
-        ]);
         $form = $builder->getForm();
 
         $form->handleRequest($request);
