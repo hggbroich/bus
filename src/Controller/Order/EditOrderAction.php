@@ -4,6 +4,7 @@ namespace App\Controller\Order;
 
 use App\Entity\Order;
 use App\Form\OrderType;
+use App\Order\OrderFiller;
 use App\Repository\OrderRepositoryInterface;
 use App\Security\Voter\OrderVoter;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
@@ -18,9 +19,13 @@ class EditOrderAction extends AbstractController {
     public function __invoke(
         #[MapEntity(mapping: ['uuid' => 'uuid'])] Order $order,
         Request $request,
-        OrderRepositoryInterface $orderRepository
+        OrderRepositoryInterface $orderRepository,
+        OrderFiller $orderFiller
     ): Response {
         $this->denyAccessUnlessGranted(OrderVoter::EDIT, $order);
+
+        // UPDATE PROFILE DATA
+        $orderFiller->copyProfileToOrder($order, $order->getStudent());
 
         $form = $this->createForm(OrderType::class, $order);
         $form->handleRequest($request);

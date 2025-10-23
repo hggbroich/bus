@@ -2,6 +2,9 @@
 
 namespace App\Entity;
 
+use App\Doctrine\Encryption\Attribute\Encrypt;
+use App\Doctrine\Encryption\Preview\IbanPreviewGenerator;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -20,6 +23,55 @@ class Order {
     #[ORM\JoinColumn(onDelete: 'CASCADE')]
     private Student $student;
 
+    #[ORM\Column(type: Types::STRING)]
+    #[Assert\NotBlank]
+    private string $firstname;
+
+    #[ORM\Column(type: Types::STRING)]
+    #[Assert\NotBlank]
+    private string $lastname;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Assert\NotBlank]
+    private DateTime $birthday;
+
+    #[ORM\Column(type: Types::STRING)]
+    #[Assert\NotBlank(allowNull: true)]
+    private ?string $street = null;
+
+    #[ORM\Column(type: Types::STRING)]
+    #[Assert\NotBlank(allowNull: true)]
+    private ?string $houseNumber = null;
+
+    #[ORM\Column(type: Types::INTEGER, nullable: true)]
+    private ?int $plz = null;
+
+    #[ORM\Column(type: Types::STRING)]
+    #[Assert\NotBlank(allowNull: true)]
+    private ?string $city = null;
+
+    #[ORM\Column(type: Types::INTEGER, nullable: true)]
+    private ?int $busCompanyCustomerId = null;
+
+    #[ORM\Column(type: Types::BOOLEAN)]
+    private bool $sgb12 = false;
+
+    #[ORM\ManyToOne(targetEntity: Stop::class)]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?Stop $stop = null;
+
+    #[ORM\ManyToOne(targetEntity: School::class)]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?School $publicSchool = null;
+
+    #[ORM\Column(type: Types::INTEGER)]
+    #[Assert\GreaterThanOrEqual(0)]
+    private int $confirmedDistanceToPublicSchool = 0;
+
+    #[ORM\Column(type: Types::INTEGER)]
+    #[Assert\GreaterThanOrEqual(0)]
+    private int $confirmedDistanceToSchool = 0;
+
     #[ORM\ManyToOne(targetEntity: Country::class)]
     #[ORM\JoinColumn(nullable: false)]
     #[Assert\NotNull]
@@ -35,12 +87,18 @@ class Order {
     private string $email;
 
     #[ORM\Column(type: Types::STRING)]
-    #[Assert\Iban]
+    #[Encrypt(
+        encryptedPropertyName: 'encryptedIban',
+        previewGenerator: IbanPreviewGenerator::class,
+        preventEncryptionValuePropertyName: 'preventEncryptionValue'
+    )]
+    #[Assert\Iban(groups: ['iban'])]
     private string $iban;
 
-    #[ORM\Column(type: Types::STRING)]
-    #[Assert\Bic]
-    private string $bic;
+    #[ORM\Column(type: Types::TEXT)]
+    private string $encryptedIban;
+
+    private string|null $preventEncryptionValue = null;
 
     #[ORM\ManyToOne(targetEntity: Ticket::class)]
     #[ORM\JoinColumn(nullable: true)]
@@ -66,6 +124,123 @@ class Order {
 
     public function setStudent(Student $student): Order {
         $this->student = $student;
+        return $this;
+    }
+
+    public function getFirstname(): string {
+        return $this->firstname;
+    }
+
+    public function setFirstname(string $firstname): Order {
+        $this->firstname = $firstname;
+        return $this;
+    }
+
+    public function getLastname(): string {
+        return $this->lastname;
+    }
+
+    public function setLastname(string $lastname): Order {
+        $this->lastname = $lastname;
+        return $this;
+    }
+
+    public function getBirthday(): DateTime {
+        return $this->birthday;
+    }
+
+    public function setBirthday(DateTime $birthday): Order {
+        $this->birthday = $birthday;
+        return $this;
+    }
+
+    public function getStreet(): ?string {
+        return $this->street;
+    }
+
+    public function setStreet(?string $street): Order {
+        $this->street = $street;
+        return $this;
+    }
+
+    public function getHouseNumber(): ?string {
+        return $this->houseNumber;
+    }
+
+    public function setHouseNumber(?string $houseNumber): Order {
+        $this->houseNumber = $houseNumber;
+        return $this;
+    }
+
+    public function getPlz(): ?int {
+        return $this->plz;
+    }
+
+    public function setPlz(?int $plz): Order {
+        $this->plz = $plz;
+        return $this;
+    }
+
+    public function getCity(): ?string {
+        return $this->city;
+    }
+
+    public function setCity(?string $city): Order {
+        $this->city = $city;
+        return $this;
+    }
+
+    public function getBusCompanyCustomerId(): ?int {
+        return $this->busCompanyCustomerId;
+    }
+
+    public function setBusCompanyCustomerId(?int $busCompanyCustomerId): Order {
+        $this->busCompanyCustomerId = $busCompanyCustomerId;
+        return $this;
+    }
+
+    public function isSgb12(): bool {
+        return $this->sgb12;
+    }
+
+    public function setSgb12(bool $sgb12): Order {
+        $this->sgb12 = $sgb12;
+        return $this;
+    }
+
+    public function getStop(): ?Stop {
+        return $this->stop;
+    }
+
+    public function setStop(?Stop $stop): Order {
+        $this->stop = $stop;
+        return $this;
+    }
+
+    public function getPublicSchool(): ?School {
+        return $this->publicSchool;
+    }
+
+    public function setPublicSchool(?School $publicSchool): Order {
+        $this->publicSchool = $publicSchool;
+        return $this;
+    }
+
+    public function getConfirmedDistanceToPublicSchool(): int {
+        return $this->confirmedDistanceToPublicSchool;
+    }
+
+    public function setConfirmedDistanceToPublicSchool(int $confirmedDistanceToPublicSchool): Order {
+        $this->confirmedDistanceToPublicSchool = $confirmedDistanceToPublicSchool;
+        return $this;
+    }
+
+    public function getConfirmedDistanceToSchool(): int {
+        return $this->confirmedDistanceToSchool;
+    }
+
+    public function setConfirmedDistanceToSchool(int $confirmedDistanceToSchool): Order {
+        $this->confirmedDistanceToSchool = $confirmedDistanceToSchool;
         return $this;
     }
 
@@ -105,12 +280,21 @@ class Order {
         return $this;
     }
 
-    public function getBic(): string {
-        return $this->bic;
+    public function getEncryptedIban(): string {
+        return $this->encryptedIban;
     }
 
-    public function setBic(string $bic): Order {
-        $this->bic = $bic;
+    public function setEncryptedIban(string $encryptedIban): Order {
+        $this->encryptedIban = $encryptedIban;
+        return $this;
+    }
+
+    public function getPreventEncryptionValue(): ?string {
+        return $this->preventEncryptionValue;
+    }
+
+    public function setPreventEncryptionValue(?string $preventEncryptionValue): Order {
+        $this->preventEncryptionValue = $preventEncryptionValue;
         return $this;
     }
 

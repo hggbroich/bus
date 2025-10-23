@@ -74,10 +74,6 @@ class Student implements Stringable {
     #[ORM\Column(type: Types::BOOLEAN)]
     private bool $sgb1 = false;
 
-    #[ORM\ManyToOne(targetEntity: Ticket::class)]
-    #[ORM\JoinColumn(nullable: true)]
-    private ?Ticket $ticket = null;
-
     #[ORM\ManyToOne(targetEntity: Stop::class)]
     #[ORM\JoinColumn(nullable: true)]
     private ?Stop $stop = null;
@@ -246,15 +242,6 @@ class Student implements Stringable {
 
     public function setSgb1(bool $sgb1): Student {
         $this->sgb1 = $sgb1;
-        return $this;
-    }
-
-    public function getTicket(): ?Ticket {
-        return $this->ticket;
-    }
-
-    public function setTicket(?Ticket $ticket): Student {
-        $this->ticket = $ticket;
         return $this;
     }
 

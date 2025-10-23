@@ -8,6 +8,7 @@ use App\Entity\Student;
 use App\Entity\StudentSibling;
 use App\Entity\User;
 use App\Form\OrderType;
+use App\Order\OrderFiller;
 use App\Repository\OrderRepositoryInterface;
 use App\Security\Voter\OrderVoter;
 use App\Settings\OrderSettings;
@@ -20,7 +21,11 @@ use Symfony\Component\Security\Http\Attribute\CurrentUser;
 
 class PlaceOrderAction extends AbstractController {
 
-    public function __construct(private readonly OrderRepositoryInterface $orderRepository, private readonly OrderSettings $orderSettings) { }
+    public function __construct(
+        private readonly OrderRepositoryInterface $orderRepository,
+        private readonly OrderSettings $orderSettings,
+        private readonly OrderFiller $orderFiller
+    ) { }
 
 
     #[Route('/orders/place/{uuid}', name: 'place_order')]
@@ -33,6 +38,7 @@ class PlaceOrderAction extends AbstractController {
 
         $order = new Order();
         $order->setStudent($student);
+        $this->orderFiller->copyProfileToOrder($order, $student);
         $this->addSiblings($order, $user, $this->orderSettings->school);
         $orderDataWasTakenFrom = $this->addRecentOrSiblingData($order, $user);
 
@@ -54,39 +60,31 @@ class PlaceOrderAction extends AbstractController {
     }
 
     private function addRecentOrSiblingData(Order $order, User $user): Order|null {
-        if($this->orderSettings->windowStart === null || $this->orderSettings->windowEnd === null) {
+        if ($this->orderSettings->windowStart === null || $this->orderSettings->windowEnd === null) {
             return null;
         }
 
         // Find sibling
-        foreach($user->getAssociatedStudents() as $student) {
+        foreach ($user->getAssociatedStudents() as $student) {
             $recent = $this->orderRepository->findForStudentInRange($student, $this->orderSettings->windowStart, $this->orderSettings->windowEnd);
 
-            if($recent === null || $recent->getCreatedBy() !== $user->getUserIdentifier()) { // do not leak information
+            if ($recent === null || $recent->getCreatedBy() !== $user->getUserIdentifier()) { // do not leak information
                 continue;
             }
 
-            $this->applyFromOtherOrder($order, $recent);
+            $this->orderFiller->applyFromOtherOrder($order, $recent);
             return $recent;
         }
 
         // Find most recent order for student
         $recent = $this->orderRepository->findMostRecentForStudent($order->getStudent());
 
-        if($recent === null || $recent->getCreatedBy() !== $user->getUserIdentifier()) { // do not leak information
+        if ($recent === null || $recent->getCreatedBy() !== $user->getUserIdentifier()) { // do not leak information
             return null;
         }
 
-        $this->applyFromOtherOrder($order, $recent);
+        $this->orderFiller->applyFromOtherOrder($order, $recent);
         return $recent;
-    }
-
-    private function applyFromOtherOrder(Order $order, Order $recent): void {
-        $order->setCountry($recent->getCountry());
-        $order->setPhoneNumber($recent->getPhoneNumber());
-        $order->setEmail($recent->getEmail());
-        $order->setIban($recent->getIban());
-        $order->setBic($recent->getBic());
     }
 
     private function addSiblings(Order $order, User $user, School|null $school): void {

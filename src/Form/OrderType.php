@@ -2,13 +2,36 @@
 
 namespace App\Form;
 
+use App\Entity\Order;
+use LogicException;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class OrderType extends AbstractType {
+
+    public function configureOptions(OptionsResolver $resolver): void {
+        $resolver->setDefault('validation_groups', function(FormInterface $form): array {
+            $order = $form->getData();
+
+            if(!$order instanceof Order) {
+                throw new LogicException(sprintf('Bound object must be of type %s, %s given', Order::class, gettype($order)));
+            }
+
+            if($order->getIban() !== $order->getPreventEncryptionValue()) {
+                return ['Default', 'iban'];
+            }
+
+            return ['Default'];
+        });
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void {
         $builder
             ->add('country', CountryType::class)
@@ -21,10 +44,6 @@ class OrderType extends AbstractType {
             ->add('iban', TextType::class, [
                 'label' => 'label.iban',
             ])
-            ->add('bic', TextType::class, [
-                'label' => 'label.bic',
-            ])
-            //->add('ticket', TicketType::class)
             ->add('siblings', CollectionType::class, [
                 'entry_type' => StudentSiblingType::class,
                 'allow_add' => true,

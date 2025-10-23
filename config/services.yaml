@@ -79,3 +79,8 @@ services:
     App\Import\Stops\GtfsStopsImporter:
         bind:
             $tempDir: "%kernel.project_dir%/var/tmp"
+
+    App\Doctrine\Encryption\Encryptors\SodiumPublicKeyEncryptor:
+        bind:
+            $selfKeyPairBase64: "%env(SELF_KEYPAIR)%"
+            $otherPublicKeyBase64: "%env(OTHER_PUBLICKEY)%"
