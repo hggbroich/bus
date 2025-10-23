@@ -53,4 +53,16 @@ class ImportRequest {
 
     #[Assert\NotBlank]
     public string $birthdayHeader = 'Geburtsdatum';
+
+    #[Assert\NotBlank]
+    public string $genderHeader = 'Geschlecht';
+
+    #[Assert\NotBlank]
+    public string $maleGenderValue = 'm';
+
+    #[Assert\NotBlank]
+    public string $femaleGenderValue = 'w';
+
+    #[Assert\NotBlank]
+    public string $diversGenderValue = 'd';
 }

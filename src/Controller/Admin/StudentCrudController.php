@@ -15,6 +15,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
@@ -64,7 +65,7 @@ class StudentCrudController extends AbstractCrudController
             ->add('email')
             ->add('plz')
             ->add('city')
-            ->add('sgb1')
+            ->add('sgb12')
             ->add('stop')
             ->add('publicSchool')
             ->add('distanceToPublicSchool')
@@ -142,12 +143,17 @@ class StudentCrudController extends AbstractCrudController
                 ->setLabel('Geburtstag')
                 ->setDisabled()
                 ->hideOnIndex(),
+            FormField::addColumn(6),
+            ChoiceField::new('gender')
+                ->setLabel('Geschlecht')
+                ->setDisabled()
+                ->hideOnIndex(),
 
             FormField::addTab('Bus- und Haltestellendaten'),
             IntegerField::new('busCompanyCustomerId')
                 ->setLabel('Kundennummer Busunternehmen')
                 ->hideOnIndex(),
-            BooleanField::new('sgb1')
+            BooleanField::new('sgb12')
                 ->setLabel('SGB12')
                 ->setRequired(false)
                 ->hideOnIndex(),
@@ -178,9 +184,9 @@ class StudentCrudController extends AbstractCrudController
                 ->setRequired(false)
                 ->setHelp('in km')
                 ->hideOnIndex(),
-            ButtonField::new('foo', 'Label')
+            /*ButtonField::new('foo', 'Label')
                 ->onlyOnDetail()
-                ->setUrl('https://www.google.com/maps/dir/?api=1&travelmode=walking&origin={street} {houseNumber}, {plz} {city}&destination={publicSchool.address}, {publicSchool.plz} {publicSchool.city}'),
+                ->setUrl('https://www.google.com/maps/dir/?api=1&travelmode=walking&origin={street} {houseNumber}, {plz} {city}&destination={publicSchool.address}, {publicSchool.plz} {publicSchool.city}'),*/
             FormField::addColumn(6),
             FormField::addPanel('Eigene Schule'),
             NumberField::new('distanceToSchool')

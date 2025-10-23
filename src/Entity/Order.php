@@ -35,6 +35,9 @@ class Order {
     #[Assert\NotBlank]
     private DateTime $birthday;
 
+    #[ORM\Column(type: Types::STRING, enumType: Gender::class)]
+    private Gender $gender = Gender::Other;
+
     #[ORM\Column(type: Types::STRING)]
     #[Assert\NotBlank(allowNull: true)]
     private ?string $street = null;
@@ -151,6 +154,15 @@ class Order {
 
     public function setBirthday(DateTime $birthday): Order {
         $this->birthday = $birthday;
+        return $this;
+    }
+
+    public function getGender(): Gender {
+        return $this->gender;
+    }
+
+    public function setGender(Gender $gender): Order {
+        $this->gender = $gender;
         return $this;
     }
 

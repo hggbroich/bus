@@ -10,11 +10,12 @@ class OrderFiller {
         $order->setFirstname($student->getFirstname());
         $order->setLastname($student->getLastname());
         $order->setBirthday($student->getBirthday());
+        $order->setGender($student->getGender());
         $order->setStreet($student->getStreet());
         $order->setHouseNumber($student->getHouseNumber());
         $order->setPlz($student->getPlz());
         $order->setCity($student->getCity());
-        $order->setSgb12($student->isSgb1());
+        $order->setSgb12($student->isSgb12());
         $order->setStop($student->getStop());
         $order->setPublicSchool($student->getPublicSchool());
         $order->setConfirmedDistanceToPublicSchool($student->getConfirmedDistanceToPublicSchool());

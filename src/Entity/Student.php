@@ -47,6 +47,9 @@ class Student implements Stringable {
     #[Assert\NotBlank]
     private DateTime $birthday;
 
+    #[ORM\Column(type: Types::STRING, enumType: Gender::class)]
+    private Gender $gender = Gender::Other;
+
     #[ORM\Column(type: Types::STRING)]
     #[Assert\NotBlank(allowNull: true)]
     private ?string $street = null;
@@ -72,7 +75,7 @@ class Student implements Stringable {
     private ?int $busCompanyCustomerId = null;
 
     #[ORM\Column(type: Types::BOOLEAN)]
-    private bool $sgb1 = false;
+    private bool $sgb12 = false;
 
     #[ORM\ManyToOne(targetEntity: Stop::class)]
     #[ORM\JoinColumn(nullable: true)]
@@ -173,6 +176,15 @@ class Student implements Stringable {
         return $this;
     }
 
+    public function getGender(): Gender {
+        return $this->gender;
+    }
+
+    public function setGender(Gender $gender): Student {
+        $this->gender = $gender;
+        return $this;
+    }
+
     public function getStreet(): ?string {
         return $this->street;
     }
@@ -236,12 +248,12 @@ class Student implements Stringable {
         return $this;
     }
 
-    public function isSgb1(): bool {
-        return $this->sgb1;
+    public function isSgb12(): bool {
+        return $this->sgb12;
     }
 
-    public function setSgb1(bool $sgb1): Student {
-        $this->sgb1 = $sgb1;
+    public function setSgb12(bool $sgb12): Student {
+        $this->sgb12 = $sgb12;
         return $this;
     }
 

@@ -54,6 +54,18 @@ class ImportRequestType extends AbstractType {
             ])
             ->add('leaveDateHeader', TextType::class, [
                 'label' => 'Entlassdatum-Spaltenname'
+            ])
+            ->add('genderHeader', TextType::class, [
+                'label' => 'Geschlecht-Spaltenname'
+            ])
+            ->add('maleGenderValue', TextType::class, [
+                'label' => 'Wert für männlich'
+            ])
+            ->add('femaleGenderValue', TextType::class, [
+                'label' => 'Wert für weiblich'
+            ])
+            ->add('diversGenderValue', TextType::class, [
+                'label' => 'Wert für divers'
             ]);
     }
 }

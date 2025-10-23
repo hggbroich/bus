@@ -2,6 +2,7 @@
 
 namespace App\Import\Students;
 
+use App\Entity\Gender;
 use App\Entity\Student;
 use App\Import\CsvHelperTrait;
 use App\Import\ImportResult;
@@ -63,6 +64,7 @@ class CsvSchildImporter {
             $student->setEntranceDate($this->getDateTime($record[$request->entranceDateHeader]));
             $student->setLeaveDate($this->getDateTimeOrNull($record[$request->leaveDateHeader]));
             $student->setBirthday($this->getDateTime($record[$request->birthdayHeader]));
+            $student->setGender($this->getGender($this->getString($record[$request->genderHeader]), $request));
 
             $this->studentRepository->persist($student);
         }
@@ -88,6 +90,15 @@ class CsvSchildImporter {
             8 => 'Abitur',
             9 => 'Abgänger',
             default => 'Unbekannt',
+        };
+    }
+
+    private function getGender(string $gender, ImportRequest $request): Gender {
+        return match($gender) {
+            $request->maleGenderValue => Gender::Male,
+            $request->femaleGenderValue => Gender::Female,
+            $request->diversGenderValue => Gender::Divers,
+            default => Gender::Other
         };
     }
 }
