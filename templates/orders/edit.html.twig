@@ -23,9 +23,21 @@
         <div class="card-header">{{ 'label.general'|trans }}</div>
 
         <div class="card-body">
-            {{ form_row(form.country) }}
-            {{ form_row(form.phoneNumber) }}
-            {{ form_row(form.email) }}
+            <div class="bs-callout bs-callout-info">
+                <h5>{{ 'info.label'|trans }}</h5>
+                <p>{{ 'orders.account_information.info'|trans() }}</p>
+            </div>
+
+            {{ form_row(form.depositorFirstname) }}
+            {{ form_row(form.depositorLastname) }}
+            {{ form_row(form.depositorBirthday) }}
+            {{ form_row(form.depositorStreet) }}
+            {{ form_row(form.depositorHouseNumber) }}
+            {{ form_row(form.depositorPlz) }}
+            {{ form_row(form.depositorCity) }}
+            {{ form_row(form.depositorCountry)}}
+            {{ form_row(form.depositorPhoneNumber) }}
+            {{ form_row(form.depositorEmail) }}
             {{ form_row(form.iban) }}
         </div>
     </div>

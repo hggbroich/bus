@@ -39,7 +39,7 @@ class TicketCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable {
         return [
             TextField::new('name'),
-            CodeEditorField::new('description')
+            TextField::new('description')
                 ->setLabel('Beschreibung'),
             TextField::new('externalId')
                 ->setLabel('Externe ID')

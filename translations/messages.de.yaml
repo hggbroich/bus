@@ -94,6 +94,7 @@ orders:
     label: Bestellungen
     empty: Aktuell liegen keine Bestellungen vor.
     count: "{0} %count% Bestellungen|{1} %count% Bestellung|]1,Inf[ %count% Bestellungen"
+    details: Details
     window:
         not_set: Aktuell können keine Bestellungen erstellt werden.
         info: Bestellungen können bis zum %end% erstellt, bearbeitet und gelöscht werden.
@@ -106,6 +107,10 @@ orders:
         label: Neue Bestellung
         submit: Bestellung abschicken
         success: Die Bestellung wurde erfolgreich abgeschickt. Sie kann bis zum Stichtag noch bearbeitet werden.
+
+    account_information:
+        label: Kontodaten
+        info: Die folgenden Felder betreffen den Kontoinhaber oder die Kontoinhaberin.
         applied_from_recent: Die Daten wurden aus der Bestellung für %lastname%, %firstname% vom %date% übernommen. Bitte prüfen und ggf. korrigieren.
 
     edit:

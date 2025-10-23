@@ -29,9 +29,16 @@ readonly class OrderFiller {
     }
 
     public function applyFromOtherOrder(Order $order, Order $recent): void {
-        $order->setCountry($recent->getCountry());
-        $order->setPhoneNumber($recent->getPhoneNumber());
-        $order->setEmail($recent->getEmail());
+        $order->setDepositorFirstname($recent->getDepositorFirstname());
+        $order->setDepositorLastname($recent->getDepositorLastname());
+        $order->setDepositorBirthday($recent->getDepositorBirthday());
+        $order->setDepositorStreet($recent->getDepositorStreet());
+        $order->setDepositorHouseNumber($recent->getDepositorHouseNumber());
+        $order->setDepositorPlz($recent->getDepositorPlz());
+        $order->setDepositorCity($recent->getDepositorCity());
+        $order->setDepositorCountry($recent->getDepositorCountry());
+        $order->setDepositorPhoneNumber($recent->getDepositorPhoneNumber());
+        $order->setDepositorEmail($recent->getDepositorEmail());
         $order->setIban($recent->getIban());
         $order->setEncryptedIban($recent->getEncryptedIban());
         $order->setPreventEncryptionValue($recent->getIban());

@@ -20,27 +20,76 @@
                 {{ 'orders.show.header'|trans({'%date%': order.createdAt|format_datetime }) }}
             </h5>
 
+            <h6 class="card-subtitle mb-2">
+                {{ 'orders.account_information.label'|trans }}
+            </h6>
+
             <div class="container-fluid px-0">
-                <div class="row row-cols-xl-6 row-cols-lg-3 row-cols-md-2 row-cols-1">
+                <div class="row row-cols-xl-6 row-cols-lg-3 row-cols-md-2 row-cols-1 mb-4">
+                    <div class="col">
+                        <dt class="text-uppercase text-muted">{{ 'label.firstname'|trans }}</dt>
+                        <dd>{{ order.depositorFirstname }}</dd>
+                    </div>
+
+                    <div class="col">
+                        <dt class="text-uppercase text-muted">{{ 'label.lastname'|trans }}</dt>
+                        <dd>{{ order.depositorLastname }}</dd>
+                    </div>
+
+                    <div class="col">
+                        <dt class="text-uppercase text-muted">{{ 'label.birthday'|trans }}</dt>
+                        <dd>{{ order.depositorBirthday|format_date }}</dd>
+                    </div>
+
+                    <div class="col">
+                        <dt class="text-uppercase text-muted">{{ 'label.street'|trans }}</dt>
+                        <dd>{{ order.depositorStreet }}</dd>
+                    </div>
+
+                    <div class="col">
+                        <dt class="text-uppercase text-muted">{{ 'label.house_number'|trans }}</dt>
+                        <dd>{{ order.depositorHouseNumber }}</dd>
+                    </div>
+
+                    <div class="col">
+                        <dt class="text-uppercase text-muted">{{ 'label.plz'|trans }}</dt>
+                        <dd>{{ order.depositorPlz }}</dd>
+                    </div>
+
+                    <div class="col">
+                        <dt class="text-uppercase text-muted">{{ 'label.city'|trans }}</dt>
+                        <dd>{{ order.depositorCity }}</dd>
+                    </div>
+
                     <div class="col">
                         <dt class="text-uppercase text-muted">{{ 'label.country'|trans }}</dt>
-                        <dd>{{ order.country.name }}</dd>
+                        <dd>{{ order.depositorCountry.name }}</dd>
                     </div>
 
                     <div class="col">
                         <dt class="text-uppercase text-muted">{{ 'label.phone'|trans }}</dt>
-                        <dd><i class="fas fa-phone"></i> {{ order.phoneNumber }}</dd>
+                        <dd><i class="fas fa-phone"></i> {{ order.depositorPhoneNumber }}</dd>
                     </div>
 
                     <div class="col">
                         <dt class="text-uppercase text-muted">{{ 'label.email'|trans }}</dt>
-                        <dd><i class="fas fa-envelope"></i> {{ order.email }}</dd>
+                        <dd><i class="fas fa-envelope"></i> {{ order.depositorEmail }}</dd>
                     </div>
 
                     <div class="col">
                         <dt class="text-uppercase text-muted">{{ 'label.iban'|trans }}</dt>
-                        <dd><i class="fa-solid fa-money-check"></i> {{ order.iban|disguise_iban }}</dd>
+                        <dd><i class="fa-solid fa-money-check"></i> {{ order.iban }}</dd>
                     </div>
+
+                </div>
+            </div>
+
+            <h6 class="card-subtitle mb-2">
+                {{ 'orders.details'|trans }}
+            </h6>
+
+            <div class="container-fluid px-0">
+                <div class="row row-cols-xl-6 row-cols-lg-3 row-cols-md-2 row-cols-1">
 
                     <div class="col">
                         <dt class="text-uppercase text-muted">{{ 'label.ticket'|trans }}</dt>

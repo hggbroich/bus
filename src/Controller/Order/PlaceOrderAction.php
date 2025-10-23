@@ -38,6 +38,9 @@ class PlaceOrderAction extends AbstractController {
         $this->denyAccessUnlessGranted(OrderVoter::PLACE, $student);
 
         $order = new Order();
+        if(!empty($user->getEmail())) {
+            $order->setDepositorEmail($user->getEmail());
+        }
         $order->setStudent($student);
         $this->orderFiller->copyProfileToOrder($order, $student);
         $this->orderFiller->copyConfirmations($order);

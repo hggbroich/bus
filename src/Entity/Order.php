@@ -39,19 +39,19 @@ class Order {
     private Gender $gender = Gender::Other;
 
     #[ORM\Column(type: Types::STRING)]
-    #[Assert\NotBlank(allowNull: true)]
-    private ?string $street = null;
+    #[Assert\NotBlank]
+    private string $street;
 
     #[ORM\Column(type: Types::STRING)]
-    #[Assert\NotBlank(allowNull: true)]
-    private ?string $houseNumber = null;
+    #[Assert\NotBlank]
+    private string $houseNumber;
 
     #[ORM\Column(type: Types::INTEGER, nullable: true)]
-    private ?int $plz = null;
+    private int $plz;
 
     #[ORM\Column(type: Types::STRING)]
-    #[Assert\NotBlank(allowNull: true)]
-    private ?string $city = null;
+    #[Assert\NotBlank]
+    private string $city;
 
     #[ORM\Column(type: Types::INTEGER, nullable: true)]
     private ?int $busCompanyCustomerId = null;
@@ -75,20 +75,6 @@ class Order {
     #[Assert\GreaterThanOrEqual(0)]
     private int $confirmedDistanceToSchool = 0;
 
-    #[ORM\ManyToOne(targetEntity: Country::class)]
-    #[ORM\JoinColumn(nullable: false)]
-    #[Assert\NotNull]
-    private ?Country $country = null;
-
-    #[ORM\Column(type: Types::STRING)]
-    #[Assert\NotBlank]
-    private string $phoneNumber;
-
-    #[ORM\Column(type: Types::STRING)]
-    #[Assert\NotBlank]
-    #[Assert\Email]
-    private string $email;
-
     #[ORM\Column(type: Types::STRING)]
     #[Encrypt(
         encryptedPropertyName: 'encryptedIban',
@@ -102,6 +88,47 @@ class Order {
     private string $encryptedIban;
 
     private string|null $preventEncryptionValue = null;
+
+    #[ORM\Column(type: Types::STRING)]
+    #[Assert\NotBlank]
+    private string $depositorFirstname;
+
+    #[ORM\Column(type: Types::STRING)]
+    #[Assert\NotBlank]
+    private string $depositorLastname;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Assert\NotBlank]
+    private DateTime $depositorBirthday;
+
+    #[ORM\Column(type: Types::STRING)]
+    #[Assert\NotBlank]
+    private string $depositorStreet;
+
+    #[ORM\Column(type: Types::STRING)]
+    #[Assert\NotBlank]
+    private string $depositorHouseNumber;
+
+    #[ORM\Column(type: Types::INTEGER, nullable: true)]
+    private int $depositorPlz;
+
+    #[ORM\Column(type: Types::STRING)]
+    #[Assert\NotBlank]
+    private string $depositorCity;
+
+    #[ORM\ManyToOne(targetEntity: Country::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotNull]
+    private ?Country $depositorCountry = null;
+
+    #[ORM\Column(type: Types::STRING)]
+    #[Assert\NotBlank]
+    private string $depositorPhoneNumber;
+
+    #[ORM\Column(type: Types::STRING)]
+    #[Assert\NotBlank]
+    #[Assert\Email]
+    private string $depositorEmail;
 
     #[ORM\ManyToOne(targetEntity: Ticket::class)]
     #[ORM\JoinColumn(nullable: true)]
@@ -259,33 +286,6 @@ class Order {
         return $this;
     }
 
-    public function getCountry(): ?Country {
-        return $this->country;
-    }
-
-    public function setCountry(?Country $country): Order {
-        $this->country = $country;
-        return $this;
-    }
-
-    public function getPhoneNumber(): string {
-        return $this->phoneNumber;
-    }
-
-    public function setPhoneNumber(string $phoneNumber): Order {
-        $this->phoneNumber = $phoneNumber;
-        return $this;
-    }
-
-    public function getEmail(): string {
-        return $this->email;
-    }
-
-    public function setEmail(string $email): Order {
-        $this->email = $email;
-        return $this;
-    }
-
     public function getIban(): string {
         return $this->iban;
     }
@@ -310,6 +310,96 @@ class Order {
 
     public function setPreventEncryptionValue(?string $preventEncryptionValue): Order {
         $this->preventEncryptionValue = $preventEncryptionValue;
+        return $this;
+    }
+
+    public function getDepositorFirstname(): string {
+        return $this->depositorFirstname;
+    }
+
+    public function setDepositorFirstname(string $depositorFirstname): Order {
+        $this->depositorFirstname = $depositorFirstname;
+        return $this;
+    }
+
+    public function getDepositorLastname(): string {
+        return $this->depositorLastname;
+    }
+
+    public function setDepositorLastname(string $depositorLastname): Order {
+        $this->depositorLastname = $depositorLastname;
+        return $this;
+    }
+
+    public function getDepositorBirthday(): DateTime {
+        return $this->depositorBirthday;
+    }
+
+    public function setDepositorBirthday(DateTime $depositorBirthday): Order {
+        $this->depositorBirthday = $depositorBirthday;
+        return $this;
+    }
+
+    public function getDepositorStreet(): string {
+        return $this->depositorStreet;
+    }
+
+    public function setDepositorStreet(string $depositorStreet): Order {
+        $this->depositorStreet = $depositorStreet;
+        return $this;
+    }
+
+    public function getDepositorHouseNumber(): string {
+        return $this->depositorHouseNumber;
+    }
+
+    public function setDepositorHouseNumber(string $depositorHouseNumber): Order {
+        $this->depositorHouseNumber = $depositorHouseNumber;
+        return $this;
+    }
+
+    public function getDepositorPlz(): int {
+        return $this->depositorPlz;
+    }
+
+    public function setDepositorPlz(int $depositorPlz): Order {
+        $this->depositorPlz = $depositorPlz;
+        return $this;
+    }
+
+    public function getDepositorCity(): string {
+        return $this->depositorCity;
+    }
+
+    public function setDepositorCity(string $depositorCity): Order {
+        $this->depositorCity = $depositorCity;
+        return $this;
+    }
+
+    public function getDepositorCountry(): ?Country {
+        return $this->depositorCountry;
+    }
+
+    public function setDepositorCountry(?Country $depositorCountry): Order {
+        $this->depositorCountry = $depositorCountry;
+        return $this;
+    }
+
+    public function getDepositorPhoneNumber(): string {
+        return $this->depositorPhoneNumber;
+    }
+
+    public function setDepositorPhoneNumber(string $depositorPhoneNumber): Order {
+        $this->depositorPhoneNumber = $depositorPhoneNumber;
+        return $this;
+    }
+
+    public function getDepositorEmail(): string {
+        return $this->depositorEmail;
+    }
+
+    public function setDepositorEmail(string $depositorEmail): Order {
+        $this->depositorEmail = $depositorEmail;
         return $this;
     }
 

@@ -20,19 +20,31 @@
     {% include "_includes/student_base.html.twig" with { student: student, showFooter: false } only %}
 
     <div class="card">
-        <div class="card-header">{{ 'label.general'|trans }}</div>
+        <div class="card-header">{{ 'orders.account_information.label'|trans }}</div>
 
         <div class="card-body">
+            <div class="bs-callout bs-callout-info">
+                <h5>{{ 'info.label'|trans }}</h5>
+                <p>{{ 'orders.account_information.info'|trans() }}</p>
+            </div>
+
             {% if orderDataWasTakenFrom is not null %}
                 <div class="bs-callout bs-callout-info">
                     <h5>{{ 'info.label'|trans }}</h5>
-                    <p>{{ 'orders.place.applied_from_recent'|trans({'%firstname%': orderDataWasTakenFrom.student.firstname, '%lastname%': orderDataWasTakenFrom.student.lastname, '%date%': orderDataWasTakenFrom.createdAt|format_datetime}) }}</p>
+                    <p>{{ 'orders.account_information.applied_from_recent'|trans({'%firstname%': orderDataWasTakenFrom.student.firstname, '%lastname%': orderDataWasTakenFrom.student.lastname, '%date%': orderDataWasTakenFrom.createdAt|format_datetime}) }}</p>
                 </div>
             {% endif %}
 
-            {{ form_row(form.country) }}
-            {{ form_row(form.phoneNumber) }}
-            {{ form_row(form.email) }}
+            {{ form_row(form.depositorFirstname) }}
+            {{ form_row(form.depositorLastname) }}
+            {{ form_row(form.depositorBirthday) }}
+            {{ form_row(form.depositorStreet) }}
+            {{ form_row(form.depositorHouseNumber) }}
+            {{ form_row(form.depositorPlz) }}
+            {{ form_row(form.depositorCity) }}
+            {{ form_row(form.depositorCountry)}}
+            {{ form_row(form.depositorPhoneNumber) }}
+            {{ form_row(form.depositorEmail) }}
             {{ form_row(form.iban) }}
         </div>
     </div>
@@ -40,6 +52,11 @@
     <div class="card">
         <div class="card-header">{{ 'orders.siblings.label'|trans }}</div>
         <div class="card-body">
+            <div class="bs-callout bs-callout-info">
+                <h5>{{ 'info.label'|trans }}</h5>
+                <p>{{ 'orders.siblings.info'|trans }}</p>
+            </div>
+
             <div class="siblings" data-collection="siblings" data-prototype="{{ form_widget(form.siblings.vars.prototype)|e('html_attr') }}" data-id="{{ form.siblings.vars.id }}">
                 {% for sibling in form.siblings %}
                     {{ form_widget(sibling) }}
