@@ -4,6 +4,7 @@ namespace App\Order;
 
 use App\Entity\Order;
 use App\Entity\Student;
+use App\Entity\StudentSibling;
 use App\Settings\OrderSettings;
 
 readonly class OrderFiller {
@@ -42,6 +43,19 @@ readonly class OrderFiller {
         $order->setIban($recent->getIban());
         $order->setEncryptedIban($recent->getEncryptedIban());
         $order->setPreventEncryptionValue($recent->getIban());
+
+        // Siblings
+        foreach($recent->getSiblings() as $sibling) {
+            if($sibling->getStudentAtSchool()?->getId() !== $order->getStudent()->getId()) {
+                $order->addSibling(
+                    new StudentSibling()
+                        ->setFirstname($sibling->getFirstname())
+                        ->setLastname($sibling->getLastname())
+                        ->setBirthday($sibling->getBirthday())
+                        ->setStudentAtSchool($sibling->getStudentAtSchool())
+                );
+            }
+        }
     }
 
     public function copyConfirmations(Order $order): void {
