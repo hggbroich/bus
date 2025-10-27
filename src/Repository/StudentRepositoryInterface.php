@@ -17,6 +17,11 @@ interface StudentRepositoryInterface extends TransactionalRepositoryInterface {
      */
     public function findAllByEmailOrId(array $emailsOrIds): array;
 
+    /**
+     * @return string[]
+     */
+    public function findAllCities(): array;
+
     public function persist(Student $student): void;
 
     public function remove(Student $student): void;

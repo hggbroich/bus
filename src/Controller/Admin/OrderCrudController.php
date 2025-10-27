@@ -97,6 +97,12 @@ class OrderCrudController extends AbstractCrudController
                 ->hideOnIndex(),
 
             FormField::addColumn(6),
+            AssociationField::new('fareLevel', 'Preisstufe')
+                ->setDisabled()
+                ->setHelp('Die Preisstufe wird automatisch anhand des Wohnortes des Kindes ermittelt und automatisch gesetzt. Bereits vorab ausgewählte Werte werden überschrieben.')
+                ->hideOnIndex(),
+
+            FormField::addColumn(6),
             BooleanField::new('sgb12', 'SGB12')
                 ->hideOnIndex(),
 
@@ -138,6 +144,7 @@ class OrderCrudController extends AbstractCrudController
                 ->hideOnIndex(),
             FormField::addColumn(6),
             TextField::new('iban', 'IBAN')
+                ->setHelp('Die IBAN nach dem Abschicken des Formulars verschlüsselt und liegt online nicht mehr im Klartext vor. Wenn die IBAN hier nicht geändert wird, bleibt der verschlüsselte Wert erhalten.')
                 ->hideOnIndex(),
             FormField::addColumn(6),
 

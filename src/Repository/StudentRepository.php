@@ -37,4 +37,13 @@ class StudentRepository extends AbstractTransactionalRepository implements Stude
 
         return $qb->getQuery()->getResult();
     }
+
+    #[Override]
+    public function findAllCities(): array {
+        return $this->em->createQueryBuilder()
+            ->select('DISTINCT s.city')
+            ->from(Student::class, 's')
+            ->getQuery()
+            ->getSingleColumnResult();
+    }
 }

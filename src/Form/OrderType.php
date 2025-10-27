@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Order;
+use App\FareLevel\FareLevelSetter;
 use App\Settings\OrderSettings;
 use LogicException;
 use Symfony\Component\Form\AbstractType;
@@ -14,6 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -21,7 +23,10 @@ use Symfony\Component\Validator\Constraints\IsTrue;
 
 class OrderType extends AbstractType {
 
-    public function __construct(private readonly OrderSettings $orderSettings) {
+    public function __construct(
+        private readonly OrderSettings $orderSettings,
+        private readonly FareLevelSetter $fareLevelSetter
+    ) {
 
     }
 
@@ -92,5 +97,21 @@ class OrderType extends AbstractType {
                     ]
                 ]);
         }
+
+        // Fare level must be set here so validation does not fail
+        $builder
+            ->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event) {
+                $order = $event->getData();
+
+                if(!$order instanceof Order) {
+                    return;
+                }
+
+                if(empty($order->getCity())) {
+                    return;
+                }
+
+                $this->fareLevelSetter->setFareLevel($order);
+            });
     }
 }

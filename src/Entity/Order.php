@@ -134,6 +134,11 @@ class Order {
     #[ORM\JoinColumn(nullable: true)]
     private ?Ticket $ticket = null;
 
+    #[ORM\ManyToOne(targetEntity: FareLevel::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotNull]
+    private FareLevel $fareLevel;
+
     /**
      * @var Collection<int, StudentSibling>
      */
@@ -409,6 +414,15 @@ class Order {
 
     public function setTicket(?Ticket $ticket): Order {
         $this->ticket = $ticket;
+        return $this;
+    }
+
+    public function getFareLevel(): FareLevel {
+        return $this->fareLevel;
+    }
+
+    public function setFareLevel(FareLevel $fareLevel): Order {
+        $this->fareLevel = $fareLevel;
         return $this;
     }
 

@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Country;
+use App\Entity\FareLevel;
 use App\Entity\Order;
 use App\Entity\School;
 use App\Entity\Stop;
@@ -41,8 +42,10 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::section('Kataloge')->setPermission('ROLE_ADMIN');
         yield MenuItem::linkToCrud('Länder', 'fas fa-flag', Country::class)->setPermission('ROLE_ADMIN');
         yield MenuItem::linkToCrud('Tickets', 'fas fa-ticket', Ticket::class)->setPermission('ROLE_ADMIN');
+        yield MenuItem::linkToCrud('Preisstufen', 'fas fa-ticket', FareLevel::class)->setPermission('ROLE_ADMIN');
         yield MenuItem::linkToCrud('Haltestellen', 'fas fa-bus-simple', Stop::class)->setPermission('ROLE_ADMIN');
         yield MenuItem::linkToCrud('Schulen', 'fas fa-school', School::class)->setPermission('ROLE_ADMIN');
+
 
         yield MenuItem::section('Stammdaten')->setPermission('ROLE_STUDENT_ADMIN');
         yield MenuItem::linkToCrud('Schülerinnen und Schüler', 'fas fa-user-graduate', Student::class)->setPermission('ROLE_STUDENT_ADMIN');
