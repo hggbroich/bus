@@ -25,6 +25,13 @@ class StudentSiblingType extends AbstractType {
 
         if($user instanceof User) {
             $students = $user->getAssociatedStudents()->toArray();
+
+            if($options['exclude_student'] instanceof Student) {
+                $students = array_filter(
+                    $students,
+                    fn(Student $student): bool => $student->getId() !== $options['exclude_student']->getId()
+                );
+            }
         }
 
         $builder
@@ -32,6 +39,7 @@ class StudentSiblingType extends AbstractType {
                 'choices' => $students,
                 'multiple' => false,
                 'expanded' => false,
+                'placeholder' => 'Kein Schüler der Schule (alternativ Schüler auswählen)',
                 'attr' => [
                     'data-choice' => 'true'
                 ]
@@ -55,5 +63,6 @@ class StudentSiblingType extends AbstractType {
     public function configureOptions(OptionsResolver $resolver): void {
         parent::configureOptions($resolver);
         $resolver->setDefault('data_class', StudentSibling::class);
+        $resolver->setDefault('exclude_student', null);
     }
 }

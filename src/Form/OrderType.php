@@ -9,7 +9,6 @@ use LogicException;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -31,6 +30,7 @@ class OrderType extends AbstractType {
     }
 
     public function configureOptions(OptionsResolver $resolver): void {
+        $resolver->setDefault('exclude_student', null);
         $resolver->setDefault('validation_groups', function(FormInterface $form): array {
             $order = $form->getData();
 
@@ -84,6 +84,9 @@ class OrderType extends AbstractType {
                 'allow_add' => true,
                 'allow_delete' => true,
                 'by_reference' => false,
+                'entry_options' => [
+                    'exclude_student' => $options['exclude_student']
+                ]
             ]);
 
         if(count($this->orderSettings->confirmations) > 0) {
