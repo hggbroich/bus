@@ -6,6 +6,7 @@ namespace App\Controller\Admin\Settings;
 
 use App\Settings\AppSettings;
 use App\Settings\OrderSettings;
+use App\Ticket\TicketManager;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use Jbtronics\SettingsBundle\Form\SettingsFormFactoryInterface;
 use Jbtronics\SettingsBundle\Manager\SettingsManagerInterface;
@@ -19,7 +20,8 @@ class OrderSettingsActionController extends AbstractController {
 
     public function __construct(private readonly SettingsManagerInterface $settingsManager,
                                 private readonly SettingsFormFactoryInterface $formFactory,
-                                private readonly AdminUrlGenerator $adminUrlGenerator) {
+                                private readonly AdminUrlGenerator $adminUrlGenerator,
+                                private readonly TicketManager $ticketManager) {
 
     }
 
@@ -41,10 +43,11 @@ class OrderSettingsActionController extends AbstractController {
             );
         }
 
-        return $this->render('admin/form.html.twig', [
+        return $this->render('admin/settings/order_settings.html.twig', [
             'form' => $form->createView(),
             'header' => 'settings.orders.label',
-            'action' => 'actions.save'
+            'action' => 'actions.save',
+            'assignment_strategies' => $this->ticketManager->getStrategies()
         ]);
     }
 }

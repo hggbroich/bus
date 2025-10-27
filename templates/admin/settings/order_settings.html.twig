@@ -1,0 +1,16 @@
+{% extends "admin/form.html.twig" %}
+
+{% block main %}
+    {{ parent() }}
+
+    <ul class="list-unstyled">
+    {% for strategy in assignment_strategies %}
+        <li>
+            <div>{{ strategy.translationKey|trans }}</div>
+            <div class="text-muted">
+                {{ strategy.translationHelpKey|trans }}
+            </div>
+        </li>
+    {% endfor %}
+    </ul>
+{% endblock %}

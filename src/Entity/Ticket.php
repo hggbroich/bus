@@ -6,9 +6,11 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
 use Stringable;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity]
+#[UniqueEntity(fields: ['priority'])]
 class Ticket implements Stringable {
     use IdTrait;
     use UuidTrait;
@@ -24,6 +26,9 @@ class Ticket implements Stringable {
     #[ORM\Column(type: Types::STRING)]
     #[Assert\NotBlank]
     private string $externalId;
+
+    #[ORM\Column(type: Types::INTEGER, unique: true)]
+    private int $priority = 1;
 
     public function __construct() {
         $this->uuid = Uuid::uuid4();
@@ -53,6 +58,15 @@ class Ticket implements Stringable {
 
     public function setExternalId(string $externalId): Ticket {
         $this->externalId = $externalId;
+        return $this;
+    }
+
+    public function getPriority(): int {
+        return $this->priority;
+    }
+
+    public function setPriority(int $priority): Ticket {
+        $this->priority = $priority;
         return $this;
     }
 

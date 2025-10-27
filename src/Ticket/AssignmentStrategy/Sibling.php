@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Ticket;
+namespace App\Ticket\AssignmentStrategy;
 
 use App\Entity\Student;
 use DateTime;

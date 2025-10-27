@@ -4,9 +4,10 @@ namespace App\Settings;
 
 use App\Entity\School;
 use App\Form\SchoolType;
+use App\Settings\Type\AssignmentStrategyType;
+use App\Ticket\AssignmentStrategy\BirthdayAssignmentStrategy;
 use DateTime;
 use Jbtronics\SettingsBundle\ParameterTypes\ArrayType;
-use Jbtronics\SettingsBundle\ParameterTypes\IntType;
 use Jbtronics\SettingsBundle\ParameterTypes\StringType;
 use Jbtronics\SettingsBundle\Settings\Settings;
 use Jbtronics\SettingsBundle\Settings\SettingsParameter;
@@ -60,4 +61,7 @@ class OrderSettings {
         ]
     ], nullable: false)]
     public array $confirmations = [ ];
+
+    #[SettingsParameter(type: AssignmentStrategyType::class, label: 'settings.orders.ticket_assignment.label')]
+    public string $assignmentStrategy = BirthdayAssignmentStrategy::class;
 }

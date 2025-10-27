@@ -11,6 +11,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\KeyValueStore;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CodeEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
@@ -43,7 +44,10 @@ class TicketCrudController extends AbstractCrudController
                 ->setLabel('Beschreibung'),
             TextField::new('externalId')
                 ->setLabel('Externe ID')
-                ->setHelp('Diese ID wird beim Export in die CSV-Datei geschrieben')
+                ->setHelp('Diese ID wird beim Export in die CSV-Datei geschrieben'),
+            IntegerField::new('priority')
+                ->setLabel('Priorität')
+                ->setHelp('Diese Priorität wird beim automatischen Zuweisen des Tickets verwendet. Die entsprechende Zuweisungsstrategie kann in den Bestellungs-Einstellungen festgelegt werden.')
         ];
     }
 }

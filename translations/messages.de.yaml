@@ -41,6 +41,13 @@ settings:
             label: Bestätigungen
             help: Hier können Texte (bspw. Verweise auf AGBs etc.) hinterlegt werden, die bei einer Bestellung von den Eltern bestätigt werden müssen.
 
+        ticket_assignment:
+            label: Ticket-Zuweisung
+            strategies:
+                birthday:
+                    label: Geburtstag
+                    help: Das Ticket wird anhand des Geburtstages zugewiesen. Das älteste Kind bekommt das Ticket mit der Priorität 0, das zweit-älteste Kind das Ticket mit der Priorität 1 usw. Als Fallback wird automatisch das Ticket mit der größten Priorität ausgewählt.
+
 filter:
     choose:
         student: Kind auswählen

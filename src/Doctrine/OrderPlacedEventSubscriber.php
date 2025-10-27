@@ -20,7 +20,7 @@ readonly class OrderPlacedEventSubscriber {
     }
 
     public function preFlush(Order $order, PreFlushEventArgs $args): void {
-        $this->ticketManager->setCorrectTicket($order);
+        $this->ticketManager->assignTicket($order);
         $this->fareLevelSetter->setFareLevel($order);
     }
 }
