@@ -89,6 +89,11 @@ label:
 
     confirm_confirmations: Ich habe die oben genannten Punkte gelesen und akzeptiere sie.
 
+    payment_interval: Zahlungsintervall
+    external_id:
+        label: Externe ID
+        help: Diese ID wird beim Im- und Export von Daten verwendet, um das entsprechende Ticket zuordnen zu können.
+
 dashboard:
     students:
         label: Verknüpfte Kinder

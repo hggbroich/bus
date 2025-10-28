@@ -74,6 +74,10 @@ class Student implements Stringable {
     #[ORM\Column(type: Types::INTEGER, nullable: true)]
     private ?int $busCompanyCustomerId = null;
 
+    #[ORM\ManyToOne(targetEntity: PaymentInterval::class)]
+    #[ORM\JoinColumn(nullable: true, onDelete: 'SET NULL')]
+    private ?PaymentInterval $paymentInterval = null;
+
     #[ORM\Column(type: Types::BOOLEAN)]
     private bool $sgb12 = false;
 
@@ -245,6 +249,15 @@ class Student implements Stringable {
 
     public function setBusCompanyCustomerId(?int $busCompanyCustomerId): Student {
         $this->busCompanyCustomerId = $busCompanyCustomerId;
+        return $this;
+    }
+
+    public function getPaymentInterval(): ?PaymentInterval {
+        return $this->paymentInterval;
+    }
+
+    public function setPaymentInterval(?PaymentInterval $paymentInterval): Student {
+        $this->paymentInterval = $paymentInterval;
         return $this;
     }
 

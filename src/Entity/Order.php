@@ -56,6 +56,10 @@ class Order {
     #[ORM\Column(type: Types::INTEGER, nullable: true)]
     private ?int $busCompanyCustomerId = null;
 
+    #[ORM\ManyToOne(targetEntity: PaymentInterval::class)]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?PaymentInterval $paymentInterval = null;
+
     #[ORM\Column(type: Types::BOOLEAN)]
     private bool $sgb12 = false;
 
@@ -243,6 +247,15 @@ class Order {
 
     public function setBusCompanyCustomerId(?int $busCompanyCustomerId): Order {
         $this->busCompanyCustomerId = $busCompanyCustomerId;
+        return $this;
+    }
+
+    public function getPaymentInterval(): ?PaymentInterval {
+        return $this->paymentInterval;
+    }
+
+    public function setPaymentInterval(?PaymentInterval $paymentInterval): Order {
+        $this->paymentInterval = $paymentInterval;
         return $this;
     }
 

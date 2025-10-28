@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Country;
 use App\Entity\FareLevel;
 use App\Entity\Order;
+use App\Entity\PaymentInterval;
 use App\Entity\School;
 use App\Entity\Stop;
 use App\Entity\Student;
@@ -38,11 +39,13 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToRoute('Allgemeine Einstellungen', 'fas fa-cogs', 'app_settings')->setPermission('ROLE_ADMIN');
         yield MenuItem::linkToRoute('Bestellungen', 'fas fa-shopping-basket', 'order_settings')->setPermission('ROLE_ADMIN');
         yield MenuItem::linkToRoute('Import', 'fas fa-upload', 'import_settings')->setPermission('ROLE_ADMIN');
+        yield MenuItem::linkToRoute('Export', 'fas fa-download', 'export_settings')->setPermission('ROLE_ADMIN');
 
         yield MenuItem::section('Kataloge')->setPermission('ROLE_ADMIN');
         yield MenuItem::linkToCrud('Länder', 'fas fa-flag', Country::class)->setPermission('ROLE_ADMIN');
         yield MenuItem::linkToCrud('Tickets', 'fas fa-ticket', Ticket::class)->setPermission('ROLE_ADMIN');
         yield MenuItem::linkToCrud('Preisstufen', 'fas fa-ticket', FareLevel::class)->setPermission('ROLE_ADMIN');
+        yield MenuItem::linkToCrud('Zahlungsintervalle', 'fas fa-credit-card', PaymentInterval::class)->setPermission('ROLE_ADMIN');
         yield MenuItem::linkToCrud('Haltestellen', 'fas fa-bus-simple', Stop::class)->setPermission('ROLE_ADMIN');
         yield MenuItem::linkToCrud('Schulen', 'fas fa-school', School::class)->setPermission('ROLE_ADMIN');
 
