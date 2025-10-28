@@ -27,10 +27,9 @@ class AdminMenuBuilder extends AbstractMenuBuilder {
             ->setExtra('pull-right', true);
 
         if($this->authorizationChecker->isGranted('ROLE_ADMIN')) {
-            $menu->addChild('settings.label', [
-                'route' => 'settings'
-            ])
-                ->setExtra('icon', 'fa fa-cog');
+            $menu->addChild('administration.label', [
+                'route' => 'admin'
+            ]);
 
             $menu->addChild('messenger.label', [
                 'route' => 'admin_messenger'
