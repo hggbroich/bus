@@ -5,6 +5,11 @@ actions:
 settings:
     success: Einstellungen erfolgreich gespeichert
 
+    key_value:
+        key: Spaltenname
+        value: Wert
+        type: Datentyp
+
     app:
         label: Allgemeine Einstellungen
         custom_css:
@@ -21,6 +26,15 @@ settings:
             url:
                 label: URL für Haltestellen-Import
                 help: Die URL muss auf eine ZIP-Datei zeigen mit Daten im GTFS-Format.
+
+    export:
+        label: Export-Einstellungen
+        student_id_prefix:
+            label: Schüler ID (Präfix)
+            help: (Optional.) Dieser Präfix wird vor die Schüler ID (kommt aus der Schulverwaltung) gehangen.
+        additional_columns:
+            label: Weitere Spaltenwerte
+            help: (Optional.) Diese Spaltenwerte werden automatisch mit dem gewünschten Wert gesetzt beim Export.
 
     orders:
         label: Bestellungen-Einstellungen

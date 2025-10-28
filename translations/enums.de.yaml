@@ -3,3 +3,8 @@ gender:
     f: weiblich
     d: divers
     o: ohne Angabe
+
+key_value_data_types:
+    string: Zeichenkette
+    integer: Ganze Zahl
+    float: Dezimalzahl
