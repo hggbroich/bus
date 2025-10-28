@@ -71,8 +71,8 @@ class Student implements Stringable {
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?DateTime $leaveDate = null;
 
-    #[ORM\Column(type: Types::INTEGER, nullable: true)]
-    private ?int $busCompanyCustomerId = null;
+    #[ORM\Column(type: Types::STRING, nullable: true)]
+    private ?string $busCompanyCustomerId = null;
 
     #[ORM\ManyToOne(targetEntity: PaymentInterval::class)]
     #[ORM\JoinColumn(nullable: true, onDelete: 'SET NULL')]
@@ -243,11 +243,11 @@ class Student implements Stringable {
         return $this;
     }
 
-    public function getBusCompanyCustomerId(): ?int {
+    public function getBusCompanyCustomerId(): ?string {
         return $this->busCompanyCustomerId;
     }
 
-    public function setBusCompanyCustomerId(?int $busCompanyCustomerId): Student {
+    public function setBusCompanyCustomerId(?string $busCompanyCustomerId): Student {
         $this->busCompanyCustomerId = $busCompanyCustomerId;
         return $this;
     }

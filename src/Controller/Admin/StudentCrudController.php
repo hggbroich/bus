@@ -2,7 +2,6 @@
 
 namespace App\Controller\Admin;
 
-use App\Controller\Admin\Field\ButtonField;
 use App\Entity\Student;
 use App\Import\Students\CsvSchildImporter;
 use App\Import\Students\ImportRequest;
@@ -58,6 +57,7 @@ class StudentCrudController extends AbstractCrudController
 
     public function configureFilters(Filters $filters): Filters {
         return $filters
+            ->add('status')
             ->add('firstname')
             ->add('lastname')
             ->add('externalId')
@@ -71,7 +71,8 @@ class StudentCrudController extends AbstractCrudController
             ->add('distanceToPublicSchool')
             ->add('confirmedDistanceToPublicSchool')
             ->add('distanceToSchool')
-            ->add('confirmedDistanceToSchool');
+            ->add('confirmedDistanceToSchool')
+            ->add('busCompanyCustomerId');
     }
 
     public function configureFields(string $pageName): iterable {
@@ -150,13 +151,17 @@ class StudentCrudController extends AbstractCrudController
                 ->hideOnIndex(),
 
             FormField::addTab('Bus- und Haltestellendaten'),
-            IntegerField::new('busCompanyCustomerId')
-                ->setLabel('Kundennummer Busunternehmen')
-                ->hideOnIndex(),
+            FormField::addColumn(6),
+            TextField::new('busCompanyCustomerId')
+                ->setLabel('Kundennummer Busunternehmen'),
+            FormField::addColumn(6),
+            AssociationField::new('paymentInterval', 'Zahlungsintervall'),
+            FormField::addColumn(6),
             BooleanField::new('sgb12')
                 ->setLabel('SGB12')
                 ->setRequired(false)
                 ->hideOnIndex(),
+            FormField::addColumn(6),
             AssociationField::new('stop')
                 ->setLabel('Haltestelle')
                 ->autocomplete()

@@ -53,8 +53,8 @@ class Order {
     #[Assert\NotBlank]
     private string $city;
 
-    #[ORM\Column(type: Types::INTEGER, nullable: true)]
-    private ?int $busCompanyCustomerId = null;
+    #[ORM\Column(type: Types::STRING, nullable: true)]
+    private ?string $busCompanyCustomerId = null;
 
     #[ORM\ManyToOne(targetEntity: PaymentInterval::class)]
     #[ORM\JoinColumn(nullable: true)]
@@ -241,11 +241,11 @@ class Order {
         return $this;
     }
 
-    public function getBusCompanyCustomerId(): ?int {
+    public function getBusCompanyCustomerId(): ?string {
         return $this->busCompanyCustomerId;
     }
 
-    public function setBusCompanyCustomerId(?int $busCompanyCustomerId): Order {
+    public function setBusCompanyCustomerId(?string $busCompanyCustomerId): Order {
         $this->busCompanyCustomerId = $busCompanyCustomerId;
         return $this;
     }
