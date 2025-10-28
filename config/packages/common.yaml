@@ -13,3 +13,6 @@ common:
     locales:
         - de
     menu: mainMenu
+    disable:
+        cron: true
+        autoconfig: true
