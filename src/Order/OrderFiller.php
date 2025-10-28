@@ -26,6 +26,7 @@ readonly class OrderFiller {
         $order->setConfirmedDistanceToPublicSchool($student->getConfirmedDistanceToPublicSchool());
         $order->setConfirmedDistanceToSchool($student->getConfirmedDistanceToSchool());
         $order->setPaymentInterval($student->getPaymentInterval());
+        $order->setBusCompanyCustomerId($student->getBusCompanyCustomerId());
 
         return $order;
     }

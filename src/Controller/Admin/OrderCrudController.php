@@ -103,6 +103,10 @@ class OrderCrudController extends AbstractCrudController
                 ->hideOnIndex(),
 
             FormField::addColumn(6),
+            AssociationField::new('paymentInterval', 'Zahlungsintervall')
+                ->hideOnIndex(),
+
+            FormField::addColumn(6),
             BooleanField::new('sgb12', 'SGB12')
                 ->hideOnIndex(),
 
