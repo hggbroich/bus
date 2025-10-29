@@ -3,6 +3,9 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Student;
+use App\Import\BusCompanyData\BusCompanyDataImporter;
+use App\Import\BusCompanyData\ImportBusCompanyDataRequest;
+use App\Import\BusCompanyData\ImportBusCompanyDataRequestType;
 use App\Import\Students\CsvSchildImporter;
 use App\Import\Students\ImportRequest;
 use App\Import\Students\ImportRequestType;
@@ -49,9 +52,14 @@ class StudentCrudController extends AbstractCrudController
             ->linkToCrudAction('import')
             ->createAsGlobalAction();
 
+        $busCompanyImportAction = Action::new('importFromBusCompany', 'Von Busunternehmen importieren', 'fa-solid fa-upload')
+            ->linkToCrudAction('importFromBusCompany')
+            ->createAsGlobalAction();
+
         return $actions
             ->add(Crud::PAGE_INDEX, Action::DETAIL)
             ->add(Crud::PAGE_INDEX, $importAction)
+            ->add(Crud::PAGE_INDEX, $busCompanyImportAction)
             ->disable(Action::NEW, Action::DELETE, Action::BATCH_DELETE);
     }
 
@@ -218,7 +226,6 @@ class StudentCrudController extends AbstractCrudController
         $form = $this->createForm(ImportRequestType::class, $importRequest);
         $form->handleRequest($request);
 
-        $validationException = null;
         if($form->isSubmitted() && $form->isValid()) {
             try {
                 $result = $importer->import($importRequest);
@@ -235,6 +242,31 @@ class StudentCrudController extends AbstractCrudController
             'form' => $form->createView(),
             'action' => 'Importieren',
             'header' => 'Schüler und Schülerinnen importieren'
+        ]);
+    }
+
+    #[AdminRoute('/import/buscompany', name: 'import_buscompany')]
+    public function importFromBusCompany(BusCompanyDataImporter $importer, Request $request): Response {
+        $importRequest = new ImportBusCompanyDataRequest();
+        $form = $this->createForm(ImportBusCompanyDataRequestType::class, $importRequest);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()) {
+            try {
+                $updatedStudentsCount = $importer->import($importRequest);
+                $this->addFlash('success', sprintf('Daten zu %d Schülern importiert und aktualisiert.', $updatedStudentsCount));
+
+                $url = $this->urlGenerator->setController(StudentCrudController::class)->setAction(Action::INDEX)->generateUrl();
+                return $this->redirect($url);
+            } catch (Exception $e) {
+                $this->addFlash('error', $e->getMessage());
+            }
+        }
+
+        return $this->render('admin/form.html.twig', [
+            'form' => $form->createView(),
+            'action' => 'Importieren',
+            'header' => 'Daten von Busunternehmen importieren'
         ]);
     }
 }
