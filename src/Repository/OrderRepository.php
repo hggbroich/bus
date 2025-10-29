@@ -64,4 +64,20 @@ class OrderRepository extends AbstractRepository implements OrderRepositoryInter
             ->getQuery()
             ->getOneOrNullResult();
     }
+
+    #[Override]
+    public function findAllRange(DateTime $start, DateTime $end): array {
+        return $this->em->createQueryBuilder()
+            ->select(['o', 's', 't', 'l', 'c'])
+            ->from(Order::class, 'o')
+            ->leftJoin('o.student', 's')
+            ->leftJoin('o.ticket', 't')
+            ->leftJoin('o.fareLevel', 'l')
+            ->leftJoin('o.depositorCountry', 'c')
+            ->where('o.createdAt BETWEEN :start AND :end')
+            ->setParameter('start', $start)
+            ->setParameter('end', $end)
+            ->getQuery()
+            ->getResult();
+    }
 }

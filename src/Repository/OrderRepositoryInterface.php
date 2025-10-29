@@ -25,6 +25,13 @@ interface OrderRepositoryInterface {
 
     public function findMostRecentForStudent(Student $student): ?Order;
 
+    /**
+     * @param DateTime $start
+     * @param DateTime $end
+     * @return Order[]
+     */
+    public function findAllRange(DateTime $start, DateTime $end): array;
+
     public function persist(Order $order): void;
 
     public function remove(Order $order): void;

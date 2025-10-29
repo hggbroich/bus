@@ -3,6 +3,9 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Order;
+use App\Export\Order\Exporter;
+use App\Export\Order\ExportRequest;
+use App\Export\Order\ExportRequestType;
 use App\Form\StudentSiblingType;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
@@ -21,6 +24,9 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted('ROLE_ORDER_ADMIN')]
@@ -39,11 +45,17 @@ class OrderCrudController extends AbstractCrudController
     public function configureFilters(Filters $filters): Filters {
         return $filters
             ->add('student')
-            ->add('ticket');
+            ->add('ticket')
+            ->add('createdAt');
     }
 
     public function configureActions(Actions $actions): Actions {
+        $exportAction = Action::new('export', 'Exportieren', 'fa-solid fa-download')
+            ->linkToCrudAction('export')
+            ->createAsGlobalAction();
+
         return parent::configureActions($actions)
+            ->add(Crud::PAGE_INDEX, $exportAction)
             ->add(Crud::PAGE_INDEX, Action::DETAIL);
     }
 
@@ -184,5 +196,21 @@ class OrderCrudController extends AbstractCrudController
                 ->setDisabled()
                 ->hideOnForm()
         ];
+    }
+
+    public function export(Exporter $exporter, Request $request): BinaryFileResponse|Response {
+        $exportRequest = new ExportRequest();
+        $form = $this->createForm(ExportRequestType::class, $exportRequest);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()) {
+            return $exporter->export($exportRequest);
+        }
+
+        return $this->render('admin/form.html.twig', [
+            'form' => $form->createView(),
+            'header' => 'Bestellungen exportieren',
+            'action' => 'Exportieren'
+        ]);
     }
 }

@@ -96,6 +96,20 @@ class Ticket implements Stringable {
         return $this->paymentIntervals;
     }
 
+    public function getExternalIdForPaymentInterval(PaymentInterval|null $paymentInterval): ?string {
+        if($paymentInterval === null) {
+            return $this->getDefaultExternalId();
+        }
+
+        foreach($this->paymentIntervals as $ticketPaymentInterval) {
+            if($ticketPaymentInterval->getPaymentInterval() === $paymentInterval) {
+                return $ticketPaymentInterval->getExternalId();
+            }
+        }
+
+        return $this->getDefaultExternalId();
+    }
+
     public function __toString(): string {
         return $this->name;
     }
