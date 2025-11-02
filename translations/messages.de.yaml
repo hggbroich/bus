@@ -16,6 +16,18 @@ settings:
             label: Benutzerdefiniertes CSS
             help: Hier kann benutzerdefiniertes CSS eingebunden werden, um die Software nach eigenen Wünschen einzufärben.
 
+    profile:
+        label: Stammdaten-Einstellungen
+        lock_public_school:
+            label: Feld für die öffentliche Schule sperren, wenn die Distanz (zur öffentlichen Schule) durch die Schule geprüft wurde.
+        lock_stop:
+            label: Feld für die Haltestelle sperren, wenn die Distanz (zur eigenen Schule) durch die Schule geprüft wurde.
+        lock_distance_public_school:
+            label: Feld für Distanz zur öffentlichen Schule sperren, wenn die Distanz (zur öffentlichen Schule) geprüft wurde.
+        lock_distance:
+            label: Feld für Distanz zur eigenen Schule sperren, wenn die Distanz (zur eigenen Schule) geprüft wurde.
+
+
     import:
         label: Import-Einstellungen
         schools:

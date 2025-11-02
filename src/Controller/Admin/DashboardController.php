@@ -45,6 +45,7 @@ class DashboardController extends AbstractDashboardController
 
         yield MenuItem::section('Einstellungen')->setPermission('ROLE_ADMIN');
         yield MenuItem::linkToRoute('Allgemeine Einstellungen', 'fas fa-cogs', 'app_settings')->setPermission('ROLE_ADMIN');
+        yield MenuItem::linkToRoute('Profileinstellungen', 'fa-solid fa-address-card', 'profile_settings')->setPermission('ROLE_ADMIN');
         yield MenuItem::linkToRoute('Bestellungen', 'fas fa-shopping-basket', 'order_settings')->setPermission('ROLE_ADMIN');
         yield MenuItem::linkToRoute('Import', 'fas fa-upload', 'import_settings')->setPermission('ROLE_ADMIN');
         yield MenuItem::linkToRoute('Export', 'fas fa-download', 'export_settings')->setPermission('ROLE_ADMIN');

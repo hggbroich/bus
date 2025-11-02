@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Stop;
+use App\Entity\Student;
+use App\Settings\ProfileSettings;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -10,8 +12,18 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormInterface;
 
 class StudentType extends AbstractType {
+
+    public function __construct(
+        private readonly ProfileSettings $profileSettings
+    ) {
+
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void {
         $builder
             ->add('firstname', TextType::class, [
@@ -69,6 +81,48 @@ class StudentType extends AbstractType {
             ->add('distanceToSchool', DistanceType::class, [
                 'label' => 'label.distance_to_school.label',
                 'help' => 'label.distance_to_school.help'
-            ]);
+            ])
+            ->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event) {
+                $form = $event->getForm();
+                /** @var Student $data */
+                $data = $event->getData();
+
+                if($data->getConfirmedDistanceToSchool() > 0) {
+                    if($this->profileSettings->lockStopIfDistanceIsConfirmed) {
+                        $this->disableField($form, $form->get('stop'));
+                    }
+
+                    if($this->profileSettings->lockDistanceToSchoolIfConfirmed) {
+                        $this->disableField($form, $form->get('distanceToSchool'));
+                    }
+                }
+
+                if($data->getConfirmedDistanceToPublicSchool() > 0) {
+                    if($this->profileSettings->lockPublicSchoolIfDistanceIsConfirmed) {
+                        $this->disableField($form, $form->get('publicSchool'));
+                    }
+
+                    if($this->profileSettings->lockDistanceToPublicSchoolIfConfirmed) {
+                        $this->disableField($form, $form->get('distanceToPublicSchool'));
+                    }
+                }
+            });
+    }
+
+    private function disableField(FormInterface $form, FormInterface $field): void {
+        $form->remove($field->getName());
+
+        dump($field);
+
+        $form->add(
+            $field->getName(),
+            get_class($field->getConfig()->getType()->getInnerType()),
+            array_merge(
+                $field->getConfig()->getOptions(),
+                [
+                    'disabled' => true
+                ]
+            )
+        );
     }
 }
