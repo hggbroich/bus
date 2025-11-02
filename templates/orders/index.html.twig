@@ -114,6 +114,18 @@
                                 {% endif %}
                             </div>
                         </div>
+
+                        {% if violations[order.id] is defined and violations[order.id].hasViolations %}
+                            <div class="alert alert-danger mb-0">
+                                {% for violation in violations[order.id].violations %}
+                                    <div class="d-flex align-items-center">
+                                        <i class="fas fa-exclamation-triangle flex-shrink-0 me-2"></i>
+                                        <div>{{ violation.messageKey|trans(violation.messageParameters) }}</div>
+                                    </div>
+                                    {% if not loop.last %}<hr>{% endif %}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
                     </div>
                 {% endfor %}
             </div>

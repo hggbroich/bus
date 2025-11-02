@@ -82,7 +82,9 @@ label:
     house_number: Hausnummer
     city: Ort
     plz: PLZ
-    stop: Haltestelle
+    stop:
+        label: Haltestelle
+        placeholder: Haltestelle auswählen
     customer_id: Kundennummer
 
     firstname: Vorname
@@ -91,6 +93,7 @@ label:
 
     public_school:
         label: Öffentliche Schule
+        placeholder: Schule auswählen
         help: Bitte die nächstgelegene öffentliche Schule angeben.
 
     distance_to_public_school:
@@ -177,6 +180,14 @@ orders:
             public_school: Nächste öffentliche Schule
             public_school_distance: Distanz (öff. Schule)
             own_school_distance: Distanz (eigene Schule)
+
+    checks:
+        foreign_siblings:
+            message: 'Die Angaben zu Geschwistern (an fremder Schule) stimmen nicht überein.'
+        siblings_incomplete:
+            message: 'Für mindestens ein Geschwisterkind wurde noch keine Bestellung aufgegeben, obwohl das Geschwisterkind bei einer Bestellung als Geschwisterkind mit Ticket angegeben wurde.'
+        self_included:
+            message: 'Bei der Bestellung des Geschwisterkindes wurde das andere Kind nicht unter den Geschwistern aufgelistet.'
 
 
 distance: '%distance% km'

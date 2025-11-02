@@ -47,7 +47,8 @@ class StudentType extends AbstractType {
                 'disabled' => true
             ])
             ->add('stop', EntityType::class, [
-                'label' => 'label.stop',
+                'label' => 'label.stop.label',
+                'placeholder' => 'label.stop.placeholder',
                 'class' => Stop::class,
                 'attr' => [
                     'data-choice' => 'true'
@@ -56,6 +57,7 @@ class StudentType extends AbstractType {
             ->add('publicSchool', SchoolType::class, [
                 'label' => 'label.public_school.label',
                 'help' => 'label.public_school.help',
+                'placeholder' => 'label.public_school.placeholder',
                 'attr' => [
                     'data-choice' => 'true'
                 ]
