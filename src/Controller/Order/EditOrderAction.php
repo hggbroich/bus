@@ -8,6 +8,8 @@ use App\Order\OrderFiller;
 use App\Repository\OrderRepositoryInterface;
 use App\Security\Voter\OrderVoter;
 use App\Settings\OrderSettings;
+use SchulIT\CommonBundle\Http\Attribute\ForbiddenRedirect;
+use SchulIT\CommonBundle\Http\Attribute\NotFoundRedirect;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,6 +18,8 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class EditOrderAction extends AbstractController {
 
+    #[NotFoundRedirect(redirectRoute: 'orders', flashMessage: 'orders.not_found')]
+    #[ForbiddenRedirect(redirectRoute: 'orders', flashMessage: 'orders.not_found')]
     #[Route('/orders/{uuid}/edit', name: 'edit_order')]
     public function __invoke(
         #[MapEntity(mapping: ['uuid' => 'uuid'])] Order $order,

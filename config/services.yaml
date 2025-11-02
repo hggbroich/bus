@@ -36,6 +36,10 @@ services:
             $retryRoute: 'dashboard'
             $loggedInRoute: 'dashboard'
 
+    SchulIT\CommonBundle\Http\AttributeResolver: ~
+    SchulIT\CommonBundle\Http\HttpNotFoundExceptionSubscriber: ~
+    SchulIT\CommonBundle\Http\ForbiddenRedirectSubscriber: ~
+
     LightSaml\SpBundle\Security\User\UsernameMapperInterface:
         alias: lightsaml_sp.username_mapper.simple
 

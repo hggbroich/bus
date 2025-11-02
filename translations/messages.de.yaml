@@ -121,6 +121,7 @@ orders:
     empty: Aktuell liegen keine Bestellungen vor.
     count: "{0} %count% Bestellungen|{1} %count% Bestellung|]1,Inf[ %count% Bestellungen"
     details: Details
+    not_found: Die angeforderte Bestellung wurde nicht gefunden.
     window:
         not_set: Aktuell können keine Bestellungen erstellt werden.
         info: Bestellungen können bis zum %end% erstellt, bearbeitet und gelöscht werden.
@@ -133,6 +134,7 @@ orders:
         label: Neue Bestellung
         submit: Bestellung abschicken
         success: Die Bestellung wurde erfolgreich abgeschickt. Sie kann bis zum Stichtag noch bearbeitet werden.
+        not_found: Ungültige URL.
 
     account_information:
         label: Kontodaten
@@ -185,6 +187,7 @@ iban:
 
 profile:
     label: Stammdaten
+    not_found: Das Kind wurde nicht gefunden.
 
     update:
         label: Stammdaten ändern

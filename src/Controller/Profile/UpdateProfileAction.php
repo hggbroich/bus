@@ -6,6 +6,8 @@ use App\Entity\Student;
 use App\Form\StudentType;
 use App\Repository\StudentRepositoryInterface;
 use App\Security\Voter\ProfileVoter;
+use SchulIT\CommonBundle\Http\Attribute\ForbiddenRedirect;
+use SchulIT\CommonBundle\Http\Attribute\NotFoundRedirect;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,6 +15,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 class UpdateProfileAction extends AbstractController {
+
+    #[NotFoundRedirect(redirectRoute: 'profile', flashMessage: 'profile.not_found')]
+    #[ForbiddenRedirect(redirectRoute: 'profile', flashMessage: 'profile.not_found')]
     #[Route('/profile/{uuid}', name: 'update_profile')]
     public function __invoke(
         #[MapEntity(mapping: ['uuid' => 'uuid'])] Student $student,

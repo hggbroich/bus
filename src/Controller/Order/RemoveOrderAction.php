@@ -6,6 +6,8 @@ use App\Entity\Order;
 use App\Repository\OrderRepositoryInterface;
 use App\Security\Voter\OrderVoter;
 use SchulIT\CommonBundle\Form\ConfirmType;
+use SchulIT\CommonBundle\Http\Attribute\ForbiddenRedirect;
+use SchulIT\CommonBundle\Http\Attribute\NotFoundRedirect;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,6 +16,8 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class RemoveOrderAction extends AbstractController {
 
+    #[NotFoundRedirect(redirectRoute: 'orders', flashMessage: 'orders.not_found')]
+    #[ForbiddenRedirect(redirectRoute: 'orders', flashMessage: 'orders.not_found')]
     #[Route('/orders/{uuid}/remove', name: 'remove_order')]
     public function __invoke(
         #[MapEntity(mapping: ['uuid' => 'uuid'])] Order $order,

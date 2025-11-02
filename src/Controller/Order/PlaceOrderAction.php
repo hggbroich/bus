@@ -12,6 +12,8 @@ use App\Order\OrderFiller;
 use App\Repository\OrderRepositoryInterface;
 use App\Security\Voter\OrderVoter;
 use App\Settings\OrderSettings;
+use SchulIT\CommonBundle\Http\Attribute\ForbiddenRedirect;
+use SchulIT\CommonBundle\Http\Attribute\NotFoundRedirect;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,6 +30,8 @@ class PlaceOrderAction extends AbstractController {
     ) { }
 
 
+    #[NotFoundRedirect(redirectRoute: 'orders', flashMessage: 'orders.place.not_found')]
+    #[ForbiddenRedirect(redirectRoute: 'orders', flashMessage: 'orders.place.not_found')]
     #[Route('/orders/place/{uuid}', name: 'place_order')]
     public function __invoke(
         #[MapEntity(mapping: ['uuid' => 'uuid'])] Student $student,
