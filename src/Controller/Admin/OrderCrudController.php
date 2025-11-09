@@ -13,6 +13,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
+use EasyCorp\Bundle\EasyAdminBundle\Config\KeyValueStore;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
@@ -39,7 +40,8 @@ class OrderCrudController extends AbstractCrudController
 {
 
     public function __construct(
-        private readonly AdminUrlGenerator $urlGenerator
+        private readonly AdminUrlGenerator $urlGenerator,
+        private readonly OrderChecker $orderChecker
     ) {
 
     }
@@ -51,7 +53,9 @@ class OrderCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud {
         return $crud
             ->setEntityLabelInSingular('Bestellung')
-            ->setEntityLabelInPlural('Bestellungen');
+            ->setEntityLabelInPlural('Bestellungen')
+            ->overrideTemplate('crud/detail', 'admin/pages/orders/detail.html.twig')
+            ->overrideTemplate('crud/edit', 'admin/pages/orders/edit.html.twig');
     }
 
     public function configureFilters(Filters $filters): Filters {
@@ -80,6 +84,19 @@ class OrderCrudController extends AbstractCrudController
             ->add(Crud::PAGE_INDEX, $checkAction)
             ->add(Crud::PAGE_INDEX, $showInvalidAction)
             ->add(Crud::PAGE_INDEX, Action::DETAIL);
+    }
+
+    public function configureResponseParameters(KeyValueStore $responseParameters): KeyValueStore {
+        $order = $responseParameters->get('entity')?->getInstance() ?? null;
+
+        if(!$order instanceof Order) {
+            return $responseParameters;
+        }
+
+        $violations = $this->orderChecker->check($order);
+        $responseParameters->set('violations', $violations);
+
+        return $responseParameters;
     }
 
     public function configureFields(string $pageName): iterable {

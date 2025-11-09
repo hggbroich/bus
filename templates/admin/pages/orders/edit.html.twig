@@ -1,0 +1,22 @@
+{% extends "@EasyAdmin/crud/edit.html.twig" %}
+
+{% block main %}
+    {% if violations is defined and violations.hasViolations %}
+        {% for violation in violations.violations %}
+            <div class="alert alert-danger mb-2">
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-exclamation-triangle flex-shrink-0 me-2"></i>
+                    <div class="flex-fill">{{ violation.messageKey|trans(violation.messageParameters) }}</div>
+
+                    {% if violation.otherOrderId is not null %}
+                        <a href="{{ path('admin_order_edit', { entityId: violation.otherOrderId }) }}" target="_blank" class="btn btn-outline-danger btn-sm">
+                            <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    {{ parent() }}
+{% endblock %}
