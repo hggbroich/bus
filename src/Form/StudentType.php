@@ -112,8 +112,6 @@ class StudentType extends AbstractType {
     private function disableField(FormInterface $form, FormInterface $field): void {
         $form->remove($field->getName());
 
-        dump($field);
-
         $form->add(
             $field->getName(),
             get_class($field->getConfig()->getType()->getInnerType()),
