@@ -44,6 +44,18 @@ settings:
             url:
                 label: URL für Haltestellen-Import
                 help: Die URL muss auf eine ZIP-Datei zeigen mit Daten im GTFS-Format.
+            min_lat:
+                label: Min. Latitude
+                help: Boundingbox für den Import - nur Stationen innerhalb der Box werden importiert.
+            min_long:
+                label: Min. Longitude
+                help: Boundingbox für den Import - nur Stationen innerhalb der Box werden importiert.
+            max_lat:
+                label: Max. Latitude
+                help: Boundingbox für den Import - nur Stationen innerhalb der Box werden importiert.
+            max_long:
+                label: Max. Longitude
+                help: Boundingbox für den Import - nur Stationen innerhalb der Box werden importiert.
 
     export:
         label: Export-Einstellungen

@@ -37,6 +37,13 @@ readonly class GtfsStopsImporter {
         $this->stopRepository->beginTransaction();
 
         foreach($records as $record) {
+            $latitude = floatval($record['stop_lat']);
+            $longitude = floatval($record['stop_lon']);
+
+            if(!$this->isInBoundingBox($latitude, $longitude)) {
+                continue;
+            }
+
             $id = $record['stop_id'];
             $stop = $existingStops[$id] ?? null;
 
@@ -49,8 +56,8 @@ readonly class GtfsStopsImporter {
             }
 
             $stop->setName($record['stop_name']);
-            $stop->setLatitude(floatval($record['stop_lat']));
-            $stop->setLongitude(floatval($record['stop_lon']));
+            $stop->setLatitude($latitude);
+            $stop->setLongitude($longitude);
 
             $this->stopRepository->persist($stop);
         }
@@ -58,6 +65,17 @@ readonly class GtfsStopsImporter {
         $this->stopRepository->commit();
 
         return new ImportResult($added, $updated, 0);
+    }
+
+    private function isInBoundingBox(float $latitude, float $longitude): bool {
+        if($this->importSettings->minLongitude === null || $this->importSettings->minLongitude === null || $this->importSettings->maxLatitude === null || $this->importSettings->maxLatitude === null) {
+            return true;
+        }
+
+        return $this->importSettings->minLatitude < $latitude
+            && $latitude < $this->importSettings->maxLatitude
+            && $this->importSettings->minLongitude < $longitude
+            && $longitude < $this->importSettings->maxLongitude;
     }
 
     private function downloadZipAndExtractStopsCsv(): string {
