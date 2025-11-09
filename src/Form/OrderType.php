@@ -115,6 +115,14 @@ class OrderType extends AbstractType {
                 }
 
                 $this->fareLevelSetter->setFareLevel($order);
+
+                foreach($order->getSiblings() as $sibling) {
+                    if($sibling->getStudentAtSchool() === null || $this->orderSettings->school === null) {
+                        continue;
+                    }
+
+                    $sibling->setSchool($this->orderSettings->school);
+                }
             });
     }
 }

@@ -9,7 +9,9 @@ use App\Settings\OrderSettings;
 
 readonly class OrderFiller {
 
-    public function __construct(private OrderSettings $orderSettings) { }
+    public function __construct(
+        private OrderSettings $orderSettings
+    ) { }
 
     public function copyProfileToOrder(Order $order, Student $student): Order{
         $order->setFirstname($student->getFirstname());
@@ -55,6 +57,7 @@ readonly class OrderFiller {
                         ->setLastname($sibling->getLastname())
                         ->setBirthday($sibling->getBirthday())
                         ->setStudentAtSchool($sibling->getStudentAtSchool())
+                        ->setSchool($sibling->getStudentAtSchool() ? $this->orderSettings->school : null)
                 );
             }
         }
