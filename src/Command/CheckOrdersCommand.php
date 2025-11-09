@@ -2,14 +2,11 @@
 
 namespace App\Command;
 
-use App\Order\Check\CheckOrderMessage;
 use App\Order\Check\OrderChecker;
-use App\Repository\OrderRepositoryInterface;
 use App\Settings\OrderSettings;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Scheduler\Attribute\AsCronTask;
 
 #[AsCommand('app:orders:check')]
@@ -17,9 +14,8 @@ use Symfony\Component\Scheduler\Attribute\AsCronTask;
 readonly class CheckOrdersCommand {
 
     public function __construct(
-        private OrderRepositoryInterface $orderRepository,
         private OrderSettings $orderSettings,
-        private MessageBusInterface $messageBus
+        private OrderChecker $orderChecker
     ) {
 
     }
@@ -30,19 +26,9 @@ readonly class CheckOrdersCommand {
             return Command::SUCCESS;
         }
 
-        $orders = $this->orderRepository->findAllRange(
-            $this->orderSettings->windowStart,
-            $this->orderSettings->windowEnd
-        );
+        $count = $this->orderChecker->checkAllInCurrentWindowAsync();
 
-        $io->section(sprintf('Bearbeite %d Bestellung(en)', count($orders)));
-
-        foreach($orders as $order) {
-            $this->messageBus->dispatch(new CheckOrderMessage($order->getId()));
-        }
-
-        $io->success('Alle Bestellungen wurden zur Prüfung eingereiht. Die Bestellungen werden asynchron geprüft.');
-
+        $io->success(sprintf('%d Bestellung(en) wurden zur Prüfung eingereiht. Die Bestellungen werden asynchron geprüft.', $count));
         return Command::SUCCESS;
     }
 }

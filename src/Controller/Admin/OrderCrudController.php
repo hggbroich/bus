@@ -7,6 +7,8 @@ use App\Export\Order\Exporter;
 use App\Export\Order\ExportRequest;
 use App\Export\Order\ExportRequestType;
 use App\Form\StudentSiblingType;
+use App\Order\Check\OrderChecker;
+use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminRoute;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -24,14 +26,24 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted('ROLE_ORDER_ADMIN')]
 class OrderCrudController extends AbstractCrudController
 {
+
+    public function __construct(
+        private readonly AdminUrlGenerator $urlGenerator
+    ) {
+
+    }
+
     public static function getEntityFqcn(): string {
         return Order::class;
     }
@@ -55,8 +67,18 @@ class OrderCrudController extends AbstractCrudController
             ->linkToCrudAction('export')
             ->createAsGlobalAction();
 
+        $checkAction = Action::new('check', 'Bestellungen prüfen', 'fa-solid fa-clipboard-check')
+            ->linkToCrudAction('checkOrders')
+            ->createAsGlobalAction();
+
+        $showInvalidAction = Action::new('incorrect', 'Ungültige Bestellungen anzeigen', 'fas fa-exclamation-triangle')
+            ->linkToCrudAction('showIncorrect')
+            ->createAsGlobalAction();
+
         return parent::configureActions($actions)
             ->add(Crud::PAGE_INDEX, $exportAction)
+            ->add(Crud::PAGE_INDEX, $checkAction)
+            ->add(Crud::PAGE_INDEX, $showInvalidAction)
             ->add(Crud::PAGE_INDEX, Action::DETAIL);
     }
 
@@ -195,10 +217,19 @@ class OrderCrudController extends AbstractCrudController
             FormField::addColumn(6),
             DateTimeField::new('updatedAt', 'Aktualisiert am')
                 ->setDisabled()
-                ->hideOnForm()
+                ->hideOnForm(),
+
+            FormField::addColumn(6),
+            BooleanField::new('isIncorrect', 'Fehlerhafte Bestellung')
+                ->setDisabled()
+                ->hideOnForm(),
+            DateTimeField::new('lastCheckedAt', 'Letzte Prüfung')
+                ->setDisabled()
+                ->hideOnForm(),
         ];
     }
 
+    #[AdminRoute('/export')]
     public function export(Exporter $exporter, Request $request): BinaryFileResponse|Response {
         $exportRequest = new ExportRequest();
         $form = $this->createForm(ExportRequestType::class, $exportRequest);
@@ -213,5 +244,25 @@ class OrderCrudController extends AbstractCrudController
             'header' => 'Bestellungen exportieren',
             'action' => 'Exportieren'
         ]);
+    }
+
+    #[AdminRoute('/check')]
+    public function checkOrders(OrderChecker $orderChecker): RedirectResponse {
+        $count = $orderChecker->checkAllInCurrentWindowAsync();
+
+        $this->addFlash('success', sprintf('%d Bestellung(en) wurden zur Prüfung eingereiht. Die Bestellungen werden asynchron geprüft.', $count));
+
+        $url = $this->urlGenerator->setController(OrderCrudController::class)->setAction(Action::INDEX)->generateUrl();
+        return $this->redirect($url);
+    }
+
+    #[AdminRoute('/incorrect')]
+    public function showIncorrect(): RedirectResponse {
+        $url = $this->urlGenerator
+            ->setController(OrderCrudController::class)
+            ->setAction(Action::INDEX)
+            ->set('filters[isIncorrect]', '1')
+            ->generateUrl();
+        return $this->redirect($url);
     }
 }
