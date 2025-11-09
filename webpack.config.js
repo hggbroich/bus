@@ -11,6 +11,7 @@ Encore
     .setPublicPath('/build')
 
     .addEntry('app', './assets/js/app.js')
+    .addEntry('maps-button', './assets/js/maps-button.js')
     .addEntry('collection', './assets/js/collection.js')
     .addStyleEntry('simple', './assets/css/simple.scss')
 

@@ -23,4 +23,9 @@ class SchoolRepository extends AbstractTransactionalRepository implements School
         $this->em->remove($school);
         $this->flushIfNotInTransaction();
     }
+
+    #[Override]
+    public function findById(int $id): ?School {
+        return $this->em->getRepository(School::class)->findOneBy(['id' => $id]);
+    }
 }

@@ -1,0 +1,14 @@
+{% extends "@EasyAdmin/crud/form_theme.html.twig" %}
+
+{% block distance_maps_widget %}
+    <div class="input-group">
+        {{ form_widget(form) }}
+
+        <a href="#" class="btn btn-primary"
+           data-maps-endpoint="{{ path('admin_student_redirect_maps', { id: ea().entity.instance.id}) }}"
+           data-school-field-id="{{ form.vars.school_field_id }}"
+        >
+            <i class="fas fa-external-link"></i> Google Maps
+        </a>
+    </div>
+{% endblock %}

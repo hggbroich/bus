@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Controller\Admin\Field\DistanceField;
 use App\Entity\Student;
 use App\Import\BusCompanyData\BusCompanyDataImporter;
 use App\Import\BusCompanyData\ImportBusCompanyDataRequest;
@@ -9,11 +10,14 @@ use App\Import\BusCompanyData\ImportBusCompanyDataRequestType;
 use App\Import\Students\CsvSchildImporter;
 use App\Import\Students\ImportRequest;
 use App\Import\Students\ImportRequestType;
+use App\Repository\SchoolRepositoryInterface;
+use App\Settings\OrderSettings;
 use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminRoute;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
+use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
@@ -26,8 +30,12 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use Exception;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted('ROLE_STUDENT_ADMIN')]
@@ -55,6 +63,9 @@ class StudentCrudController extends AbstractCrudController
         $busCompanyImportAction = Action::new('importFromBusCompany', 'Von Busunternehmen importieren', 'fa-solid fa-upload')
             ->linkToCrudAction('importFromBusCompany')
             ->createAsGlobalAction();
+
+        $mapsAction = Action::new('maps', 'Google Maps öffnen', '')
+            ->linkToCrudAction('redirectToMaps');
 
         return $actions
             ->add(Crud::PAGE_INDEX, Action::DETAIL)
@@ -192,14 +203,15 @@ class StudentCrudController extends AbstractCrudController
                 ->setVirtual(true)
                 ->hideOnDetail()
                 ->hideOnForm(),
-            NumberField::new('confirmedDistanceToPublicSchool')
+            DistanceField::new('confirmedDistanceToPublicSchool')
                 ->setLabel('Distanz zur öffentlichen Schule (geprüft)')
                 ->setRequired(false)
                 ->setHelp('in km')
+                ->setFormTypeOption('school_field_id', 'Student_publicSchool_autocomplete')
                 ->hideOnIndex(),
             /*ButtonField::new('foo', 'Label')
                 ->onlyOnDetail()
-                ->setUrl('https://www.google.com/maps/dir/?api=1&travelmode=walking&origin={street} {houseNumber}, {plz} {city}&destination={publicSchool.address}, {publicSchool.plz} {publicSchool.city}'),*/
+                ->setUrl(''),*/
             FormField::addColumn(6),
             FormField::addPanel('Eigene Schule'),
             NumberField::new('distanceToSchool')
@@ -212,7 +224,7 @@ class StudentCrudController extends AbstractCrudController
                 ->setVirtual(true)
                 ->hideOnDetail()
                 ->hideOnForm(),
-            NumberField::new('confirmedDistanceToSchool')
+            DistanceField::new('confirmedDistanceToSchool')
                 ->setLabel('Distanz zur Schule (geprüft)')
                 ->setRequired(false)
                 ->setHelp('in km')
@@ -268,5 +280,35 @@ class StudentCrudController extends AbstractCrudController
             'action' => 'Importieren',
             'header' => 'Daten von Busunternehmen importieren'
         ]);
+    }
+
+    #[AdminRoute('/{id}/maps', name: 'redirect_maps')]
+    public function redirectToMaps(
+        #[MapEntity] Student $student,
+        #[MapQueryParameter] int|null $schoolId,
+        SchoolRepositoryInterface $schoolRepository,
+        OrderSettings $orderSettings
+    ): RedirectResponse {
+        $url = "https://www.google.com/maps/dir/?api=1&travelmode=walking&origin={street} {houseNumber}, {plz} {city}&destination={destAddress}, {destPLZ} {destCity}";
+        $url = str_replace('{street}', $student->getStreet(), $url);
+        $url = str_replace('{houseNumber}', $student->getHouseNumber(), $url);
+        $url = str_replace('{plz}', $student->getPlz(), $url);
+        $url = str_replace('{city}', $student->getCity(), $url);
+
+        if($schoolId === null) {
+            $school = $orderSettings->school;
+        } else {
+            $school = $schoolRepository->findById($schoolId);
+        }
+
+        if($school === null) {
+            throw new NotFoundHttpException();
+        }
+
+        $url = str_replace('{destAddress}', $school->getAddress(), $url);
+        $url = str_replace('{destPLZ}', $school->getPlz(), $url);
+        $url = str_replace('{destCity}', $school->getCity(), $url);
+
+        return $this->redirect($url);
     }
 }
