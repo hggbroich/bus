@@ -6,7 +6,6 @@ use App\Entity\Order;
 use App\Repository\OrderRepositoryInterface;
 use App\Settings\OrderSettings;
 use SchulIT\CommonBundle\Helper\DateHelper;
-use Symfony\Component\Console\Command\Command;
 use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 use Symfony\Component\Messenger\MessageBusInterface;
 
@@ -38,16 +37,6 @@ readonly class OrderChecker {
             $order->setIsIncorrect(true);
             $order->setLastCheckedAt($this->dateHelper->getNow());
             $this->orderRepository->persist($order);
-
-            foreach ($violations as $violation) {
-                if($violation->otherOrderId !== null) {
-                    $order = $this->orderRepository->findOneById($violation->otherOrderId);
-                    $order->setLastCheckedAt($this->dateHelper->getNow());
-
-                    $order->setIsIncorrect(true);
-                    $this->orderRepository->persist($order);
-                }
-            }
         } else if($markOrdersIncorrect === true && count($violations) === 0) {
             $order->setIsIncorrect(false);
             $this->orderRepository->persist($order);
