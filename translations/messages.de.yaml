@@ -34,6 +34,12 @@ settings:
             url:
                 label: URL für Schulen-Import
                 help: URL zur Schulen.csv im GitHub-Repository des SVWS-Servers
+            start_plz:
+                label: PLZ Start
+                help: Wenn dieses Feld gesetzt ist, werden nur Schulen importiert, deren PLZ größer oder gleich ist als der angegebene Wert.
+            end_plz:
+                label: PLZ Ende
+                help: Wenn dieses Feld gesetzt ist, werden nur Schulen importiert, deren PLZ kleiner oder gleich ist als der angegeben Wert.
         stops:
             url:
                 label: URL für Haltestellen-Import
@@ -171,6 +177,7 @@ orders:
     siblings:
         label: Geschwister
         info: Bitte hier nur Geschwisterkinder eintragen, für die ebenfalls ein Busticket entweder bereits bestellt wurde oder noch bestellt wird. Geschwisterkinder, die kein Busticket bestellen, dürfen hier nicht aufgelistet werden.
+        confirm: Für dieses Kind wird verbindlich ein Ticket über dessen Schule bestellt.
 
     confirmations:
         label: Hinweise

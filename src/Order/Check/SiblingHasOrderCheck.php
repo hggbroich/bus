@@ -40,7 +40,7 @@ readonly class SiblingHasOrderCheck implements CheckInterface {
             );
 
             if($otherOrder === null) {
-                $violations[] = new Violation('orders.checks.siblings_incomplete.message');
+                $violations[] = new Violation(null, 'orders.checks.siblings_incomplete.message');
             }
         }
 

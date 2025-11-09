@@ -32,6 +32,12 @@ interface OrderRepositoryInterface {
      */
     public function findAllRange(DateTime $start, DateTime $end): array;
 
+    /**
+     * @param int $id
+     * @return Order|null
+     */
+    public function findOneById(int $id): ?Order;
+
     public function persist(Order $order): void;
 
     public function remove(Order $order): void;

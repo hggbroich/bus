@@ -58,7 +58,7 @@ readonly class ForeignSiblingsAreSameCheck implements CheckInterface {
                 ->toArray();
 
             if(!ArrayUtils::areEqual($otherForeignSiblings, $thisForeignSiblings)) {
-                $violations[] = new Violation('orders.checks.foreign_siblings.message');
+                $violations[] = new Violation($siblingOrder->getId(), 'orders.checks.foreign_siblings.message');
             }
         }
 

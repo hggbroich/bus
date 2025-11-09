@@ -32,7 +32,7 @@ class School implements Stringable {
     #[Assert\NotBlank(allowNull: true)]
     private ?string $city = null;
 
-    public function __construct(private readonly School $school) {
+    public function __construct() {
         $this->uuid = Uuid::uuid4();
     }
 

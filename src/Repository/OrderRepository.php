@@ -80,4 +80,16 @@ class OrderRepository extends AbstractRepository implements OrderRepositoryInter
             ->getQuery()
             ->getResult();
     }
+
+    #[Override]
+    public function findOneById(int $id): ?Order {
+        return $this->em->createQueryBuilder()
+            ->select(['o', 's'])
+            ->from(Order::class, 'o')
+            ->join('o.student', 's')
+            ->where('o.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }

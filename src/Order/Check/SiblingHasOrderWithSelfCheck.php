@@ -52,7 +52,7 @@ readonly class SiblingHasOrderWithSelfCheck implements CheckInterface {
             }
 
             if($selfIncluded === false) {
-                $violations[] = new Violation('orders.checks.self_included.message');
+                $violations[] = new Violation($otherOrder->getId(), 'orders.checks.self_included.message');
             }
         }
 

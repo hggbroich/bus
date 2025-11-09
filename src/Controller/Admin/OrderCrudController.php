@@ -46,7 +46,8 @@ class OrderCrudController extends AbstractCrudController
         return $filters
             ->add('student')
             ->add('ticket')
-            ->add('createdAt');
+            ->add('createdAt')
+            ->add('isIncorrect');
     }
 
     public function configureActions(Actions $actions): Actions {

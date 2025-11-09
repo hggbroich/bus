@@ -34,6 +34,15 @@ readonly class SvwsGitHubSchoolsImporter {
         $this->schoolRepository->beginTransaction();
 
         foreach($records as $record) {
+            $plz = intval($record['PLZ']);
+            if($this->importSettings->importPlzStart !== null && $plz < $this->importSettings->importPlzStart) {
+                continue;
+            }
+
+            if($this->importSettings->importPlzEnd !== null && $plz > $this->importSettings->importPlzEnd) {
+                continue;
+            }
+
             $id = $record['SchulNr'];
             $school = $existingSchools[$id] ?? null;
 

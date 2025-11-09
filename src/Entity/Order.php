@@ -152,6 +152,12 @@ class Order {
     #[ORM\Column(type: Types::JSON)]
     private array $confirmations = [ ];
 
+    #[ORM\Column(type: Types::BOOLEAN)]
+    private bool $isIncorrect = false;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private DateTime|null $lastCheckedAt = null;
+
     use TimestampableOnCreateTrait;
     use TimestampableOnUpdateTrait;
 
@@ -461,6 +467,24 @@ class Order {
 
     public function setConfirmations(array $confirmations): Order {
         $this->confirmations = $confirmations;
+        return $this;
+    }
+
+    public function isIncorrect(): bool {
+        return $this->isIncorrect;
+    }
+
+    public function setIsIncorrect(bool $isIncorrect): Order {
+        $this->isIncorrect = $isIncorrect;
+        return $this;
+    }
+
+    public function getLastCheckedAt(): ?DateTime {
+        return $this->lastCheckedAt;
+    }
+
+    public function setLastCheckedAt(?DateTime $lastCheckedAt): Order {
+        $this->lastCheckedAt = $lastCheckedAt;
         return $this;
     }
 }
