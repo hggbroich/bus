@@ -4,11 +4,15 @@ namespace App\Settings;
 
 use App\Entity\School;
 use App\Form\SchoolType;
+use App\Grade\Followup\NrwStrategy;
 use App\Settings\Type\AssignmentStrategyType;
+use App\Settings\Type\FollowupGradeStrategyType;
+use App\Settings\Type\KeyValueType;
 use App\Ticket\AssignmentStrategy\BirthdayAssignmentStrategy;
 use DateTime;
 use Jbtronics\SettingsBundle\ParameterTypes\ArrayType;
 use Jbtronics\SettingsBundle\ParameterTypes\DatetimeType;
+use Jbtronics\SettingsBundle\ParameterTypes\FloatType;
 use Jbtronics\SettingsBundle\ParameterTypes\StringType;
 use Jbtronics\SettingsBundle\Settings\Settings;
 use Jbtronics\SettingsBundle\Settings\SettingsParameter;
@@ -63,9 +67,28 @@ class OrderSettings {
     ], nullable: false)]
     public array $confirmations = [ ];
 
-    #[SettingsParameter(type: AssignmentStrategyType::class, label: 'settings.orders.ticket_assignment.label')]
-    public string $assignmentStrategy = BirthdayAssignmentStrategy::class;
+    #[SettingsParameter(type: FloatType::class, label: 'settings.orders.minimum_distance_sekI.label', description: 'settings.orders.minimum_distance_sekI.help', nullable: true)]
+    public float|null $minimumDistanceSekI = null;
+
+    #[SettingsParameter(type: FloatType::class, label: 'settings.orders.minimum_distance_sekII.label', description: 'settings.orders.minimum_distance_sekII.help', nullable: true)]
+    public float|null $minimumDistanceSekII = null;
+
+    #[SettingsParameter(type: ArrayType::class, label: 'settings.orders.sekII_grades.label', description: 'settings.orders.sekII_grades.help', options: ['type' => StringType::class ], formType: CollectionType::class, formOptions: [
+        'entry_type' => TextType::class,
+        'allow_add' => true,
+        'allow_delete' => true,
+        'row_attr' => [
+            'class' => 'field-collection'
+        ]
+    ], nullable: false)]
+    public array $sekIIGrades = [ ];
+
+    #[SettingsParameter(type: FollowupGradeStrategyType::class, label: 'settings.orders.followup_strategy.label', description: 'settings.orders.followup_strategy.help', nullable: false)]
+    public string $followUpStrategy = NrwStrategy::class;
 
     #[SettingsParameter(label: 'settings.orders.effective_date.label', description: 'settings.orders.effective_date.help', formType: DateType::class, nullable: false)]
     public DateTime|null $effectiveDate = null;
+
+    #[SettingsParameter(type: AssignmentStrategyType::class, label: 'settings.orders.ticket_assignment.label')]
+    public string $assignmentStrategy = BirthdayAssignmentStrategy::class;
 }

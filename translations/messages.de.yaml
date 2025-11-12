@@ -100,6 +100,21 @@ settings:
             help: Bei der Geburtstagsstrategie wird das Alter an diesem Stichtag berücksichtigt.
 
 
+        minimum_distance_sekI:
+            label: Mindest-Distanz (Sekundarstufe I)
+            help: (Optional.) Falls ein Wert angegeben wird, kann ein Ticket nur bestellt werden, wenn das Kind mindestens die angegebene Distanz von der eigenen Schule entfernt wohnt.
+
+        minimum_distance_sekII:
+            label: Mindest-Distanz (Sekundarstufe II)
+            help: (Optional.) Falls ein Wert angegeben wird, kann ein Ticket nur bestellt werden, wenn das Kind mindestens die angegebene Distanz von der eigenen Schule entfernt wohnt.
+
+        followup_strategy:
+            label: Folgeklassen-Berechnung
+            help: Gibt an, nach welcher Strategie die Folgeklasse bestimmt werden soll.
+            nrw: NRW-Bezeichungen verwenden
+
+
+
 
 filter:
     choose:
@@ -168,10 +183,6 @@ orders:
         not_set: Aktuell können keine Bestellungen erstellt werden.
         info: Bestellungen können bis zum %end% erstellt, bearbeitet und gelöscht werden.
 
-    errors:
-        label: Fehler
-        profile_not_completed: Die Stammdaten von mindestens einem Kind sind nicht vollständig. Solange die Stammdaten für ein Kind nicht vollständig sind, kann keine Bestellung für das Kind getätigt werden.
-
     place:
         label: Neue Bestellung
         submit: Bestellung abschicken
@@ -228,6 +239,12 @@ orders:
             message: 'Für mindestens ein Geschwisterkind wurde noch keine Bestellung aufgegeben, obwohl das Geschwisterkind bei einer Bestellung als Geschwisterkind mit Ticket angegeben wurde.'
         self_included:
             message: 'Bei der Bestellung des Geschwisterkindes wurde das andere Kind nicht unter den Geschwistern aufgelistet.'
+
+    requirements:
+        checks:
+            error: Voraussetzungsprüfung
+            profile_incomplete: Die Stammdaten sind nicht vollständig. Bitte nachtragen.
+            distance_too_short: "Die Distanz zur Schule von %distance% km ist zu gering (Mindestdistanz ist %minimum% km)."
 
 
 distance: '%distance% km'

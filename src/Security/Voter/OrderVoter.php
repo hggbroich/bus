@@ -5,7 +5,7 @@ namespace App\Security\Voter;
 use App\Entity\Order;
 use App\Entity\Student;
 use App\Entity\User;
-use App\Profile\ProfileCompleteChecker;
+use App\Order\Requirements\RequirementsChecker;
 use App\Repository\OrderRepositoryInterface;
 use App\Settings\OrderSettings;
 use LogicException;
@@ -27,7 +27,7 @@ class OrderVoter extends Voter {
         private readonly OrderSettings $orderSettings,
         private readonly ClockInterface $clock,
         private readonly OrderRepositoryInterface $orderRepository,
-        private readonly ProfileCompleteChecker $profileCompleteChecker,
+        private readonly RequirementsChecker $requirementsChecker
     ) {
 
     }
@@ -91,7 +91,7 @@ class OrderVoter extends Voter {
             return false;
         }
 
-        if(!$this->profileCompleteChecker->isProfileCompletedByParents($student)) {
+        if($this->requirementsChecker->check($student)->hasViolations()) {
             return false;
         }
 

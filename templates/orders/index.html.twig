@@ -11,15 +11,21 @@
 
 {% block content %}
 
-    {% if hasProfileThatIsNotCompletedByParents %}
-        <div class="bs-callout bs-callout-warning">
-            <h5>{{ 'orders.errors.label'|trans }}</h5>
-            <p>{{ 'orders.errors.profile_not_completed'|trans }}</p>
-            <a href="{{ path('profile') }}" class="btn btn-primary btn-sm">
-                <i class="fa-solid fa-address-card"></i> {{ 'profile.checks.button.complete'|trans }}
-            </a>
-        </div>
-    {% endif %}
+    {% for student in app.user.associatedStudents %}
+        {% if requirementsViolations[student.id] is defined and requirementsViolations[student.id].hasViolations %}
+            <div class="bs-callout bs-callout-warning">
+                <h5>{{ student.lastname }}, {{ student.firstname }}</h5>
+                <ul>
+                    {% for violation in requirementsViolations[student.id].violations %}
+                        <li>{{ violation.messageKey|trans(violation.messageParameters) }}</li>
+                    {% endfor %}
+                </ul>
+                <a href="{{ path('profile') }}" class="btn btn-primary btn-sm">
+                    <i class="fa-solid fa-address-card"></i> {{ 'profile.checks.button.complete'|trans }}
+                </a>
+            </div>
+        {% endif %}
+    {% endfor %}
 
     <div class="card">
         <div class="card-header">

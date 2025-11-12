@@ -4,6 +4,7 @@ namespace App\Controller\Order;
 
 use App\Entity\User;
 use App\Order\Check\OrderChecker;
+use App\Order\Requirements\RequirementsChecker;
 use App\Profile\ProfileCompleteChecker;
 use App\Repository\OrderRepositoryInterface;
 use App\Repository\PaginationQuery;
@@ -25,18 +26,16 @@ class ShowOrdersAction extends AbstractController {
         StudentFilter $studentFilter,
         Request $request,
         OrderSettings $orderSettings,
-        ProfileCompleteChecker $profileCompleteChecker,
+        RequirementsChecker $requirementsChecker,
         OrderChecker $orderChecker,
         #[MapQueryParameter] int $page = 1,
     ): Response {
         $studentFilterView = $studentFilter->handle($request, $user);
 
-        $hasProfileThatIsNotCompletedByParents = false;
+        $requirementsViolations = [ ];
 
         foreach($user->getAssociatedStudents() as $student) {
-            if($profileCompleteChecker->isProfileCompletedByParents($student) !== true) {
-                $hasProfileThatIsNotCompletedByParents = true;
-            }
+            $requirementsViolations[$student->getId()] = $requirementsChecker->check($student);
         }
 
         $orders = $orderRepository->findAllForStudentsPaginated($studentFilterView->getCurrentOrDefault(), new PaginationQuery($page));
@@ -49,7 +48,7 @@ class ShowOrdersAction extends AbstractController {
         return $this->render('orders/index.html.twig', [
             'studentFilter' => $studentFilterView,
             'settings' => $orderSettings,
-            'hasProfileThatIsNotCompletedByParents' => $hasProfileThatIsNotCompletedByParents,
+            'requirementsViolations' => $requirementsViolations,
             'orders' => $orders,
             'violations' => $violations
         ]);
