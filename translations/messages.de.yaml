@@ -137,11 +137,11 @@ label:
 
     distance_to_public_school:
         label: Distanz zur öffentlichen Schule
-        help: Bitte die Distanz (Fußweg) zur angegebenen öffentlichen Schule angeben.
+        help: Bitte die Distanz (Fußweg ab der Haustüre) zur angegebenen öffentlichen Schule angeben.
 
     distance_to_school:
         label: Distanz zur Schule
-        help: Bitte die Distanz (Fußweg) zur Schule angeben.
+        help: Bitte die Distanz (Fußweg ab der Haustüre) zur Schule angeben.
 
     confirm_confirmations: Ich habe die oben genannten Punkte gelesen und akzeptiere sie.
 
