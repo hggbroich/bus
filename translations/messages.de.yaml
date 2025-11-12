@@ -91,6 +91,15 @@ settings:
                 birthday:
                     label: Geburtstag
                     help: Das Ticket wird anhand des Geburtstages zugewiesen. Das älteste Kind bekommt das Ticket mit der Priorität 0, das zweit-älteste Kind das Ticket mit der Priorität 1 usw. Als Fallback wird automatisch das Ticket mit der größten Priorität ausgewählt.
+                birthday_age:
+                    label: Geburtstag (ohne volljährige Kinder)
+                    help: Diese Strategie funktioniert ähnlich wie die Strategie Geburtstag. Sie berücksichtigt nur nicht-volljährige Kinder (zum angegebenen Stichpunktsdatum). Volljährige Kinder wird automatisch das Ticket mit der Priorität 0 zugewiesen.
+
+        effective_date:
+            label: Stichtag
+            help: Bei der Geburtstagsstrategie wird das Alter an diesem Stichtag berücksichtigt.
+
+
 
 filter:
     choose:

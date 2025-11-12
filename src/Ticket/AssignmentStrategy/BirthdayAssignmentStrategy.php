@@ -12,13 +12,17 @@ use Override;
 readonly class BirthdayAssignmentStrategy implements AssignmentStrategyInterface {
 
     public function __construct(
-        private TicketRepositoryInterface $ticketRepository
+        protected TicketRepositoryInterface $ticketRepository
     ) {
 
     }
 
-    #[Override]
-    public function assign(Order $order): void {
+    /**
+     * @param Order $order
+     * @param Sibling[] $siblings
+     * @return void
+     */
+    protected function assignFromSiblings(Order $order, array $siblings): void {
         $tickets = ArrayUtils::createArrayWithKeys(
             $this->ticketRepository->findAll(),
             fn(Ticket $ticket): int => $ticket->getPriority()
@@ -26,24 +30,6 @@ readonly class BirthdayAssignmentStrategy implements AssignmentStrategyInterface
 
         if(count($tickets) === 0) {
             return;
-        }
-
-        $siblings = [
-            new Sibling(
-                $order->getStudent()->getFirstname(),
-                $order->getStudent()->getLastname(),
-                $order->getStudent()->getBirthday(),
-                $order->getStudent()
-            )
-        ];
-
-        foreach($order->getSiblings() as $sibling) {
-            $siblings[] = new Sibling(
-                $sibling->getFirstname(),
-                $sibling->getLastname(),
-                $sibling->getBirthday(),
-                $sibling->getStudentAtSchool()
-            );
         }
 
         usort($siblings, function(Sibling $a, Sibling $b): int {
@@ -78,6 +64,29 @@ readonly class BirthdayAssignmentStrategy implements AssignmentStrategyInterface
         }
 
         $order->setTicket($ticket);
+    }
+
+    #[Override]
+    public function assign(Order $order): void {
+        $siblings = [
+            new Sibling(
+                $order->getStudent()->getFirstname(),
+                $order->getStudent()->getLastname(),
+                $order->getStudent()->getBirthday(),
+                $order->getStudent()
+            )
+        ];
+
+        foreach($order->getSiblings() as $sibling) {
+            $siblings[] = new Sibling(
+                $sibling->getFirstname(),
+                $sibling->getLastname(),
+                $sibling->getBirthday(),
+                $sibling->getStudentAtSchool()
+            );
+        }
+
+        $this->assignFromSiblings($order, $siblings);
     }
 
     #[Override]

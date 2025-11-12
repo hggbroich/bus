@@ -8,6 +8,7 @@ use App\Settings\Type\AssignmentStrategyType;
 use App\Ticket\AssignmentStrategy\BirthdayAssignmentStrategy;
 use DateTime;
 use Jbtronics\SettingsBundle\ParameterTypes\ArrayType;
+use Jbtronics\SettingsBundle\ParameterTypes\DatetimeType;
 use Jbtronics\SettingsBundle\ParameterTypes\StringType;
 use Jbtronics\SettingsBundle\Settings\Settings;
 use Jbtronics\SettingsBundle\Settings\SettingsParameter;
@@ -64,4 +65,7 @@ class OrderSettings {
 
     #[SettingsParameter(type: AssignmentStrategyType::class, label: 'settings.orders.ticket_assignment.label')]
     public string $assignmentStrategy = BirthdayAssignmentStrategy::class;
+
+    #[SettingsParameter(label: 'settings.orders.effective_date.label', description: 'settings.orders.effective_date.help', formType: DateType::class, nullable: false)]
+    public DateTime|null $effectiveDate = null;
 }
