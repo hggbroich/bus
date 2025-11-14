@@ -16,6 +16,18 @@ trait CsvHelperTrait {
         return empty($input) ? null : $input;
     }
 
+    public function getFloatOrNull(?string $input): ?float {
+        if(empty($input)) {
+            return null;
+        }
+
+        if(!is_numeric($input)) {
+            return null;
+        }
+
+        return floatval($input);
+    }
+
     private function getIntOrNull(?string $input): ?int {
         if(empty($input)) {
             return null;
