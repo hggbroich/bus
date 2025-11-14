@@ -47,6 +47,7 @@ class StudentSiblingType extends AbstractType {
                 ]
             ])
             ->add('school', SchoolType::class, [
+                'placeholder' => 'Schule auswählen',
                 'attr' => [
                     'data-choice' => 'true'
                 ]
