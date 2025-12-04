@@ -65,4 +65,6 @@ class ImportRequest {
 
     #[Assert\NotBlank]
     public string $diversGenderValue = 'd';
+
+    public bool $remove = false;
 }

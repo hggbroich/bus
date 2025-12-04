@@ -69,9 +69,11 @@ class CsvSchildImporter {
             $this->studentRepository->persist($student);
         }
 
-        foreach($existingStudents as $externalId => $student) {
-            if(!in_array($externalId, $targetStudentIds)) {
-                $this->studentRepository->remove($student);
+        if($request->remove) {
+            foreach ($existingStudents as $externalId => $student) {
+                if (!in_array($externalId, $targetStudentIds)) {
+                    $this->studentRepository->remove($student);
+                }
             }
         }
 
