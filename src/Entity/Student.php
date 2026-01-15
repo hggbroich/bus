@@ -89,21 +89,21 @@ class Student implements Stringable {
     #[ORM\JoinColumn(nullable: true)]
     private ?School $publicSchool = null;
 
-    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\Column(type: Types::FLOAT)]
     #[Assert\GreaterThanOrEqual(0)]
-    private int $distanceToPublicSchool = 0;
+    private float $distanceToPublicSchool = 0.0;
 
-    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\Column(type: Types::FLOAT)]
     #[Assert\GreaterThanOrEqual(0)]
-    private int $confirmedDistanceToPublicSchool = 0;
+    private float $confirmedDistanceToPublicSchool = 0.0;
 
-    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\Column(type: Types::FLOAT)]
     #[Assert\GreaterThanOrEqual(0)]
-    private int $distanceToSchool = 0;
+    private float $distanceToSchool = 0.0;
 
-    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\Column(type: Types::FLOAT)]
     #[Assert\GreaterThanOrEqual(0)]
-    private int $confirmedDistanceToSchool = 0;
+    private float $confirmedDistanceToSchool = 0.0;
 
     /** @var Collection<int, Order> */
     #[ORM\OneToMany(targetEntity: Order::class, mappedBy: 'student', cascade: ['persist', 'remove'], orphanRemoval: true)]
@@ -288,29 +288,29 @@ class Student implements Stringable {
         return $this;
     }
 
-    public function getDistanceToPublicSchool(): int {
+    public function getDistanceToPublicSchool(): float {
         return $this->distanceToPublicSchool;
     }
 
-    public function setDistanceToPublicSchool(int $distanceToPublicSchool): Student {
+    public function setDistanceToPublicSchool(float $distanceToPublicSchool): Student {
         $this->distanceToPublicSchool = $distanceToPublicSchool;
         return $this;
     }
 
-    public function getDistanceToSchool(): int {
+    public function getDistanceToSchool(): float {
         return $this->distanceToSchool;
     }
 
-    public function setDistanceToSchool(int $distanceToSchool): Student {
+    public function setDistanceToSchool(float $distanceToSchool): Student {
         $this->distanceToSchool = $distanceToSchool;
         return $this;
     }
 
-    public function getConfirmedDistanceToPublicSchool(): int {
+    public function getConfirmedDistanceToPublicSchool(): float {
         return $this->confirmedDistanceToPublicSchool;
     }
 
-    public function setConfirmedDistanceToPublicSchool(int $confirmedDistanceToPublicSchool): Student {
+    public function setConfirmedDistanceToPublicSchool(float $confirmedDistanceToPublicSchool): Student {
         $this->confirmedDistanceToPublicSchool = $confirmedDistanceToPublicSchool;
         return $this;
     }
@@ -319,11 +319,11 @@ class Student implements Stringable {
         return $this->confirmedDistanceToPublicSchool > 0;
     }
 
-    public function getConfirmedDistanceToSchool(): int {
+    public function getConfirmedDistanceToSchool(): float {
         return $this->confirmedDistanceToSchool;
     }
 
-    public function setConfirmedDistanceToSchool(int $confirmedDistanceToSchool): Student {
+    public function setConfirmedDistanceToSchool(float $confirmedDistanceToSchool): Student {
         $this->confirmedDistanceToSchool = $confirmedDistanceToSchool;
         return $this;
     }
