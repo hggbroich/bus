@@ -1,6 +1,11 @@
 description: Hier kann das School-and-Fun-Ticket erwroben und verlängert werden.
 
+role_attribute:
+    display_name: Busticket Rollen
+    description: Rollen im Busticket-Tool
+
 roles:
+    ROLE_ADMIN: Administrator
     ROLE_BUYER: Kann Tickets kaufen
     ROLE_STUDENT_ADMIN: Kann Schülerinnen und Schüler verwalten
     ROLE_ORDER_ADMIN: Kann Bestellungen verwalten
