@@ -276,6 +276,7 @@ profile:
         distance_public_school_confirmed: Die Distanz zur öffentlichen Schule wurde noch nicht durch die Schule bestätigt.
         distance_school: Es wurde keine Distanz zur Schule angegeben.
         distance_school_confirmed: Die Distanz zur Schule wurde noch nicht durch die Schule bestätigt.
+        bus_stop: Es wurde keine Haltestelle angegeben.
 
 administration:
     label: Verwaltung
