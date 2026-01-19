@@ -230,6 +230,7 @@ class OrderCrudController extends AbstractCrudController
                 ->allowDelete()
                 ->setEntryIsComplex()
                 ->useEntryCrudForm()
+                ->renderExpanded()
                 ->setFormTypeOption('by_reference', false),
 
             FormField::addTab('Weitere Details')
