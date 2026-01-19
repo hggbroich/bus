@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=../../vendor/symfony/dependency-injection/Loader/schema/services.schema.json
 security:
     # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
     password_hashers:
@@ -43,7 +44,7 @@ security:
         - { path: ^/autoconfig, roles: PUBLIC_ACCESS }
         - { path: ^/logout/success, roles: PUBLIC_ACCESS }
         - { path: ^/saml/(login|discovery)$, roles: PUBLIC_ACCESS }
-        - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/admin, roles: [ROLE_ADMIN, ROLE_STUDENT_ADMIN, ROLE_ORDER_ADMIN] }
         - { path: ^, roles: ROLE_USER }
 
 when@test:
