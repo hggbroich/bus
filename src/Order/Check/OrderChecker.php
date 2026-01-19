@@ -35,12 +35,12 @@ readonly class OrderChecker {
 
         if($markOrdersIncorrect === true && count($violations) > 0) {
             $order->setIsIncorrect(true);
-            $order->setLastCheckedAt($this->dateHelper->getNow());
-            $this->orderRepository->persist($order);
         } else if($markOrdersIncorrect === true && count($violations) === 0) {
             $order->setIsIncorrect(false);
-            $this->orderRepository->persist($order);
         }
+
+        $order->setLastCheckedAt($this->dateHelper->getNow());
+        $this->orderRepository->persist($order);
 
         return new ViolationList(
             $order->getId(),
