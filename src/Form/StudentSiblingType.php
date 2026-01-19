@@ -44,7 +44,8 @@ class StudentSiblingType extends AbstractType {
                 'placeholder' => 'Kein Schüler der Schule (alternativ Schüler auswählen)',
                 'attr' => [
                     'data-choice' => 'true'
-                ]
+                ],
+                'required' => false
             ])
             ->add('school', SchoolType::class, [
                 'placeholder' => 'Schule auswählen',
