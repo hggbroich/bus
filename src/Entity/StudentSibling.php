@@ -107,6 +107,6 @@ class StudentSibling implements Stringable {
 
     #[Override]
     public function __toString(): string {
-        return sprintf('%s, %s', $this->getLastname(), $this->getFirstname());
+        return sprintf('%s, %s (%s) (%s)', $this->getLastname(), $this->getFirstname(), $this->getBirthday()?->format('Y-m-d'), $this->getSchool());
     }
 }
