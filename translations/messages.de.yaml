@@ -262,6 +262,8 @@ profile:
         info: Einige Stammdaten müssen in der Schulverwaltung geändert werden.
         success: Stammdaten erfolgreich aktualisiert.
 
+        bus_stop: Die Haltestelle ist nicht maßgeblich für die Entfernung zu den Schulen. Dazu wird ausschließlich die Adresse herangezogen.
+
     checks:
         ok: Stammdaten vollständig
         not_ok: Stammdaten nicht vollständig

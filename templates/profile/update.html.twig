@@ -35,6 +35,10 @@
         <div class="card-header">{{ 'orders.show.travel.label'|trans }}</div>
 
         <div class="card-body">
+            <div class="bs-callout bs-callout-info">
+                <p>{{ 'profile.update.bus_stop'|trans }}</p>
+            </div>
+
             {{ form_row(form.stop) }}
             {{ form_row(form.publicSchool) }}
             {{ form_row(form.distanceToPublicSchool) }}
