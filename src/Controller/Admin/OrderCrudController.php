@@ -64,7 +64,9 @@ class OrderCrudController extends AbstractCrudController
             ->setEntityLabelInSingular('Bestellung')
             ->setEntityLabelInPlural('Bestellungen')
             ->overrideTemplate('crud/detail', 'admin/pages/orders/detail.html.twig')
-            ->overrideTemplate('crud/edit', 'admin/pages/orders/edit.html.twig');
+            ->overrideTemplate('crud/edit', 'admin/pages/orders/edit.html.twig')
+            ->renderContentMaximized()
+            ->setPaginatorPageSize(35);
     }
 
     public function configureFilters(Filters $filters): Filters {
