@@ -26,11 +26,15 @@ class AdminMenuBuilder extends AbstractMenuBuilder {
             ->setExtra('menu-container', '#submenu')
             ->setExtra('pull-right', true);
 
-        if($this->authorizationChecker->isGranted('ROLE_ADMIN')) {
+        if($this->authorizationChecker->isGranted('ROLE_ADMIN')
+            || $this->authorizationChecker->isGranted('ROLE_ORDER_ADMIN')
+            || $this->authorizationChecker->isGranted('ROLE_COUNTRY_ADMIN')) {
             $menu->addChild('administration.label', [
                 'route' => 'admin'
             ]);
+        }
 
+        if($this->authorizationChecker->isGranted('ROLE_ADMIN')) {
             $menu->addChild('messenger.label', [
                 'route' => 'zenstruck_messenger_monitor_dashboard'
             ])
