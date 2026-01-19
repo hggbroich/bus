@@ -27,13 +27,13 @@ class User implements UserInterface {
     #[Assert\Length(max: 255)]
     private string $username;
 
-    #[ORM\Column(type: Types::STRING)]
-    #[Assert\NotBlank]
-    private string $firstname;
+    #[ORM\Column(type: Types::STRING, nullable: true)]
+    #[Assert\NotBlank(allowNull: true)]
+    private string|null $firstname = null;
 
-    #[ORM\Column(type: Types::STRING)]
-    #[Assert\NotBlank]
-    private string $lastname;
+    #[ORM\Column(type: Types::STRING, nullable: true)]
+    #[Assert\NotBlank(allowNull: true)]
+    private string|null $lastname = null;
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
     #[Assert\NotBlank(allowNull: true)]
@@ -76,20 +76,20 @@ class User implements UserInterface {
         return $this;
     }
 
-    public function getFirstname(): string {
+    public function getFirstname(): string|null {
         return $this->firstname;
     }
 
-    public function setFirstname(string $firstname): User {
+    public function setFirstname(string|null $firstname): User {
         $this->firstname = $firstname;
         return $this;
     }
 
-    public function getLastname(): string {
+    public function getLastname(): string|null {
         return $this->lastname;
     }
 
-    public function setLastname(string $lastname): User {
+    public function setLastname(string|null $lastname): User {
         $this->lastname = $lastname;
         return $this;
     }
