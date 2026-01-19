@@ -47,6 +47,45 @@
                     <dd>{{ student.city }}</dd>
                 </div>
             </div>
+
+            <div class="row row-cols-xl-6 row-cols-lg-3 row-cols-md-2 row-cols-1">
+                <div class="col">
+                    <dt class="text-uppercase text-muted">{{ 'orders.show.travel.customer_id'|trans }}</dt>
+                    {% if student.busCompanyCustomerId is not null %}
+                        <dd>{{ student.busCompanyCustomerId }}</dd>
+                    {% else %}
+                        <dd><span class="badge text-bg-secondary">{{ 'not_set'|trans }}</span></dd>
+                    {% endif %}
+                </div>
+
+                <div class="col">
+                    <dt class="text-uppercase text-muted">{{ 'orders.show.travel.stop'|trans }}</dt>
+                    {% if student.stop is not null %}
+                        <dd>{{ student.stop.name }}</dd>
+                    {% else %}
+                        <dd><span class="badge text-bg-secondary">{{ 'not_set'|trans }}</span></dd>
+                    {% endif %}
+                </div>
+
+                <div class="col">
+                    <dt class="text-uppercase text-muted">{{ 'orders.show.travel.public_school'|trans }}</dt>
+                    {% if student.publicSchool is not null %}
+                        <dd>{{ student.publicSchool.name }}</dd>
+                    {% else %}
+                        <dd><span class="badge text-bg-secondary">{{ 'not_set'|trans }}</span></dd>
+                    {% endif %}
+                </div>
+
+                <div class="col">
+                    <dt class="text-uppercase text-muted">{{ 'orders.show.travel.public_school_distance'|trans }}</dt>
+                    <dd>{{ 'distance'|trans({'%distance%': student.confirmedDistanceToPublicSchool}) }}</dd>
+                </div>
+
+                <div class="col">
+                    <dt class="text-uppercase text-muted">{{ 'orders.show.travel.own_school_distance'|trans }}</dt>
+                    <dd>{{ 'distance'|trans({'%distance%': student.confirmedDistanceToSchool}) }}</dd>
+                </div>
+            </div>
         </div>
     </div>
 
