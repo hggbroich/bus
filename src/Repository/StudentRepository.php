@@ -8,6 +8,11 @@ use Override;
 class StudentRepository extends AbstractTransactionalRepository implements StudentRepositoryInterface {
 
     #[Override]
+    public function findOneByUuid(string $uuid): ?Student {
+        return $this->em->getRepository(Student::class)->findOneBy(['uuid' => $uuid]);
+    }
+
+    #[Override]
     public function findAll(): array {
         return $this->em->getRepository(Student::class)->findAll();
     }

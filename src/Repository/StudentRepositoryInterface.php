@@ -6,6 +6,8 @@ use App\Entity\Student;
 
 interface StudentRepositoryInterface extends TransactionalRepositoryInterface {
 
+    public function findOneByUuid(string $uuid): ?Student;
+
     /**
      * @return Student[]
      */

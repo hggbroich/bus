@@ -3,11 +3,15 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Order;
+use App\Entity\Student;
 use App\Export\Order\Exporter;
 use App\Export\Order\ExportRequest;
 use App\Export\Order\ExportRequestType;
+use App\Form\ChooseStudentForOrderType;
 use App\Form\StudentSiblingType;
 use App\Order\Check\OrderChecker;
+use App\Order\OrderFiller;
+use App\Repository\StudentRepositoryInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminRoute;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
@@ -28,9 +32,11 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
+use Override;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
@@ -41,7 +47,10 @@ class OrderCrudController extends AbstractCrudController
 
     public function __construct(
         private readonly AdminUrlGenerator $urlGenerator,
-        private readonly OrderChecker $orderChecker
+        private readonly OrderChecker $orderChecker,
+        private readonly RequestStack $requestStack,
+        private readonly OrderFiller $orderFiller,
+        private readonly StudentRepositoryInterface $studentRepository
     ) {
 
     }
@@ -79,17 +88,25 @@ class OrderCrudController extends AbstractCrudController
             ->linkToCrudAction('showIncorrect')
             ->createAsGlobalAction();
 
+        $createAction = Action::new('create', 'Erstellen')
+            ->linkToCrudAction('createOrder')
+            ->asPrimaryAction()
+            ->createAsGlobalAction();
+
         return parent::configureActions($actions)
+            ->add(Crud::PAGE_INDEX, $createAction)
             ->add(Crud::PAGE_INDEX, $exportAction)
             ->add(Crud::PAGE_INDEX, $checkAction)
             ->add(Crud::PAGE_INDEX, $showInvalidAction)
-            ->add(Crud::PAGE_INDEX, Action::DETAIL);
+            ->add(Crud::PAGE_INDEX, Action::DETAIL)
+            ->remove(Crud::PAGE_INDEX, Action::NEW)
+            ->remove(Crud::PAGE_NEW, Action::SAVE_AND_ADD_ANOTHER);
     }
 
     public function configureResponseParameters(KeyValueStore $responseParameters): KeyValueStore {
         $order = $responseParameters->get('entity')?->getInstance() ?? null;
 
-        if(!$order instanceof Order) {
+        if(!$order instanceof Order || $order->getId() === null) {
             return $responseParameters;
         }
 
@@ -219,21 +236,25 @@ class OrderCrudController extends AbstractCrudController
             FormField::addColumn(6),
             TextField::new('createdBy', 'Erstellt von')
                 ->setDisabled()
+                ->hideWhenCreating()
                 ->hideOnForm(),
 
             FormField::addColumn(6),
             DateTimeField::new('createdAt', 'Erstellt am')
                 ->setDisabled()
+                ->hideWhenCreating()
                 ->hideOnForm(),
 
             FormField::addColumn(6),
             TextField::new('updatedBy', 'Aktualisiert von')
                 ->setDisabled()
+                ->hideWhenCreating()
                 ->hideOnForm(),
 
             FormField::addColumn(6),
             DateTimeField::new('updatedAt', 'Aktualisiert am')
                 ->setDisabled()
+                ->hideWhenCreating()
                 ->hideOnForm(),
 
             FormField::addColumn(6),
@@ -281,5 +302,52 @@ class OrderCrudController extends AbstractCrudController
             ->set('filters[isIncorrect]', '1')
             ->generateUrl();
         return $this->redirect($url);
+    }
+
+    #[AdminRoute('/create')]
+    public function createOrder(Request $request): Response|RedirectResponse {
+        $form = $this->createForm(ChooseStudentForOrderType::class);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()) {
+            $student = $form->get('student')->getData();
+
+            if($student instanceof Student) {
+                $url = $this->urlGenerator
+                    ->setController(OrderCrudController::class)
+                    ->setAction(Action::NEW)
+                    ->set('student', $student->getUuid())
+                    ->generateUrl();
+                return $this->redirect($url);
+            }
+        }
+
+        return $this->render('admin/form.html.twig', [
+            'form' => $form->createView(),
+            'header' => 'Schüler oder Schülerin auswählen',
+            'action' => 'Weiter'
+        ]);
+    }
+
+    public function createEntity(string $entityFqcn) {
+        $entity = parent::createEntity($entityFqcn);
+
+        $request = $this->requestStack->getMainRequest();
+        $studentId = $request->query->get('student');
+
+        if(empty($studentId)) {
+            return $entity;
+        }
+
+        $student = $this->studentRepository->findOneByUuid($studentId);
+
+        if($student === null) {
+            return $entity;
+        }
+
+        $entity->setStudent($student);
+        $this->orderFiller->copyProfileToOrder($entity, $student);
+
+        return $entity;
     }
 }

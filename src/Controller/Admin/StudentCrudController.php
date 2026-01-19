@@ -55,7 +55,9 @@ class StudentCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud {
         return $crud
             ->setEntityLabelInSingular('Schüler(in)')
-            ->setEntityLabelInPlural('Schüler');
+            ->setEntityLabelInPlural('Schüler')
+            ->renderContentMaximized()
+            ->setPaginatorPageSize(35);
     }
 
     public function configureActions(Actions $actions): Actions {
