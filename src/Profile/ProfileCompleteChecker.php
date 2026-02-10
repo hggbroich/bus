@@ -8,6 +8,7 @@ use App\Profile\Checks\DistanceToPublicSchoolConfirmedChecker;
 use App\Profile\Checks\DistanceToSchoolChecker;
 use App\Profile\Checks\DistanceToSchoolConfirmedChecker;
 use App\Profile\Checks\PublicSchoolChecker;
+use App\Profile\Checks\StopIsSetChecker;
 use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 
 readonly class ProfileCompleteChecker {
@@ -26,6 +27,7 @@ readonly class ProfileCompleteChecker {
                 DistanceToPublicSchoolChecker::class,
                 DistanceToSchoolChecker::class,
                 PublicSchoolChecker::class,
+                StopIsSetChecker::class
             ]
         );
 
