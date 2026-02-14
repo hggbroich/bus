@@ -28,7 +28,7 @@ class DistanceRequirementCheck implements CheckInterface {
             return [ ];
         }
 
-        if($minimumDistance < $distance) {
+        if($minimumDistance <= $distance) {
             return [ ];
         }
 
