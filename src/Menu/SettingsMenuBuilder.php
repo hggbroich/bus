@@ -5,7 +5,7 @@ namespace App\Menu;
 use Knp\Menu\ItemInterface;
 use Symfony\Component\Routing\Route;
 
-class SettingsMenuBuilder extends AbstractMenuBuilder {
+readonly class SettingsMenuBuilder extends AbstractMenuBuilder {
     public function settingsMenu(array $options = [ ]): ItemInterface {
         $root = $this->factory->createItem('root');
 

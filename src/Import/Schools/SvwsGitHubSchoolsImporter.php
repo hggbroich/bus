@@ -21,7 +21,7 @@ readonly class SvwsGitHubSchoolsImporter {
             fn(School $school) => $school->getSchoolNumber()
         );
 
-        $csv = Reader::createFromString($csvAsString);
+        $csv = Reader::fromString($csvAsString);
         $csv->setHeaderOffset(0);
         $csv->setEscape('');
         $csv->setDelimiter(';');

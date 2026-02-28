@@ -7,7 +7,7 @@ use App\Profile\ProfileCheckerInterface;
 use App\Profile\Violation;
 use Override;
 
-class StopIsSetChecker implements ProfileCheckerInterface {
+readonly class StopIsSetChecker implements ProfileCheckerInterface {
 
     public const string MessageKey = 'profile.checks.bus_stop';
 

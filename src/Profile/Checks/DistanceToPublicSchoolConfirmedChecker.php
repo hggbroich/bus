@@ -6,7 +6,7 @@ use App\Entity\Student;
 use App\Profile\ProfileCheckerInterface;
 use App\Profile\Violation;
 
-class DistanceToPublicSchoolConfirmedChecker implements ProfileCheckerInterface {
+readonly class DistanceToPublicSchoolConfirmedChecker implements ProfileCheckerInterface {
 
     public const string MessageKey = 'profile.checks.distance_public_school_confirmed';
 

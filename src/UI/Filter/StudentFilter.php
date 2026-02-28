@@ -7,7 +7,7 @@ use App\Entity\User;
 use App\Utils\ArrayUtils;
 use Symfony\Component\HttpFoundation\Request;
 
-class StudentFilter {
+readonly class StudentFilter {
     public const string QueryParam = 'student';
 
     public function handle(Request $request, User $user): StudentFilterView {

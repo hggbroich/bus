@@ -7,11 +7,11 @@ use App\Grade\Followup\FollowupGradeResolver;
 use App\Settings\OrderSettings;
 use Override;
 
-class DistanceRequirementCheck implements CheckInterface {
+readonly class DistanceRequirementCheck implements CheckInterface {
 
     public function __construct(
-        private readonly OrderSettings $orderSettings,
-        private readonly FollowupGradeResolver $followUpGradeResolver
+        private OrderSettings $orderSettings,
+        private FollowupGradeResolver $followUpGradeResolver
     ) {
 
     }

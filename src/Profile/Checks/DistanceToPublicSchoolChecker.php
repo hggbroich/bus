@@ -7,7 +7,7 @@ use App\Profile\ProfileCheckerInterface;
 use App\Profile\Violation;
 use Override;
 
-class DistanceToPublicSchoolChecker implements ProfileCheckerInterface {
+readonly class DistanceToPublicSchoolChecker implements ProfileCheckerInterface {
 
     public const string MessageKey = 'profile.checks.distance_public_school';
 

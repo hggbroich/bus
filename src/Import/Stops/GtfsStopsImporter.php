@@ -19,7 +19,7 @@ readonly class GtfsStopsImporter {
 
     public function import(): ImportResult {
         $stopsAsString = $this->downloadZipAndExtractStopsCsv();
-        $csv = Reader::createFromString($stopsAsString);
+        $csv = Reader::fromString($stopsAsString);
         $csv->setHeaderOffset(0);
         $csv->setDelimiter(',');
         $csv->setEscape('');

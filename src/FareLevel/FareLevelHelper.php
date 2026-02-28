@@ -6,11 +6,11 @@ use App\Entity\FareLevel;
 use App\Repository\FareLevelRepositoryInterface;
 use App\Repository\StudentRepositoryInterface;
 
-class FareLevelHelper {
+readonly class FareLevelHelper {
 
     public function __construct(
-        private readonly FareLevelRepositoryInterface $fareLevelRepository,
-        private readonly StudentRepositoryInterface $studentRepository
+        private FareLevelRepositoryInterface $fareLevelRepository,
+        private StudentRepositoryInterface   $studentRepository
     ) {
 
     }

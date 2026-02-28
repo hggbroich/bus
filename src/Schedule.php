@@ -8,7 +8,7 @@ use Symfony\Component\Scheduler\ScheduleProviderInterface;
 use Symfony\Contracts\Cache\CacheInterface;
 
 #[AsSchedule]
-class Schedule implements ScheduleProviderInterface
+readonly class Schedule implements ScheduleProviderInterface
 {
     public function __construct(
         private CacheInterface $cache,

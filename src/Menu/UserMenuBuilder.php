@@ -9,7 +9,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class UserMenuBuilder extends AbstractMenuBuilder {
+readonly class UserMenuBuilder extends AbstractMenuBuilder {
 
     public function __construct(private readonly string $idpProfileUrl,
                                 FactoryInterface $factory, TokenStorageInterface $tokenStorage,

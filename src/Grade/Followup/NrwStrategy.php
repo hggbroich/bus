@@ -5,7 +5,7 @@ namespace App\Grade\Followup;
 use InvalidArgumentException;
 use Override;
 
-class NrwStrategy implements StrategyInterface {
+readonly class NrwStrategy implements StrategyInterface {
 
     private const array HasPrefix = [
         '5' => true,

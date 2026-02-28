@@ -7,7 +7,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[AsCommand('app:generate-keypair')]
-class GenerateSodiumKeyPairCommand {
+readonly class GenerateSodiumKeyPairCommand {
     public function __invoke(SymfonyStyle $io): int {
         $keypair = sodium_crypto_box_keypair();
         $io->section('Keypair (Base64)');

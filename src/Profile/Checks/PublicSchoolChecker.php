@@ -7,7 +7,7 @@ use App\Profile\ProfileCheckerInterface;
 use App\Profile\Violation;
 use Override;
 
-class PublicSchoolChecker implements ProfileCheckerInterface {
+readonly class PublicSchoolChecker implements ProfileCheckerInterface {
 
     public const string MessageKey = 'profile.checks.public_school';
 

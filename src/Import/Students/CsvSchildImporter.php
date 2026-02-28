@@ -10,14 +10,14 @@ use App\Repository\StudentRepositoryInterface;
 use App\Utils\ArrayUtils;
 use League\Csv\Reader;
 
-class CsvSchildImporter {
+readonly class CsvSchildImporter {
 
     use CsvHelperTrait;
 
     public function __construct(private readonly StudentRepositoryInterface $studentRepository) { }
 
     public function import(ImportRequest $request): ImportResult {
-        $csv = Reader::createFromPath($request->csv->getRealPath());
+        $csv = Reader::from($request->csv->getRealPath());
         $csv->setHeaderOffset(0);
         $csv->setDelimiter($request->delimiter);
         $csv->setEscape('');
