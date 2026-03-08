@@ -52,7 +52,7 @@ readonly class CsvSchildImporter {
                 $updated++;
             }
 
-            $student->setStatus($this->getStatus($this->getString($record[$request->statusHeader])));
+            $student->setStatus($this->getStatus($this->getIntOrNull($record[$request->statusHeader])));
             $student->setFirstname($this->getString($record[$request->firstnameHeader]));
             $student->setLastname($this->getString($record[$request->lastnameHeader]));
             $student->setGrade($this->getStringOrNull($record[$request->gradeHeader]));
