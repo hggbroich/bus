@@ -39,7 +39,7 @@ class Student implements Stringable {
     #[Assert\Email]
     private ?string $email = null;
 
-    #[ORM\Column(type: Types::STRING)]
+    #[ORM\Column(type: Types::STRING, nullable: true)]
     #[Assert\NotBlank(allowNull: true)]
     private ?string $grade = null;
 
