@@ -58,7 +58,7 @@ readonly class CsvSchildImporter {
             $student->setGrade($this->getStringOrNull($record[$request->gradeHeader]));
             $student->setEmail($this->getStringOrNull($record[$request->emailHeader]));
             $student->setStreet($this->getStringOrNull($record[$request->streetHeader]));
-            $student->setHouseNumber($this->getString($record[$request->houseNumberHeader]));
+            $student->setHouseNumber($this->getStringOrNull($record[$request->houseNumberHeader]));
             $student->setPlz($this->getIntOrNull($record[$request->plzHeader]));
             $student->setCity($this->getStringOrNull($record[$request->cityHeader]));
             $student->setEntranceDate($this->getDateTime($record[$request->entranceDateHeader]));
