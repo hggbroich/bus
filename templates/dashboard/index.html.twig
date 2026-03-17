@@ -26,7 +26,7 @@
     {% endif %}
 
     {% for student in app.user.associatedStudents %}
-        {% include "_includes/student_base.html.twig" %}
+        {% include "_includes/student_base.html.twig" with { showPlaceOrderLink: true } %}
     {% endfor %}
 
     {% if app.user.associatedStudents|length > 0 %}

@@ -106,8 +106,14 @@
                 {{ 'profile.checks.button.complete'|trans }}
             </a>
         {% else %}
-            <a href="{{ path('update_profile', { uuid: student.uuid }) }}" class="btn btn-primary btn-sm">
+            <a href="{{ path('update_profile', { uuid: student.uuid }) }}" class="btn btn-outline-primary btn-sm">
                 {{ 'profile.checks.button.change'|trans }}
+            </a>
+        {% endif %}
+
+        {% if showPlaceOrderLink|default(false) and is_granted('place-order', student) %}
+            <a href="{{ path('place_order', { uuid: student.uuid }) }}" class="btn btn-primary btn-sm">
+                <i class="fas fa-plus"></i> {{ 'orders.place.label'|trans }}
             </a>
         {% endif %}
     </div>
