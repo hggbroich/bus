@@ -60,6 +60,7 @@ class StudentType extends AbstractType {
             ])
             ->add('stop', EntityType::class, [
                 'label' => 'label.stop.label',
+                'help' => 'label.stop.help',
                 'placeholder' => 'label.stop.placeholder',
                 'class' => Stop::class,
                 'attr' => [

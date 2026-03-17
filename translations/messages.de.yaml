@@ -139,6 +139,7 @@ label:
     stop:
         label: Haltestelle
         placeholder: Haltestelle auswählen
+        help: Wenn die Haltestelle nicht gefunden wird, bitte den Haltestellennamen ohne Angabe des Ortes bzw. Stadtteils suchen.
     customer_id: Kundennummer
 
     firstname: Vorname
