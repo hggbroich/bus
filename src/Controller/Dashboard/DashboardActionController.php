@@ -6,6 +6,7 @@ namespace App\Controller\Dashboard;
 
 use App\Entity\User;
 use App\Profile\ProfileCompleteChecker;
+use App\Settings\AppSettings;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -15,7 +16,8 @@ class DashboardActionController extends AbstractController {
     #[Route('/dashboard', name: 'dashboard')]
     public function __invoke(
         #[CurrentUser] User $user,
-        ProfileCompleteChecker $profileChecker
+        ProfileCompleteChecker $profileChecker,
+        AppSettings $appSettings
     ): Response {
         $violationLists = [ ];
 
@@ -25,6 +27,7 @@ class DashboardActionController extends AbstractController {
 
         return $this->render('dashboard/index.html.twig', [
             'violationLists' => $violationLists,
+            'welcomeMessage' => $appSettings->welcomeMessage
         ]);
     }
 }

@@ -12,6 +12,20 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 class AppSettings {
     use SettingsTrait;
 
+    #[SettingsParameter(type: StringType::class, label: 'settings.app.welcome.label', description: 'settings.app.welcome.help', formType: TextareaType::class, formOptions:
+        [
+            'required' => false,
+            'attr' =>
+                [
+                    'data-ea-code-editor-field' => 'true',
+                    'data-language' => 'markdown',
+                    'data-tab-size' => 4,
+                    'data-indent-with-tabs' => 'false',
+                    'data-show-line-numbers' => 'true'
+                ]
+        ], nullable: true)]
+    public ?string $welcomeMessage = null;
+
     #[SettingsParameter(type: StringType::class, label: 'settings.app.custom_css.label', description: 'settings.app.custom_css.help', formType: TextareaType::class, formOptions:
         [
             'required' => false,
@@ -26,4 +40,6 @@ class AppSettings {
         ],
         nullable: true)]
     public ?string $customCss = null;
+
+
 }

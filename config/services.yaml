@@ -103,3 +103,8 @@ services:
     SchulIT\CommonBundle\Monolog\RequestProcessor:
         tags:
             - { name: monolog.processor }
+
+    # Markdown Extensions
+    League\CommonMark\Extension\DefaultAttributes\DefaultAttributesExtension:
+        tags:
+            - { name: twig.markdown.league_extension }

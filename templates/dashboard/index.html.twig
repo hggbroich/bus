@@ -9,6 +9,12 @@
 {% endblock %}
 
 {% block content %}
+    {% if welcomeMessage is not null %}
+        <div class="bs-callout bs-callout-info">
+            {{ welcomeMessage|markdown_to_html }}
+        </div>
+    {% endif %}
+
     {% if app.user.associatedStudents|length == 0 %}
         <div class="bs-callout bs-callout-info">
             <h5>{{ 'info.label'|trans }}</h5>

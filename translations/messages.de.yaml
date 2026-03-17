@@ -12,6 +12,9 @@ settings:
 
     app:
         label: Allgemeine Einstellungen
+        welcome:
+            label: Willkommens-Mitteilung
+            help: Optional. Hier kann eine Mitteilung verfasst werden, die auf der Startseite oben angezeigt wird. Dieses Feld unterstützt Markdown.
         custom_css:
             label: Benutzerdefiniertes CSS
             help: Hier kann benutzerdefiniertes CSS eingebunden werden, um die Software nach eigenen Wünschen einzufärben.

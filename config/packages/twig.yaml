@@ -8,6 +8,14 @@ twig:
         #user: '@App\Twig\UserVariable'
         profile_url: "%env(IDP_PROFILE_URL)%"
 
+twig_extra:
+    commonmark:
+        default_attributes:
+            League\CommonMark\Extension\CommonMark\Node\Inline\Link:
+                class: 'btn btn-outline-primary btn-sm'
+                target: '_blank'
+
+
 when@test:
     twig:
         strict_variables: true
