@@ -117,7 +117,8 @@ class PlaceOrderAction extends AbstractController {
                     ->setStudentAtSchool($student)
                     ->setFirstname($student->getFirstname())
                     ->setLastname($student->getLastname())
-                    ->setSchool($school)
+                    ->setBirthday($student->getBirthday())
+                    ->setSchool(null)
             );
         }
 

@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Validator\Constraints\IsTrue;
@@ -48,10 +49,11 @@ class StudentSiblingType extends AbstractType {
                 'required' => false
             ])
             ->add('school', SchoolType::class, [
-                'placeholder' => 'Schule auswählen',
+                'placeholder' => 'Schule auswählen (falls an externer Schule)',
                 'attr' => [
                     'data-choice' => 'true'
-                ]
+                ],
+                'required' => false
             ])
             ->add('firstname', TextType::class, [
                 'label' => 'label.firstname'

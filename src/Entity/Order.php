@@ -146,6 +146,7 @@ class Order {
     /**
      * @var Collection<int, StudentSibling>
      */
+    #[Assert\Valid]
     #[ORM\OneToMany(targetEntity: StudentSibling::class, mappedBy: 'order', cascade: ['persist'], orphanRemoval: true)]
     private Collection $siblings;
 

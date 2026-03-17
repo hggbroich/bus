@@ -31,7 +31,7 @@ readonly class ForeignSiblingsAreSameCheck implements CheckInterface {
         }
 
         $filterFunction = fn(StudentSibling $sibling): bool => $sibling->getStudentAtSchool() === null;
-        $mapFunction = fn(StudentSibling $sibling): string => sprintf('%s-%s-%-%s', $sibling->getFirstname(), $sibling->getLastname(), $sibling->getSchool()->getId(), $sibling->getBirthday()->format('Y-m-d'));
+        $mapFunction = fn(StudentSibling $sibling): string => sprintf('%s-%s-%-%s', $sibling->getFirstname(), $sibling->getLastname(), $sibling->getSchool()?->getId(), $sibling->getBirthday()->format('Y-m-d'));
         $thisForeignSiblings = $order
             ->getSiblings()
             ->filter($filterFunction)

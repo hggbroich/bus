@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Order;
+use App\Entity\StudentSibling;
 use App\FareLevel\FareLevelSetter;
 use App\Settings\OrderSettings;
 use LogicException;
@@ -87,7 +88,13 @@ class OrderType extends AbstractType {
                 'entry_options' => [
                     'exclude_student' => $options['exclude_student']
                 ]
-            ]);
+            ])
+            ->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
+                // See https://symfonycasts.com/screencast/collections/embedded-validation#fixing-collectiontype-validation-bug
+                $data = $event->getData();
+                $data['siblings'] = array_values($data['siblings']);
+                $event->setData($data);
+            });
 
         if(count($this->orderSettings->confirmations) > 0) {
             $builder
