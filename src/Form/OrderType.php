@@ -92,7 +92,11 @@ class OrderType extends AbstractType {
             ->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
                 // See https://symfonycasts.com/screencast/collections/embedded-validation#fixing-collectiontype-validation-bug
                 $data = $event->getData();
-                $data['siblings'] = array_values($data['siblings']);
+
+                if(array_key_exists('siblings', $data)) {
+                    $data['siblings'] = array_values($data['siblings']);
+                }
+                
                 $event->setData($data);
             });
 
