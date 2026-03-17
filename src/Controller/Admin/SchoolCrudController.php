@@ -16,7 +16,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-#[IsGranted('ROLE_ADMIN')]
+#[IsGranted('ROLE_STUDENT_ADMIN')]
 class SchoolCrudController extends AbstractCrudController
 {
 
@@ -32,7 +32,8 @@ class SchoolCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud {
         return $crud
             ->setEntityLabelInSingular('Schule')
-            ->setEntityLabelInPlural('Schulen');
+            ->setEntityLabelInPlural('Schulen')
+            ->setEntityPermission('ROLE_ADMIN');
     }
 
     public function configureFilters(Filters $filters): Filters {
@@ -50,7 +51,11 @@ class SchoolCrudController extends AbstractCrudController
 
         return $actions
             ->disable(Action::NEW, Action::EDIT, Action::DELETE, Action::BATCH_DELETE)
-            ->add(Crud::PAGE_INDEX, $importAction);
+            ->add(Crud::PAGE_INDEX, $importAction)
+            ->setPermission(Action::NEW, 'ROLE_ADMIN')
+            ->setPermission(Action::DELETE, 'ROLE_ADMIN')
+            ->setPermission(Action::EDIT, 'ROLE_ADMIN')
+            ->setPermission(Action::BATCH_DELETE, 'ROLE_ADMIN');
     }
 
     public function configureFields(string $pageName): iterable {
