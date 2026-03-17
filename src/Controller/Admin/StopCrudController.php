@@ -15,12 +15,14 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-#[IsGranted('ROLE_ADMIN')]
+#[IsGranted('ROLE_STUDENT_ADMIN')]
 class StopCrudController extends AbstractCrudController
 {
+
     public function __construct(private readonly AdminUrlGenerator $urlGenerator) {
 
     }
@@ -33,7 +35,8 @@ class StopCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud {
         return $crud
             ->setEntityLabelInSingular('Haltestelle')
-            ->setEntityLabelInPlural('Haltestellen');
+            ->setEntityLabelInPlural('Haltestellen')
+            ->setEntityPermission('ROLE_ADMIN');
     }
 
     public function configureFilters(Filters $filters): Filters {
@@ -51,7 +54,11 @@ class StopCrudController extends AbstractCrudController
 
         return $actions
             ->disable(Action::NEW, Action::EDIT, Action::DELETE, Action::BATCH_DELETE)
-            ->add(Crud::PAGE_INDEX, $importAction);
+            ->add(Crud::PAGE_INDEX, $importAction)
+            ->setPermission(Action::NEW, 'ROLE_ADMIN')
+            ->setPermission(Action::DELETE, 'ROLE_ADMIN')
+            ->setPermission(Action::EDIT, 'ROLE_ADMIN')
+            ->setPermission(Action::BATCH_DELETE, 'ROLE_ADMIN');
     }
 
     public function configureFields(string $pageName): iterable {
