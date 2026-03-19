@@ -30,6 +30,7 @@ class StudentSiblingCrudController extends AbstractCrudController
 
             AssociationField::new('school')
                 ->setLabel('Schule')
+                ->setHelp('Nur eine Schule eintragen, wenn es sich um einen externen Schüler/eine externe Schülerin handelt.')
                 ->autocomplete(),
         ];
     }
