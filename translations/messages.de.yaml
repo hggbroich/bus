@@ -18,6 +18,12 @@ settings:
         custom_css:
             label: Benutzerdefiniertes CSS
             help: Hier kann benutzerdefiniertes CSS eingebunden werden, um die Software nach eigenen Wünschen einzufärben.
+        school_name:
+            label: Name der Schule
+        to_school_name:
+            label: Schule mit Präposition
+            help: Beispielsweise "zum Max-Mustermann-Gymnasium"
+
 
     profile:
         label: Stammdaten-Einstellungen
@@ -150,17 +156,17 @@ label:
     school: Schule
 
     public_school:
-        label: Öffentliche Schule
+        label: Öffentliches Gymnasium
         placeholder: Schule auswählen
-        help: Bitte die nächstgelegene öffentliche Schule angeben.
+        help: Bitte das nächstgelegene öffentliche Gymnasium angeben.
 
     distance_to_public_school:
-        label: Distanz zur öffentlichen Schule
-        help: Bitte die Distanz (Fußweg ab der Haustüre) zur angegebenen öffentlichen Schule angeben.
+        label: Distanz zum öffentlichen Gymnasium
+        help: Bitte die Distanz (Fußweg ab der Haustüre) zum angegebenen öffentlichen Gymnasium angeben.
 
     distance_to_school:
-        label: Distanz zur Schule
-        help: Bitte die Distanz (Fußweg ab der Haustüre) zur Schule angeben.
+        label: Distanz %toSchool%
+        help: Bitte die Distanz (Fußweg ab der Haustüre) %toSchool% angeben.
 
     confirm_confirmations: Ich habe die oben genannten Punkte gelesen und akzeptiere sie.
 
@@ -233,8 +239,8 @@ orders:
             customer_id: Kundennummer beim Busunternehmen
             stop: Haltestelle
             public_school: Nächste öffentliche Schule
-            public_school_distance: Distanz (öff. Schule)
-            own_school_distance: Distanz (eigene Schule)
+            public_school_distance: Distanz (öff. Gymnasium)
+            own_school_distance: Distanz (%school%)
 
     checks:
         foreign_siblings:

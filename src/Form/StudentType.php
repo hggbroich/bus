@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Stop;
 use App\Entity\Student;
+use App\Settings\AppSettings;
 use App\Settings\ProfileSettings;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -19,7 +20,8 @@ use Symfony\Component\Form\FormInterface;
 class StudentType extends AbstractType {
 
     public function __construct(
-        private readonly ProfileSettings $profileSettings
+        private readonly ProfileSettings $profileSettings,
+        private readonly AppSettings $appSettings
     ) {
 
     }
@@ -81,7 +83,13 @@ class StudentType extends AbstractType {
             ])
             ->add('distanceToSchool', DistanceType::class, [
                 'label' => 'label.distance_to_school.label',
-                'help' => 'label.distance_to_school.help'
+                'label_translation_parameters' => [
+                    '%toSchool%' => $this->appSettings->toSchoolName
+                ],
+                'help' => 'label.distance_to_school.help',
+                'help_translation_parameters' => [
+                    '%toSchool%' => $this->appSettings->toSchoolName
+                ]
             ])
             ->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event) {
                 $form = $event->getForm();

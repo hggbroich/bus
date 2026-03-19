@@ -5,6 +5,7 @@ twig:
         - "form.html.twig"
     globals:
         config: '@SchulIT\CommonBundle\Twig\ConfigVariable'
+        app_settings: '@App\Settings\AppSettings'
         #user: '@App\Twig\UserVariable'
         profile_url: "%env(IDP_PROFILE_URL)%"
 

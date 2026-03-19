@@ -82,7 +82,7 @@
                 </div>
 
                 <div class="col">
-                    <dt class="text-uppercase text-muted">{{ 'orders.show.travel.own_school_distance'|trans }}</dt>
+                    <dt class="text-uppercase text-muted">{{ 'orders.show.travel.own_school_distance'|trans({'%school%': app_settings.schoolName}) }}</dt>
                     <dd>{{ 'distance'|trans({'%distance%': student.confirmedDistanceToSchool}) }}</dd>
                 </div>
             </div>
