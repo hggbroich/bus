@@ -332,7 +332,7 @@ class OrderCrudController extends AbstractCrudController
         ]);
     }
 
-    public function createEntity(string $entityFqcn) {
+    public function createEntity(string $entityFqcn): object {
         $entity = parent::createEntity($entityFqcn);
 
         $request = $this->requestStack->getMainRequest();
