@@ -94,8 +94,8 @@ class StudentSibling implements Stringable {
     }
 
     public function getBirthday(): ?DateTime {
-        if($this->studentAtSchool !== null) {
-            return $this->studentAtSchool->getBirthday();
+        if($this->birthday === null && $this->studentAtSchool !== null) {
+            $this->setBirthday($this->studentAtSchool->getBirthday());
         }
 
         return $this->birthday;
