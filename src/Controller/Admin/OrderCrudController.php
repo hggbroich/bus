@@ -7,8 +7,8 @@ use App\Entity\Student;
 use App\Export\Order\Exporter;
 use App\Export\Order\ExportRequest;
 use App\Export\Order\ExportRequestType;
+use App\FareLevel\FareLevelSetter;
 use App\Form\ChooseStudentForOrderType;
-use App\Form\StudentSiblingType;
 use App\Order\Check\OrderChecker;
 use App\Order\OrderFiller;
 use App\Repository\StudentRepositoryInterface;
@@ -27,18 +27,14 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
-use Override;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted('ROLE_ORDER_ADMIN')]
@@ -50,6 +46,7 @@ class OrderCrudController extends AbstractCrudController
         private readonly OrderChecker $orderChecker,
         private readonly RequestStack $requestStack,
         private readonly OrderFiller $orderFiller,
+        private readonly FareLevelSetter $fareLevelSetter,
         private readonly StudentRepositoryInterface $studentRepository
     ) {
 
@@ -207,6 +204,9 @@ class OrderCrudController extends AbstractCrudController
             IntegerField::new('depositorPlz', 'PLZ')
                 ->hideOnIndex(),
 
+            TextField::new('depositorCity', 'Ort')
+                ->hideOnIndex(),
+
             FormField::addColumn(6),
             AssociationField::new('depositorCountry', 'Land')
                 ->hideOnIndex(),
@@ -350,6 +350,7 @@ class OrderCrudController extends AbstractCrudController
 
         $entity->setStudent($student);
         $this->orderFiller->copyProfileToOrder($entity, $student);
+        $this->fareLevelSetter->setFareLevel($entity);
 
         return $entity;
     }
