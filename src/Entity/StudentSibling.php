@@ -68,8 +68,8 @@ class StudentSibling implements Stringable {
     }
 
     public function getFirstname(): string {
-        if($this->studentAtSchool !== null) {
-            return $this->studentAtSchool->getFirstname();
+        if($this->firstname === null && $this->studentAtSchool !== null) {
+            $this->setFirstname($this->studentAtSchool->getFirstname());
         }
 
         return $this->firstname;
@@ -81,8 +81,8 @@ class StudentSibling implements Stringable {
     }
 
     public function getLastname(): string {
-        if($this->studentAtSchool !== null) {
-            return $this->studentAtSchool->getLastname();
+        if($this->lastname === null && $this->studentAtSchool !== null) {
+            $this->setLastname($this->studentAtSchool->getLastname());
         }
 
         return $this->lastname;
