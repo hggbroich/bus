@@ -283,7 +283,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         }>,
  *     },
  *     asset_mapper?: bool|array{ // Asset Mapper configuration
- *         enabled?: bool|Param, // Default: false
+ *         enabled?: bool|Param, // Default: true
  *         paths?: array<string, scalar|Param|null>,
  *         excluded_patterns?: list<scalar|Param|null>,
  *         exclude_dotfiles?: bool|Param, // If true, any files starting with "." will be excluded from the asset mapper. // Default: true
@@ -991,20 +991,6 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     intercept_redirects?: bool|Param, // Default: false
  *     excluded_ajax_paths?: scalar|Param|null, // Default: "^/((index|app(_[\\w]+)?)\\.php/)?_wdt"
  * }
- * @psalm-type StimulusConfig = array{
- *     controller_paths?: list<scalar|Param|null>,
- *     controllers_json?: scalar|Param|null, // Default: "%kernel.project_dir%/assets/controllers.json"
- * }
- * @psalm-type TurboConfig = array{
- *     broadcast?: bool|array{
- *         enabled?: bool|Param, // Default: true
- *         entity_template_prefixes?: list<scalar|Param|null>,
- *         doctrine_orm?: bool|array{ // Enable the Doctrine ORM integration
- *             enabled?: bool|Param, // Default: true
- *         },
- *     },
- *     default_transport?: scalar|Param|null, // Default: "default"
- * }
  * @psalm-type TwigExtraConfig = array{
  *     cache?: bool|array{
  *         enabled?: bool|Param, // Default: false
@@ -1049,7 +1035,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *             use_underscore?: bool|Param, // Default: true
  *             unordered_list_markers?: list<scalar|Param|null>,
  *         },
- *         ...<mixed>
+ *         ...<string, mixed>
  *     },
  * }
  * @psalm-type SecurityConfig = array{
@@ -1622,9 +1608,9 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         logo_link?: scalar|Param|null, // Default: null
  *     },
  *     disable?: array{
- *         cron?: bool|Param, // Default: false
+ *         cron?: bool|Param, // Deprecated: The child node "cron" at path "common.disable.cron" is deprecated. // Default: false
  *         orm?: bool|Param, // Default: false
- *         messenger?: bool|Param, // Default: false
+ *         messenger?: bool|Param, // Deprecated: The child node "messenger" at path "common.disable.messenger" is deprecated. // Default: false
  *         autoconfig?: bool|Param, // Default: false
  *     },
  *     autoconfig?: array{
@@ -1633,21 +1619,12 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         app_icon?: string|Param,
  *         saml_cert_file?: string|Param,
  *         role_hierarchy?: mixed,
+ *         role_translator?: string|Param, // Default: "SchulIT\\CommonBundle\\Autoconfig\\Roles\\TranslationFileTranslator"
  *         ignore_roles?: list<string|Param>,
  *         role_attribute_name?: string|Param, // Default: "urn:roles"
  *         index_route_name?: string|Param, // Default: "index"
  *         login_acs_route_name?: string|Param, // Default: "lightsaml_sp.login_check"
  *     },
- * }
- * @psalm-type WebpackEncoreConfig = array{
- *     output_path?: scalar|Param|null, // The path where Encore is building the assets - i.e. Encore.setOutputPath()
- *     crossorigin?: false|"anonymous"|"use-credentials"|Param, // crossorigin value when Encore.enableIntegrityHashes() is used, can be false (default), anonymous or use-credentials // Default: false
- *     preload?: bool|Param, // preload all rendered script and link tags automatically via the http2 Link header. // Default: false
- *     cache?: bool|Param, // Enable caching of the entry point file(s) // Default: false
- *     strict_mode?: bool|Param, // Throw an exception if the entrypoints.json file is missing or an entry is missing from the data // Default: true
- *     builds?: array<string, scalar|Param|null>,
- *     script_attributes?: array<string, scalar|Param|null>,
- *     link_attributes?: array<string, scalar|Param|null>,
  * }
  * @psalm-type ZenstruckMessengerMonitorConfig = array{
  *     storage?: array{
@@ -1757,8 +1734,6 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     doctrine?: DoctrineConfig,
  *     doctrine_migrations?: DoctrineMigrationsConfig,
  *     twig?: TwigConfig,
- *     stimulus?: StimulusConfig,
- *     turbo?: TurboConfig,
  *     twig_extra?: TwigExtraConfig,
  *     security?: SecurityConfig,
  *     monolog?: MonologConfig,
@@ -1768,7 +1743,6 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     composer_dependency_list?: ComposerDependencyListConfig,
  *     chrisguitarguy_request_id?: ChrisguitarguyRequestIdConfig,
  *     common?: CommonConfig,
- *     webpack_encore?: WebpackEncoreConfig,
  *     zenstruck_messenger_monitor?: ZenstruckMessengerMonitorConfig,
  *     jbtronics_settings?: JbtronicsSettingsConfig,
  *     twig_component?: TwigComponentConfig,
@@ -1783,8 +1757,6 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         debug?: DebugConfig,
  *         twig?: TwigConfig,
  *         web_profiler?: WebProfilerConfig,
- *         stimulus?: StimulusConfig,
- *         turbo?: TurboConfig,
  *         twig_extra?: TwigExtraConfig,
  *         security?: SecurityConfig,
  *         monolog?: MonologConfig,
@@ -1795,7 +1767,6 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         composer_dependency_list?: ComposerDependencyListConfig,
  *         chrisguitarguy_request_id?: ChrisguitarguyRequestIdConfig,
  *         common?: CommonConfig,
- *         webpack_encore?: WebpackEncoreConfig,
  *         zenstruck_messenger_monitor?: ZenstruckMessengerMonitorConfig,
  *         jbtronics_settings?: JbtronicsSettingsConfig,
  *         twig_component?: TwigComponentConfig,
@@ -1809,8 +1780,6 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         doctrine?: DoctrineConfig,
  *         doctrine_migrations?: DoctrineMigrationsConfig,
  *         twig?: TwigConfig,
- *         stimulus?: StimulusConfig,
- *         turbo?: TurboConfig,
  *         twig_extra?: TwigExtraConfig,
  *         security?: SecurityConfig,
  *         monolog?: MonologConfig,
@@ -1820,7 +1789,6 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         composer_dependency_list?: ComposerDependencyListConfig,
  *         chrisguitarguy_request_id?: ChrisguitarguyRequestIdConfig,
  *         common?: CommonConfig,
- *         webpack_encore?: WebpackEncoreConfig,
  *         zenstruck_messenger_monitor?: ZenstruckMessengerMonitorConfig,
  *         jbtronics_settings?: JbtronicsSettingsConfig,
  *         twig_component?: TwigComponentConfig,
@@ -1835,8 +1803,6 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         doctrine_migrations?: DoctrineMigrationsConfig,
  *         twig?: TwigConfig,
  *         web_profiler?: WebProfilerConfig,
- *         stimulus?: StimulusConfig,
- *         turbo?: TurboConfig,
  *         twig_extra?: TwigExtraConfig,
  *         security?: SecurityConfig,
  *         monolog?: MonologConfig,
@@ -1846,7 +1812,6 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         composer_dependency_list?: ComposerDependencyListConfig,
  *         chrisguitarguy_request_id?: ChrisguitarguyRequestIdConfig,
  *         common?: CommonConfig,
- *         webpack_encore?: WebpackEncoreConfig,
  *         zenstruck_messenger_monitor?: ZenstruckMessengerMonitorConfig,
  *         jbtronics_settings?: JbtronicsSettingsConfig,
  *         twig_component?: TwigComponentConfig,

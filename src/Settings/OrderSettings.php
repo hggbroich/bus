@@ -39,10 +39,7 @@ class OrderSettings {
     ], nullable: false)]
     public array $requiredStatusForOrder = [ ];
 
-    #[SettingsParameter(type: EntityType::class, label: 'settings.orders.school.label', description: 'settings.orders.school.help', options: [
-        'class' => School::class,
-        'exclude_own_school' => false,
-    ], formType: SchoolType::class, nullable: true, cloneable: false)]
+    #[SettingsParameter(type: EntityType::class, label: 'settings.orders.school.label', description: 'settings.orders.school.help', options: ['class' => School::class], formType: SchoolType::class, formOptions: ['exclude_own_school' => false], nullable: true, cloneable: false)]
     #[Assert\NotNull]
     public School|null $school = null;
 

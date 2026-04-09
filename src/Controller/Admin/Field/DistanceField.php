@@ -20,7 +20,7 @@ class DistanceField implements FieldInterface {
             ->setLabel($label)
             ->setFormType(DistanceGoogleMapsType::class)
             ->addFormTheme('admin/field/distance_form.html.twig')
-            ->addWebpackEncoreEntries('maps-button')
+            ->addJsFiles('js/maps-button.js')
             ->setCustomOption(self::OPTION_BUTTON_STOP_FIELD, null)
             ->setCustomOption(self::OPTION_BUTTON_PUBLIC_SCHOOL_FIELD, null);
     }
