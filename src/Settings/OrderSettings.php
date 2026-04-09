@@ -10,6 +10,8 @@ use App\Settings\Type\FollowupGradeStrategyType;
 use App\Settings\Type\KeyValueType;
 use App\Ticket\AssignmentStrategy\BirthdayAssignmentStrategy;
 use DateTime;
+use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Jbtronics\SettingsBundle\ParameterTypes\ArrayType;
 use Jbtronics\SettingsBundle\ParameterTypes\DatetimeType;
 use Jbtronics\SettingsBundle\ParameterTypes\FloatType;
@@ -37,7 +39,10 @@ class OrderSettings {
     ], nullable: false)]
     public array $requiredStatusForOrder = [ ];
 
-    #[SettingsParameter(type: EntityType::class, label: 'settings.orders.school.label', description: 'settings.orders.school.help', options: ['class' => School::class], formType: SchoolType::class, nullable: true, cloneable: false)]
+    #[SettingsParameter(type: EntityType::class, label: 'settings.orders.school.label', description: 'settings.orders.school.help', options: [
+        'class' => School::class,
+        'exclude_own_school' => false,
+    ], formType: SchoolType::class, nullable: true, cloneable: false)]
     #[Assert\NotNull]
     public School|null $school = null;
 
