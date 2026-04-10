@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cead16db846bf830eccf1117da971c13",
+    "content-hash": "0be4b75c00b92338145e3b245b36f31e",
     "packages": [
         {
             "name": "brick/math",
@@ -3596,16 +3596,16 @@
         },
         {
             "name": "schulit/common-bundle",
-            "version": "6.2.0",
+            "version": "6.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SchulIT/common-bundle.git",
-                "reference": "fb6ed39d22b51ad8c7ea07e824b6eb1af0da39f7"
+                "reference": "f075cc5f833da6103b57b22aaf54c3905941fb46"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SchulIT/common-bundle/zipball/fb6ed39d22b51ad8c7ea07e824b6eb1af0da39f7",
-                "reference": "fb6ed39d22b51ad8c7ea07e824b6eb1af0da39f7",
+                "url": "https://api.github.com/repos/SchulIT/common-bundle/zipball/f075cc5f833da6103b57b22aaf54c3905941fb46",
+                "reference": "f075cc5f833da6103b57b22aaf54c3905941fb46",
                 "shasum": ""
             },
             "require": {
@@ -3646,9 +3646,9 @@
             "description": "Commonly used bundle for SchulIT software suite.",
             "support": {
                 "issues": "https://github.com/SchulIT/common-bundle/issues",
-                "source": "https://github.com/SchulIT/common-bundle/tree/6.2.0"
+                "source": "https://github.com/SchulIT/common-bundle/tree/6.2.1"
             },
-            "time": "2026-04-07T19:28:05+00:00"
+            "time": "2026-04-10T18:17:05+00:00"
         },
         {
             "name": "scienta/doctrine-json-functions",
@@ -10118,16 +10118,16 @@
         },
         {
             "name": "webmozart/assert",
-            "version": "2.1.6",
+            "version": "2.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/webmozarts/assert.git",
-                "reference": "ff31ad6efc62e66e518fbab1cde3453d389bcdc8"
+                "reference": "1b99650e7ffcad232624a260bc7fbdec2ffc407c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/webmozarts/assert/zipball/ff31ad6efc62e66e518fbab1cde3453d389bcdc8",
-                "reference": "ff31ad6efc62e66e518fbab1cde3453d389bcdc8",
+                "url": "https://api.github.com/repos/webmozarts/assert/zipball/1b99650e7ffcad232624a260bc7fbdec2ffc407c",
+                "reference": "1b99650e7ffcad232624a260bc7fbdec2ffc407c",
                 "shasum": ""
             },
             "require": {
@@ -10174,9 +10174,9 @@
             ],
             "support": {
                 "issues": "https://github.com/webmozarts/assert/issues",
-                "source": "https://github.com/webmozarts/assert/tree/2.1.6"
+                "source": "https://github.com/webmozarts/assert/tree/2.2.0"
             },
-            "time": "2026-02-27T10:28:38+00:00"
+            "time": "2026-04-09T16:54:47+00:00"
         },
         {
             "name": "zenstruck/bytes",
@@ -12625,7 +12625,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {},
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
@@ -12633,8 +12633,9 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "ext-sodium": "*",
-        "ext-zip": "*"
+        "ext-zip": "*",
+        "ext-zlib": "*"
     },
-    "platform-dev": [],
+    "platform-dev": {},
     "plugin-api-version": "2.6.0"
 }
