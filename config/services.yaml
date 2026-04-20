@@ -108,3 +108,12 @@ services:
     League\CommonMark\Extension\DefaultAttributes\DefaultAttributesExtension:
         tags:
             - { name: twig.markdown.league_extension }
+
+    # Scheduler
+    Zenstruck\Messenger\Monitor\Command\PurgeCommand:
+        tags:
+            - { name: scheduler.task, arguments: '', trigger: 'cron', expression: '@daily' }
+
+    SchulIT\CommonBundle\Command\ClearLogsCommand:
+        tags:
+            - { name: scheduler.task, arguments: '', trigger: 'cron', expression: '@daily' }
