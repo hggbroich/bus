@@ -20,6 +20,10 @@ return [
         'path' => './assets/js/collection.js',
         'entrypoint' => true,
     ],
+    'maps-button' => [
+        'path' => './assets/js/maps-button.js',
+        'entrypoint' => true,
+    ],
     'bootstrap' => [
         'version' => '5.3.8',
     ],
