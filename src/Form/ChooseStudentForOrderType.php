@@ -11,7 +11,10 @@ class ChooseStudentForOrderType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options): void {
         $builder
             ->add('student', EntityType::class, [
-                'class' => Student::class
+                'class' => Student::class,
+                'attr' => [
+                    'data-tomselect' => 'true'
+                ]
             ]);
     }
 }

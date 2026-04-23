@@ -24,6 +24,10 @@ return [
         'path' => './assets/js/maps-button.js',
         'entrypoint' => true,
     ],
+    'choice' => [
+        'path' => './assets/js/choice.js',
+        'entrypoint' => true,
+    ],
     'bootstrap' => [
         'version' => '5.3.8',
     ],
@@ -43,5 +47,22 @@ return [
     ],
     '@popperjs/core' => [
         'version' => '2.11.8',
+    ],
+    'tom-select' => [
+        'version' => '2.6.0',
+    ],
+    '@orchidjs/sifter' => [
+        'version' => '1.1.0',
+    ],
+    '@orchidjs/unicode-variants' => [
+        'version' => '1.1.2',
+    ],
+    'tom-select/dist/css/tom-select.default.min.css' => [
+        'version' => '2.6.0',
+        'type' => 'css',
+    ],
+    'tom-select/dist/css/tom-select.bootstrap5.min.css' => [
+        'version' => '2.6.0',
+        'type' => 'css',
     ],
 ];

@@ -13,6 +13,7 @@
 {% block head_stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" href="{{ asset('field-code-editor.css', ea.assets.defaultAssetPackageName) }}">
+    <link rel="stylesheet" href="{{ preload(asset('vendor/tom-select/dist/css/tom-select.bootstrap5.min.css')) }}" type="text/css">
 {% endblock %}
 
 {% block head_javascript %}
@@ -20,6 +21,10 @@
     <script src="{{ asset('form.js', ea.assets.defaultAssetPackageName) }}"></script>
     <script src="{{ asset('field-collection.js', ea.assets.defaultAssetPackageName) }}"></script>
     <script src="{{ asset('field-code-editor.js', ea.assets.defaultAssetPackageName) }}"></script>
+
+    {% block importmap %}
+        {{ importmap(['choice']) }}
+    {% endblock %}
 {% endblock head_javascript %}
 
 

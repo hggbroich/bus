@@ -17,10 +17,13 @@ document.addEventListener('DOMContentLoaded', function() {
             placeholder: true
         };
 
+        console.log(el);
+
         el.choices = new Choices(el, config);
     };
 
     document.querySelectorAll('select[data-choice=true]').forEach(function(el) {
+        console.log(el);
         initializeChoice(el);
     });
 
