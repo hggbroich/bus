@@ -49,13 +49,13 @@ readonly class OrderChecker {
     }
 
     public function checkAllInCurrentWindowAsync(): int {
-        if($this->orderSettings->windowStart === null || $this->orderSettings->windowEnd === true) {
+        if($this->orderSettings->checkWindowStart === null || $this->orderSettings->checkWindowEnd === true) {
             return 0;
         }
 
         $orders = $this->orderRepository->findAllRange(
-            $this->orderSettings->windowStart,
-            $this->orderSettings->windowEnd
+            $this->orderSettings->checkWindowStart,
+            $this->orderSettings->checkWindowEnd
         );
 
         foreach($orders as $order) {

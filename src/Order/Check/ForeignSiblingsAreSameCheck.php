@@ -22,11 +22,11 @@ readonly class ForeignSiblingsAreSameCheck implements CheckInterface {
 
     #[Override]
     public function check(Order $order): array {
-        if($this->orderSettings->windowStart === null || $this->orderSettings->windowEnd === null) {
+        if($this->orderSettings->checkWindowStart === null || $this->orderSettings->checkWindowEnd === null) {
             return [ ];
         }
 
-        if(!$this->dateHelper->isBetween($order->getCreatedAt(), $this->orderSettings->windowStart, $this->orderSettings->windowEnd)) {
+        if(!$this->dateHelper->isBetween($order->getCreatedAt(), $this->orderSettings->checkWindowStart, $this->orderSettings->checkWindowEnd)) {
             return [ ];
         }
 
@@ -45,7 +45,7 @@ readonly class ForeignSiblingsAreSameCheck implements CheckInterface {
                 continue;
             }
 
-            $siblingOrder = $this->orderRepository->findForStudentInRange($sibling->getStudentAtSchool(), $this->orderSettings->windowStart, $this->orderSettings->windowEnd);
+            $siblingOrder = $this->orderRepository->findForStudentInRange($sibling->getStudentAtSchool(), $this->orderSettings->checkWindowStart, $this->orderSettings->checkWindowEnd);
 
             if($siblingOrder === null) {
                 continue;

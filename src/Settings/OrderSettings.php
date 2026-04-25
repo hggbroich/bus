@@ -50,6 +50,13 @@ class OrderSettings {
     #[Assert\GreaterThan(propertyPath: 'windowStart')]
     public DateTime|null $windowEnd = null;
 
+    #[SettingsParameter(label: 'settings.orders.check_window.start.label', description: 'settings.orders.check_window.start.help', formType: DateType::class, nullable: true)]
+    public DateTime|null $checkWindowStart = null;
+
+    #[SettingsParameter(label: 'settings.orders.check_window.end.label', description: 'settings.orders.check_window.end.help', formType: DateType::class, nullable: true)]
+    #[Assert\GreaterThan(propertyPath: 'checkWindowStart')]
+    public DateTime|null $checkWindowEnd = null;
+
     #[SettingsParameter(type: ArrayType::class, label: 'settings.orders.confirmations.label', description: 'settings.orders.confirmations.help', options: ['type' => StringType::class ], formType: CollectionType::class, formOptions: [
         'entry_type' => TextareaType::class,
         'allow_add' => true,

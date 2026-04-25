@@ -90,6 +90,13 @@ settings:
             end:
                 label: Ende Bestellungs-Zeitfenster
                 help: Bis zu diesem Tag (exklusive) können Bustickets gebucht, bearbeitet und gelöscht werden. Nach diesem Stichtag ist das Bearbeiten und Löschen von Bestellungen durch Eltern nicht mehr möglich.
+        check_window:
+            start:
+                label: Beginn Überprüfungs-Zeitfenster
+                help: Zur Überprüfung der Bestellungen für Geschwisterkinder, muss hier ein Startdatum eingegeben werden, in dem sich Bestellungen der Geschwister befinden müssen, um berücksichtig zuw erden.
+            end:
+                label: Ende Überprüfungs-Zeitfenster
+                help: Bis zu diesem Tag (exklusive) werden Bestellungen für Geschwisterkinder überprüft.
         confirmations:
             label: Bestätigungen
             help: Hier können Texte (bspw. Verweise auf AGBs etc.) hinterlegt werden, die bei einer Bestellung von den Eltern bestätigt werden müssen.

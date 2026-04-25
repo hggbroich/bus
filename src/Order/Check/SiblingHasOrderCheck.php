@@ -18,11 +18,11 @@ readonly class SiblingHasOrderCheck implements CheckInterface {
 
     #[Override]
     public function check(Order $order): array {
-        if($this->orderSettings->windowStart === null || $this->orderSettings->windowEnd === null) {
+        if($this->orderSettings->checkWindowStart === null || $this->orderSettings->checkWindowEnd === null) {
             return [ ];
         }
 
-        if(!$this->dateHelper->isBetween($order->getCreatedAt(), $this->orderSettings->windowStart, $this->orderSettings->windowEnd)) {
+        if(!$this->dateHelper->isBetween($order->getCreatedAt(), $this->orderSettings->checkWindowStart, $this->orderSettings->checkWindowEnd)) {
             return [ ];
         }
 
@@ -35,8 +35,8 @@ readonly class SiblingHasOrderCheck implements CheckInterface {
 
             $otherOrder = $this->orderRepository->findForStudentInRange(
                 $sibling->getStudentAtSchool(),
-                $this->orderSettings->windowStart,
-                $this->orderSettings->windowEnd
+                $this->orderSettings->checkWindowStart,
+                $this->orderSettings->checkWindowEnd
             );
 
             if($otherOrder === null) {

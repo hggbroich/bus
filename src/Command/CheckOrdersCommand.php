@@ -21,8 +21,8 @@ readonly class CheckOrdersCommand {
     }
 
     public function __invoke(SymfonyStyle $io): int {
-        if($this->orderSettings->windowStart === null || $this->orderSettings->windowEnd === true) {
-            $io->success('Aktuell gibt es kein Bestellungszeitfenster, mache nichts.');
+        if($this->orderSettings->checkWindowStart === null || $this->orderSettings->checkWindowEnd === true) {
+            $io->success('Aktuell gibt es kein Überprüfungszeitfenster (siehe Einstellungen), mache nichts.');
             return Command::SUCCESS;
         }
 
