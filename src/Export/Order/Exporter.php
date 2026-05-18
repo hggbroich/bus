@@ -3,12 +3,8 @@
 namespace App\Export\Order;
 
 use App\Entity\Gender;
-use App\Order\Check\OrderChecker;
-use App\Repository\FareLevelRepositoryInterface;
 use App\Repository\OrderRepositoryInterface;
-use App\Repository\TicketRepositoryInterface;
 use App\Settings\ExportSettings;
-use App\Settings\ImportSettings;
 use App\Settings\ValueDataType;
 use League\Csv\Reader;
 use League\Csv\Writer;
@@ -18,10 +14,7 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 readonly class Exporter {
     public function __construct(
         private OrderRepositoryInterface $orderRepository,
-        private ExportSettings  $exportSettings,
-        private OrderChecker $orderChecker,
-        private FareLevelRepositoryInterface $fareLevelRepository,
-        private ImportSettings $importSettings
+        private ExportSettings  $exportSettings
     ) {
 
     }
@@ -52,9 +45,7 @@ readonly class Exporter {
         $csv->insertOne($headers);
 
         foreach($this->orderRepository->findAllRange($request->startDate, $request->endDate) as $order) {
-            $violations = $this->orderChecker->check($order);
-
-            if($violations->hasViolations()) {
+            if($order->isIncorrect()) { // no not call validator here as it is very slow for many orders!!
                 continue; // do not export invalid orders
             }
 
