@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\FareLevel;
 use App\FareLevel\FareLevelHelper;
+use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminRoute;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -62,6 +63,7 @@ class FareLevelCrudController extends AbstractCrudController
         ];
     }
 
+    #[AdminRoute]
     public function addMissing(AdminContext $context, FareLevelHelper $fareLevelHelper): RedirectResponse {
         $count = $fareLevelHelper->addMissingLevels();
 

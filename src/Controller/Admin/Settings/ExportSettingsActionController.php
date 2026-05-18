@@ -4,17 +4,14 @@ declare(strict_types=1);
 
 namespace App\Controller\Admin\Settings;
 
-use App\Settings\AppSettings;
 use App\Settings\ExportSettings;
-use App\Settings\ImportSettings;
+use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminRoute;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use Jbtronics\SettingsBundle\Form\SettingsFormFactoryInterface;
 use Jbtronics\SettingsBundle\Manager\SettingsManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Attribute\Route;
 
 class ExportSettingsActionController extends AbstractController {
 
@@ -25,7 +22,7 @@ class ExportSettingsActionController extends AbstractController {
     }
 
 
-    #[Route('/admin/settings/export', name: 'export_settings')]
+    #[AdminRoute('/settings/export', name: 'export_settings')]
     public function __invoke(Request $request): Response {
         $settings = $this->settingsManager->createTemporaryCopy(ExportSettings::class);
         $builder = $this->formFactory->createSettingsFormBuilder($settings);

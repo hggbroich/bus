@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\School;
 use App\Import\Schools\SvwsGitHubSchoolsImporter;
+use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminRoute;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -75,6 +76,7 @@ class SchoolCrudController extends AbstractCrudController
         ];
     }
 
+    #[AdminRoute]
     public function import(AdminContext $context, SvwsGitHubSchoolsImporter $importer): RedirectResponse {
         $result = $importer->import();
         $this->addFlash('success', sprintf('%d Schulen neu importiert und %d Schulen aktualisiert.', $result->added, $result->updated));

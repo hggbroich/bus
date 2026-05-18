@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace App\Controller\Admin\Settings;
 
 use App\Settings\ProfileSettings;
+use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminRoute;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use Jbtronics\SettingsBundle\Form\SettingsFormFactoryInterface;
 use Jbtronics\SettingsBundle\Manager\SettingsManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Attribute\Route;
 
 class ProfileSettingsActionController extends AbstractController {
 
@@ -22,7 +22,7 @@ class ProfileSettingsActionController extends AbstractController {
     }
 
 
-    #[Route('/admin/settings/profile', name: 'profile_settings')]
+    #[AdminRoute('/settings/profile', name: 'profile_settings')]
     public function __invoke(Request $request): Response {
         $settings = $this->settingsManager->createTemporaryCopy(ProfileSettings::class);
         $builder = $this->formFactory->createSettingsFormBuilder($settings);

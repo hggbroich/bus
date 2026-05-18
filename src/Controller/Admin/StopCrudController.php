@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Stop;
 use App\Import\Stops\GtfsStopsImporter;
+use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminRoute;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -76,6 +77,7 @@ class StopCrudController extends AbstractCrudController
         ];
     }
 
+    #[AdminRoute]
     public function import(AdminContext $context, GtfsStopsImporter $importer): RedirectResponse {
         $result = $importer->import();
         $this->addFlash('success', sprintf('%d Haltestellen neu importiert und %d Haltestellen aktualisiert.', $result->added, $result->updated));

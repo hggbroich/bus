@@ -200,7 +200,7 @@ class StudentCrudController extends AbstractCrudController
                 ->setRequired(false)
                 ->hideOnIndex(),
             FormField::addColumn(6),
-            FormField::addPanel('Öffentliche Schule'),
+            FormField::addFieldset('Öffentliche Schule'),
             AssociationField::new('publicSchool')
                 ->setLabel('Öffentliche Schule')
                 ->autocomplete()
@@ -222,11 +222,8 @@ class StudentCrudController extends AbstractCrudController
                 ->setHelp('in km')
                 ->setFormTypeOption('school_field_id', 'Student_publicSchool_autocomplete')
                 ->hideOnIndex(),
-            /*ButtonField::new('foo', 'Label')
-                ->onlyOnDetail()
-                ->setUrl(''),*/
             FormField::addColumn(6),
-            FormField::addPanel('Eigene Schule'),
+            FormField::addFieldset('Eigene Schule'),
             NumberField::new('distanceToSchool')
                 ->setLabel('Distanz zur Schule (Eltern)')
                 ->setRequired(false)

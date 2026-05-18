@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Admin\Settings;
 
 use App\Settings\AppSettings;
+use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminRoute;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use Jbtronics\SettingsBundle\Form\SettingsFormFactoryInterface;
 use Jbtronics\SettingsBundle\Manager\SettingsManagerInterface;
@@ -23,7 +24,7 @@ class AppSettingsActionController extends AbstractController {
     }
 
 
-    #[Route('/admin/settings/app', name: 'app_settings')]
+    #[AdminRoute('/settings/app', name: 'app_settings')]
     public function __invoke(Request $request): Response {
         $settings = $this->settingsManager->createTemporaryCopy(AppSettings::class);
         $builder = $this->formFactory->createSettingsFormBuilder($settings);

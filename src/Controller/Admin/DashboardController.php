@@ -44,25 +44,25 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
 
         yield MenuItem::section('Einstellungen')->setPermission('ROLE_ADMIN');
-        yield MenuItem::linkToRoute('Allgemeine Einstellungen', 'fas fa-cogs', 'app_settings')->setPermission('ROLE_ADMIN');
-        yield MenuItem::linkToRoute('Profileinstellungen', 'fa-solid fa-address-card', 'profile_settings')->setPermission('ROLE_ADMIN');
-        yield MenuItem::linkToRoute('Bestellungen', 'fas fa-shopping-basket', 'order_settings')->setPermission('ROLE_ADMIN');
-        yield MenuItem::linkToRoute('Import', 'fas fa-upload', 'import_settings')->setPermission('ROLE_ADMIN');
-        yield MenuItem::linkToRoute('Export', 'fas fa-download', 'export_settings')->setPermission('ROLE_ADMIN');
+        yield MenuItem::linkToRoute('Allgemeine Einstellungen', 'fas fa-cogs', 'admin_app_settings')->setPermission('ROLE_ADMIN');
+        yield MenuItem::linkToRoute('Profileinstellungen', 'fa-solid fa-address-card', 'admin_profile_settings')->setPermission('ROLE_ADMIN');
+        yield MenuItem::linkToRoute('Bestellungen', 'fas fa-shopping-basket', 'admin_order_settings')->setPermission('ROLE_ADMIN');
+        yield MenuItem::linkToRoute('Import', 'fas fa-upload', 'admin_import_settings')->setPermission('ROLE_ADMIN');
+        yield MenuItem::linkToRoute('Export', 'fas fa-download', 'admin_export_settings')->setPermission('ROLE_ADMIN');
 
         yield MenuItem::section('Kataloge')->setPermission('ROLE_ADMIN');
-        yield MenuItem::linkToCrud('Länder', 'fas fa-flag', Country::class)->setPermission('ROLE_ADMIN');
-        yield MenuItem::linkToCrud('Tickets', 'fas fa-ticket', Ticket::class)->setPermission('ROLE_ADMIN');
-        yield MenuItem::linkToCrud('Preisstufen', 'fas fa-ticket', FareLevel::class)->setPermission('ROLE_ADMIN');
-        yield MenuItem::linkToCrud('Zahlungsintervalle', 'fas fa-credit-card', PaymentInterval::class)->setPermission('ROLE_ADMIN');
-        yield MenuItem::linkToCrud('Haltestellen', 'fas fa-bus-simple', Stop::class)->setPermission('ROLE_ADMIN');
-        yield MenuItem::linkToCrud('Schulen', 'fas fa-school', School::class)->setPermission('ROLE_ADMIN');
+        yield MenuItem::linkTo(CountryCrudController::class, 'Länder', 'fas fa-flag')->setPermission('ROLE_ADMIN');
+        yield MenuItem::linkTo(TicketCrudController::class, 'Tickets', 'fas fa-ticket')->setPermission('ROLE_ADMIN');
+        yield MenuItem::linkTo(FareLevelCrudController::class, 'Preisstufen', 'fas fa-ticket')->setPermission('ROLE_ADMIN');
+        yield MenuItem::linkTo(PaymentIntervalCrudController::class, 'Zahlungsintervalle', 'fas fa-credit-card')->setPermission('ROLE_ADMIN');
+        yield MenuItem::linkTo(StopCrudController::class, 'Haltestellen', 'fas fa-bus-simple')->setPermission('ROLE_ADMIN');
+        yield MenuItem::linkTo(SchoolCrudController::class, 'Schulen', 'fas fa-school')->setPermission('ROLE_ADMIN');
 
 
         yield MenuItem::section('Stammdaten')->setPermission('ROLE_STUDENT_ADMIN');
-        yield MenuItem::linkToCrud('Schülerinnen und Schüler', 'fas fa-user-graduate', Student::class)->setPermission('ROLE_STUDENT_ADMIN');
+        yield MenuItem::linkTo(StudentCrudController::class, 'Schülerinnen und Schüler', 'fas fa-user-graduate')->setPermission('ROLE_STUDENT_ADMIN');
 
         yield MenuItem::section('Bestellungen')->setPermission('ROLE_ORDER_ADMIN');
-        yield MenuItem::linkToCrud('Bestellungen', 'fa fa-shopping-basket', Order::class)->setPermission('ROLE_ORDER_ADMIN');
+        yield MenuItem::linkTo(OrderCrudController::class, 'Bestellungen', 'fa fa-shopping-basket')->setPermission('ROLE_ORDER_ADMIN');
     }
 }

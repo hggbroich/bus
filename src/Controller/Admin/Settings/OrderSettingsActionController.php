@@ -4,17 +4,15 @@ declare(strict_types=1);
 
 namespace App\Controller\Admin\Settings;
 
-use App\Settings\AppSettings;
 use App\Settings\OrderSettings;
 use App\Ticket\TicketManager;
+use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminRoute;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use Jbtronics\SettingsBundle\Form\SettingsFormFactoryInterface;
 use Jbtronics\SettingsBundle\Manager\SettingsManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Attribute\Route;
 
 class OrderSettingsActionController extends AbstractController {
 
@@ -26,7 +24,7 @@ class OrderSettingsActionController extends AbstractController {
     }
 
 
-    #[Route('/admin/settings/orders', name: 'order_settings')]
+    #[AdminRoute('/settings/orders', name: 'order_settings')]
     public function __invoke(Request $request): Response {
         $settings = $this->settingsManager->createTemporaryCopy(OrderSettings::class);
         $builder = $this->formFactory->createSettingsFormBuilder($settings);
