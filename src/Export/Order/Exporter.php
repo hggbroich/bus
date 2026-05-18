@@ -6,6 +6,7 @@ use App\Entity\Gender;
 use App\Repository\OrderRepositoryInterface;
 use App\Settings\ExportSettings;
 use App\Settings\ValueDataType;
+use League\Csv\Bom;
 use League\Csv\Reader;
 use League\Csv\Writer;
 use Symfony\Component\HttpFoundation\Response;
@@ -40,7 +41,7 @@ readonly class Exporter {
         $csv = Writer::from('php://temp', 'w');
         $csv->setDelimiter($request->delimiter);
         $csv->setEscape('');
-        $csv->setOutputBOM(Writer::BOM_UTF8);
+        $csv->setOutputBOM(Bom::Utf8);
 
         $csv->insertOne($headers);
 
