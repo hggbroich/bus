@@ -7,6 +7,9 @@ use App\Entity\Student;
 use App\Export\Order\Exporter;
 use App\Export\Order\ExportRequest;
 use App\Export\Order\ExportRequestType;
+use App\Export\OrderSiblings\Exporter as SiblingExporter;
+use App\Export\OrderSiblings\ExportRequest as SiblingExportRequest;
+use App\Export\OrderSiblings\ExportRequestType as SiblingExportRequestType;
 use App\FareLevel\FareLevelSetter;
 use App\Form\ChooseStudentForOrderType;
 use App\Order\Check\OrderChecker;
@@ -79,6 +82,10 @@ class OrderCrudController extends AbstractCrudController
             ->linkToCrudAction('export')
             ->createAsGlobalAction();
 
+        $exportSiblingsAction = Action::new('exportSiblings', 'Geschwisterkinder exportieren', 'fa-solid fa-download')
+            ->linkToCrudAction('exportSiblings')
+            ->createAsGlobalAction();
+
         $checkAction = Action::new('check', 'Bestellungen prüfen', 'fa-solid fa-clipboard-check')
             ->linkToCrudAction('checkOrders')
             ->createAsGlobalAction();
@@ -95,6 +102,7 @@ class OrderCrudController extends AbstractCrudController
         return parent::configureActions($actions)
             ->add(Crud::PAGE_INDEX, $createAction)
             ->add(Crud::PAGE_INDEX, $exportAction)
+            ->add(Crud::PAGE_INDEX, $exportSiblingsAction)
             ->add(Crud::PAGE_INDEX, $checkAction)
             ->add(Crud::PAGE_INDEX, $showInvalidAction)
             ->add(Crud::PAGE_INDEX, Action::DETAIL)
@@ -283,6 +291,23 @@ class OrderCrudController extends AbstractCrudController
         return $this->render('admin/form.html.twig', [
             'form' => $form->createView(),
             'header' => 'Bestellungen exportieren',
+            'action' => 'Exportieren'
+        ]);
+    }
+
+    #[AdminRoute('/export/siblings')]
+    public function exportSiblings(SiblingExporter $exporter, Request $request): BinaryFileResponse|Response {
+        $exportRequest = new SiblingExportRequest();
+        $form = $this->createForm(SiblingExportRequestType::class, $exportRequest);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()) {
+            return $exporter->export($exportRequest);
+        }
+
+        return $this->render('admin/form.html.twig', [
+            'form' => $form->createView(),
+            'header' => 'Geschwisterkinder exportieren',
             'action' => 'Exportieren'
         ]);
     }
