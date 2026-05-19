@@ -14,6 +14,12 @@ interface StudentRepositoryInterface extends TransactionalRepositoryInterface {
     public function findAll(): array;
 
     /**
+     * @param string $status
+     * @return Student[]
+     */
+    public function findAllByStatus(string $status): array;
+
+    /**
      * @param string[] $emailsOrIds
      * @return Student[]
      */

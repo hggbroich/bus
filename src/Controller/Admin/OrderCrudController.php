@@ -10,6 +10,9 @@ use App\Export\Order\ExportRequestType;
 use App\Export\OrderSiblings\Exporter as SiblingExporter;
 use App\Export\OrderSiblings\ExportRequest as SiblingExportRequest;
 use App\Export\OrderSiblings\ExportRequestType as SiblingExportRequestType;
+use App\Export\OrderBezReg\Exporter as BezRegExporter;
+use App\Export\OrderBezReg\ExportRequest as BezRegExportRequest;
+use App\Export\OrderBezReg\ExportRequestType as BezRegExportRequestType;
 use App\FareLevel\FareLevelSetter;
 use App\Form\ChooseStudentForOrderType;
 use App\Order\Check\OrderChecker;
@@ -86,6 +89,10 @@ class OrderCrudController extends AbstractCrudController
             ->linkToCrudAction('exportSiblings')
             ->createAsGlobalAction();
 
+        $exportBezRegAction = Action::new('exportBezReg', 'Export für BR', 'fa-solid fa-download')
+            ->linkToCrudAction('exportBezReg')
+            ->createAsGlobalAction();
+
         $checkAction = Action::new('check', 'Bestellungen prüfen', 'fa-solid fa-clipboard-check')
             ->linkToCrudAction('checkOrders')
             ->createAsGlobalAction();
@@ -103,6 +110,7 @@ class OrderCrudController extends AbstractCrudController
             ->add(Crud::PAGE_INDEX, $createAction)
             ->add(Crud::PAGE_INDEX, $exportAction)
             ->add(Crud::PAGE_INDEX, $exportSiblingsAction)
+            ->add(Crud::PAGE_INDEX, $exportBezRegAction)
             ->add(Crud::PAGE_INDEX, $checkAction)
             ->add(Crud::PAGE_INDEX, $showInvalidAction)
             ->add(Crud::PAGE_INDEX, Action::DETAIL)
@@ -308,6 +316,23 @@ class OrderCrudController extends AbstractCrudController
         return $this->render('admin/form.html.twig', [
             'form' => $form->createView(),
             'header' => 'Geschwisterkinder exportieren',
+            'action' => 'Exportieren'
+        ]);
+    }
+
+    #[AdminRoute('/export/bezreg')]
+    public function exportBezReg(BezRegExporter $exporter, Request $request): BinaryFileResponse|Response {
+        $exportRequest = new BezRegExportRequest();
+        $form = $this->createForm(BezRegExportRequestType::class, $exportRequest);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()) {
+            return $exporter->export($exportRequest);
+        }
+
+        return $this->render('admin/form.html.twig', [
+            'form' => $form->createView(),
+            'header' => 'Export für BR',
             'action' => 'Exportieren'
         ]);
     }

@@ -18,6 +18,11 @@ class StudentRepository extends AbstractTransactionalRepository implements Stude
     }
 
     #[Override]
+    public function findAllByStatus(string $status): array {
+        return $this->em->getRepository(Student::class)->findBy(['status' => $status]);
+    }
+
+    #[Override]
     public function persist(Student $student): void {
         $this->em->persist($student);
         $this->flushIfNotInTransaction();
