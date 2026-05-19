@@ -136,10 +136,10 @@ readonly class Exporter {
 
     private function getGender(Gender $gender): string {
         return match($gender) {
-            Gender::Male => 'm',
-            Gender::Female => 'f',
-            Gender::Divers => 'd',
-            Gender::Other => 'o',
+            Gender::Male => 'M',
+            Gender::Female => 'F',
+            Gender::Divers => 'D',
+            Gender::Other => 'O',
         };
     }
 }
