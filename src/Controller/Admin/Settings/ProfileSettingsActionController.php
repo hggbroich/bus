@@ -35,7 +35,7 @@ class ProfileSettingsActionController extends AbstractController {
 
             $this->addFlash('success', 'settings.success');
             return $this->redirect(
-                $this->adminUrlGenerator->setRoute('profile_settings')->generateUrl()
+                $this->adminUrlGenerator->setRoute('admin_profile_settings')->generateUrl()
             );
         }
 

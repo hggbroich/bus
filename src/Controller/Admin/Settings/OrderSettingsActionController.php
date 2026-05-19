@@ -37,7 +37,7 @@ class OrderSettingsActionController extends AbstractController {
 
             $this->addFlash('success', 'settings.success');
             return $this->redirect(
-                $this->adminUrlGenerator->setRoute('order_settings')->generateUrl()
+                $this->adminUrlGenerator->setRoute('admin_order_settings')->generateUrl()
             );
         }
 

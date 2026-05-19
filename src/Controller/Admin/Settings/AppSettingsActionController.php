@@ -37,7 +37,7 @@ class AppSettingsActionController extends AbstractController {
 
             $this->addFlash('success', 'settings.success');
             return $this->redirect(
-                $this->adminUrlGenerator->setRoute('app_settings')->generateUrl()
+                $this->adminUrlGenerator->setRoute('admin_app_settings')->generateUrl()
             );
         }
 

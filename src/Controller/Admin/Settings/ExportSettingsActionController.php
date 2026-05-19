@@ -35,7 +35,7 @@ class ExportSettingsActionController extends AbstractController {
 
             $this->addFlash('success', 'settings.success');
             return $this->redirect(
-                $this->adminUrlGenerator->setRoute('export_settings')->generateUrl()
+                $this->adminUrlGenerator->setRoute('admin_export_settings')->generateUrl()
             );
         }
 

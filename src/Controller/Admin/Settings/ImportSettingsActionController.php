@@ -35,7 +35,7 @@ class ImportSettingsActionController extends AbstractController {
 
             $this->addFlash('success', 'settings.success');
             return $this->redirect(
-                $this->adminUrlGenerator->setRoute('import_settings')->generateUrl()
+                $this->adminUrlGenerator->setRoute('admin_import_settings')->generateUrl()
             );
         }
 
