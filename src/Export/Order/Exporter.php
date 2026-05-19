@@ -9,13 +9,17 @@ use App\Settings\ValueDataType;
 use League\Csv\Bom;
 use League\Csv\Reader;
 use League\Csv\Writer;
+use libphonenumber\NumberParseException;
+use libphonenumber\PhoneNumberFormat;
+use libphonenumber\PhoneNumberUtil;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 readonly class Exporter {
     public function __construct(
         private OrderRepositoryInterface $orderRepository,
-        private ExportSettings  $exportSettings
+        private ExportSettings  $exportSettings,
+        private PhoneNumberUtil $phoneNumberUtil,
     ) {
 
     }
@@ -62,7 +66,7 @@ readonly class Exporter {
             $this->fill($row, $headers, $request->houseNumberSuffixHeader, $suffix);
             $this->fill($row, $headers, $request->plzHeader, $order->getPlz());
             $this->fill($row, $headers, $request->cityHeader, $order->getCity());
-            $this->fill($row, $headers, $request->phoneNumberHeader, $order->getDepositorPhoneNumber());
+            $this->fill($row, $headers, $request->phoneNumberHeader, $this->normalizePhoneNumber($order->getDepositorPhoneNumber()));
             $this->fill($row, $headers, $request->birthdayHeader, $order->getBirthday()?->format('d.m.Y'));
             $this->fill($row, $headers, $request->genderHeader, $this->getGender($order->getGender()));
 
@@ -112,7 +116,8 @@ readonly class Exporter {
     }
 
     /**
-     * @return array{ string, string|null } First index is house number and last is suffix (or null if no suffix is present)
+     * @return array{ string, string|null } First index is house number and last is suffix (or null if no suffix is
+     *     present)
      * @return array{ null, null } If no house number is provided, both values are present but null
      */
     private function splitHouseNumberAndSuffix(string|null $houseNumber): array {
@@ -132,6 +137,16 @@ readonly class Exporter {
             $number,
             $suffix
         ];
+    }
+
+    private function normalizePhoneNumber(string $phoneNumber): string {
+
+        try {
+            $parsedPhoneNumber = $this->phoneNumberUtil->parse($phoneNumber, defaultRegion: 'DE');
+            return $this->phoneNumberUtil->format($parsedPhoneNumber, PhoneNumberFormat::E164);
+        } catch (NumberParseException) {
+            return $phoneNumber;
+        }
     }
 
     private function getGender(Gender $gender): string {

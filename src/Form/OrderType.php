@@ -13,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -71,7 +72,7 @@ class OrderType extends AbstractType {
                 'label' => 'label.city'
             ])
             ->add('depositorCountry', CountryType::class)
-            ->add('depositorPhoneNumber', TextType::class, [
+            ->add('depositorPhoneNumber', TelType::class, [
                 'label' => 'label.phone',
             ])
             ->add('depositorEmail', EmailType::class, [
@@ -96,7 +97,7 @@ class OrderType extends AbstractType {
                 if(array_key_exists('siblings', $data)) {
                     $data['siblings'] = array_values($data['siblings']);
                 }
-                
+
                 $event->setData($data);
             });
 

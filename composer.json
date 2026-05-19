@@ -23,6 +23,7 @@
         "lightsaml2/lightsaml": ">=3.0.1",
         "lightsaml2/sp-bundle": "^5.0",
         "lightsaml2/symfony-bridge": "^6.0",
+        "odolbeau/phone-number-bundle": "^4.2",
         "phpdocumentor/reflection-docblock": "^5.6.7",
         "phpstan/phpdoc-parser": "^2.3.2",
         "schulit/common-bundle": "^6.2.1",

@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber;
 use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -127,6 +128,7 @@ class Order {
 
     #[ORM\Column(type: Types::STRING)]
     #[Assert\NotBlank]
+    #[PhoneNumber]
     private string $depositorPhoneNumber;
 
     #[ORM\Column(type: Types::STRING)]
