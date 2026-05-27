@@ -47,6 +47,10 @@ readonly class Exporter {
         $csv->setEscape('');
         $csv->setOutputBOM(Bom::Utf8);
 
+        if($request->includeOrderId) {
+            $headers[] = 'Order_ID';
+        }
+
         $csv->insertOne($headers);
 
         foreach($this->orderRepository->findAllRange($request->startDate, $request->endDate) as $order) {
@@ -102,6 +106,11 @@ readonly class Exporter {
                 }
 
                 $this->fill($row, $headers, $keyValuePair->key, $value);
+            }
+
+            // Export Order_ID
+            if($request->includeOrderId) {
+                $this->fill($row, $headers, 'Order_ID', $order->getId());
             }
 
             $csv->insertOne($row);

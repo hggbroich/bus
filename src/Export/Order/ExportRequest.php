@@ -23,6 +23,8 @@ class ExportRequest {
     #[Assert\GreaterThanOrEqual(propertyPath: 'startDate')]
     public DateTime $endDate;
 
+    public bool $includeOrderId = true;
+
     #[Assert\NotBlank]
     public string $studentIdHeader = 'Externe_Nr';
 

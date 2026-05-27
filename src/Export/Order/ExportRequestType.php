@@ -3,6 +3,7 @@
 namespace App\Export\Order;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -25,6 +26,10 @@ class ExportRequestType extends AbstractType {
             ->add('endDate', DateType::class, [
                 'label' => 'End-Datum',
                 'help' => 'Es werden nur Bestellungen berücksichtigt, die in diesem Zeitraum getätigt wurden.'
+            ])
+            ->add('includeOrderId', CheckboxType::class, [
+                'label' => 'ID der Bestellung (als zusätzliche Spalte) ergänzen',
+                'required' => false,
             ])
             ->add('studentIdHeader', TextType::class, [
                 'label' => 'Schüler ID-Spaltenname'
