@@ -17,6 +17,10 @@ trait CsvHelperTrait {
     }
 
     public function getFloatOrNull(?string $input): ?float {
+        if($input === '0' || $input === '0.0') {
+            return 0.0;
+        }
+
         if(empty($input)) {
             return null;
         }
@@ -29,6 +33,10 @@ trait CsvHelperTrait {
     }
 
     private function getIntOrNull(?string $input): ?int {
+        if($input === '0') {
+            return 0;
+        }
+
         if(empty($input)) {
             return null;
         }
