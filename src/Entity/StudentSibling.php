@@ -33,11 +33,11 @@ class StudentSibling implements Stringable {
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
     #[Assert\NotBlank]
-    private string|null $firstname;
+    private string|null $firstname = null;
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
     #[Assert\NotBlank]
-    private string|null $lastname;
+    private string|null $lastname = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     #[Assert\NotNull]
@@ -67,7 +67,7 @@ class StudentSibling implements Stringable {
         return $this;
     }
 
-    public function getFirstname(): string {
+    public function getFirstname(): ?string {
         if($this->firstname === null && $this->studentAtSchool !== null) {
             $this->setFirstname($this->studentAtSchool->getFirstname());
         }
@@ -80,7 +80,7 @@ class StudentSibling implements Stringable {
         return $this;
     }
 
-    public function getLastname(): string {
+    public function getLastname(): ?string {
         if($this->lastname === null && $this->studentAtSchool !== null) {
             $this->setLastname($this->studentAtSchool->getLastname());
         }
