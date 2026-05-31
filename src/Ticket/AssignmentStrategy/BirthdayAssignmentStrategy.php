@@ -33,7 +33,7 @@ readonly class BirthdayAssignmentStrategy implements AssignmentStrategyInterface
         }
 
         usort($siblings, function(Sibling $a, Sibling $b): int {
-            if($a->birthday === $b->birthday) {
+            if($a->birthday == $b->birthday) { // ONLY USE TWO == HERE - we need to ensure that birthday is compared by its value
                 return strnatcmp($a->firstname, $b->firstname);
             }
 
