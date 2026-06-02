@@ -11,6 +11,7 @@ use League\Csv\Reader;
 use League\Csv\Writer;
 use libphonenumber\NumberParseException;
 use libphonenumber\PhoneNumberFormat;
+use libphonenumber\PhoneNumberType;
 use libphonenumber\PhoneNumberUtil;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
@@ -70,7 +71,10 @@ readonly class Exporter {
             $this->fill($row, $headers, $request->houseNumberSuffixHeader, $suffix);
             $this->fill($row, $headers, $request->plzHeader, $order->getPlz());
             $this->fill($row, $headers, $request->cityHeader, $order->getCity());
-            $this->fill($row, $headers, $request->phoneNumberHeader, $this->normalizePhoneNumber($order->getDepositorPhoneNumber()));
+
+            $this->fill($row, $headers, $request->phoneNumberHeader, $this->normalizePhoneNumber($order->getDepositorPhoneNumber(), PhoneNumberType::FIXED_LINE));
+            $this->fill($row, $headers, $request->mobilePhoneNumberHeader, $this->normalizePhoneNumber($order->getDepositorPhoneNumber(), PhoneNumberType::MOBILE));
+
             $this->fill($row, $headers, $request->birthdayHeader, $order->getBirthday()?->format('d.m.Y'));
             $this->fill($row, $headers, $request->genderHeader, $this->getGender($order->getGender()));
 
@@ -148,11 +152,25 @@ readonly class Exporter {
         ];
     }
 
-    private function normalizePhoneNumber(string $phoneNumber): string {
-
+    private function fillPhoneNumber(string $phoneNumber, bool $isMobile, string $headerName): void {
         try {
             $parsedPhoneNumber = $this->phoneNumberUtil->parse($phoneNumber, defaultRegion: 'DE');
-            return $this->phoneNumberUtil->format($parsedPhoneNumber, PhoneNumberFormat::E164);
+
+
+        } catch (NumberParseException) {
+
+        }
+    }
+
+    private function normalizePhoneNumber(string $phoneNumber, PhoneNumberType $type): ?string {
+        try {
+            $parsedPhoneNumber = $this->phoneNumberUtil->parse($phoneNumber, defaultRegion: 'DE');
+
+            if($this->phoneNumberUtil->getNumberType($parsedPhoneNumber) === $type) {
+                return $this->phoneNumberUtil->format($parsedPhoneNumber, PhoneNumberFormat::E164);
+            }
+
+            return null;
         } catch (NumberParseException) {
             return $phoneNumber;
         }

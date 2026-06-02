@@ -67,6 +67,9 @@ class ExportRequestType extends AbstractType {
             ->add('phoneNumberHeader', TextType::class, [
                 'label' => 'Telefonnummer-Spaltenname'
             ])
+            ->add('mobilePhoneNumberHeader', TextType::class, [
+                'label' => 'Mobilnummer-Spaltenname'
+            ])
             ->add('birthdayHeader', TextType::class, [
                 'label' => 'Geburtstag-Spaltenname'
             ])

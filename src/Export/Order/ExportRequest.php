@@ -65,6 +65,9 @@ class ExportRequest {
     public string $phoneNumberHeader = 'Tel_Priv';
 
     #[Assert\NotBlank]
+    public string $mobilePhoneNumberHeader = 'Tel_mobil';
+
+    #[Assert\NotBlank]
     public string $emailHeader = 'E_Mail';
 
     #[Assert\NotBlank]
