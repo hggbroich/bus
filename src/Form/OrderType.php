@@ -3,8 +3,9 @@
 namespace App\Form;
 
 use App\Entity\Order;
-use App\Entity\StudentSibling;
 use App\FareLevel\FareLevelSetter;
+use App\Form\Type\IbanType;
+use App\Form\Type\PhoneNumberType;
 use App\Settings\OrderSettings;
 use LogicException;
 use Symfony\Component\Form\AbstractType;
@@ -13,7 +14,6 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -72,13 +72,13 @@ class OrderType extends AbstractType {
                 'label' => 'label.city'
             ])
             ->add('depositorCountry', CountryType::class)
-            ->add('depositorPhoneNumber', TelType::class, [
+            ->add('depositorPhoneNumber', PhoneNumberType::class, [
                 'label' => 'label.phone',
             ])
             ->add('depositorEmail', EmailType::class, [
                 'label' => 'label.email',
             ])
-            ->add('iban', TextType::class, [
+            ->add('iban', IbanType::class, [
                 'label' => 'label.iban',
             ])
             ->add('siblings', CollectionType::class, [
