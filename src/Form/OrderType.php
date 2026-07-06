@@ -6,9 +6,11 @@ use App\Entity\Order;
 use App\FareLevel\FareLevelSetter;
 use App\Form\Type\IbanType;
 use App\Form\Type\PhoneNumberType;
+use App\Repository\CityRepositoryInterface;
 use App\Settings\OrderSettings;
 use LogicException;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Event\PreSubmitEvent;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -26,7 +28,8 @@ class OrderType extends AbstractType {
 
     public function __construct(
         private readonly OrderSettings $orderSettings,
-        private readonly FareLevelSetter $fareLevelSetter
+        private readonly FareLevelSetter $fareLevelSetter,
+        private readonly CityRepositoryInterface $cityRepository
     ) {
 
     }
@@ -113,8 +116,33 @@ class OrderType extends AbstractType {
                 ]);
         }
 
-        // Fare level must be set here so validation does not fail
+        // Fix city name
         $builder
+            ->addEventListener(FormEvents::PRE_SUBMIT, function(PreSubmitEvent $event) {
+                $data = $event->getData();
+
+                if(!isset($data['depositorPlz'])) {
+                    return;
+                }
+
+                $plz = $data['depositorPlz'];
+
+                if(empty($plz)) {
+                    return;
+                }
+
+                $city = $this->cityRepository->findByPlz($plz);
+
+                if($city === null) {
+                    return;
+                }
+
+                $data['depositorCity'] = $city->getName();
+                $event->setData($data);
+            });
+
+        $builder
+            // Fare level must be set here so validation does not fail
             ->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event) {
                 $order = $event->getData();
 

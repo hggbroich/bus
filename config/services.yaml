@@ -117,3 +117,8 @@ services:
     SchulIT\CommonBundle\Command\ClearLogsCommand:
         tags:
             - { name: scheduler.task, arguments: '', trigger: 'cron', expression: '@daily' }
+
+    # OpenPLZ API
+    App\Import\Cities\OpenPlzApiClient:
+        arguments:
+            $client: '@eight_points_guzzle.client.openplzapi'

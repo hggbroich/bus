@@ -51,6 +51,8 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToRoute('Export', 'fas fa-download', 'admin_export_settings')->setPermission('ROLE_ADMIN');
 
         yield MenuItem::section('Kataloge')->setPermission('ROLE_ADMIN');
+        yield MenuItem::linkTo(CityCrudController::class, 'Städte', 'fas fa-city')->setPermission('ROLE_ADMIN');
+        yield MenuItem::linkTo(StreetCrudController::class, 'Straßen', 'fas fa-road')->setPermission('ROLE_ADMIN');
         yield MenuItem::linkTo(CountryCrudController::class, 'Länder', 'fas fa-flag')->setPermission('ROLE_ADMIN');
         yield MenuItem::linkTo(TicketCrudController::class, 'Tickets', 'fas fa-ticket')->setPermission('ROLE_ADMIN');
         yield MenuItem::linkTo(FareLevelCrudController::class, 'Preisstufen', 'fas fa-ticket')->setPermission('ROLE_ADMIN');

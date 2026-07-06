@@ -1748,6 +1748,50 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         format?: \libphonenumber\PhoneNumberFormat::E164|\libphonenumber\PhoneNumberFormat::INTERNATIONAL|\libphonenumber\PhoneNumberFormat::NATIONAL|\libphonenumber\PhoneNumberFormat::RFC3966|Param, // Default: 1
  *     },
  * }
+ * @psalm-type EightPointsGuzzleConfig = array{
+ *     clients?: array<string, array{ // Default: []
+ *         class?: scalar|Param|null, // Default: "%eight_points_guzzle.http_client.class%"
+ *         base_url?: scalar|Param|null, // Default: null
+ *         lazy?: bool|Param, // Default: false
+ *         logging?: int|Param, // Default: null
+ *         handler?: scalar|Param|null, // Default: null
+ *         options?: array{
+ *             headers?: array<string, scalar|Param|null>,
+ *             allow_redirects?: mixed,
+ *             auth?: mixed,
+ *             query?: mixed,
+ *             curl?: list<scalar|Param|null>,
+ *             cert?: mixed,
+ *             connect_timeout?: scalar|Param|null,
+ *             debug?: bool|Param,
+ *             decode_content?: mixed,
+ *             delay?: float|Param,
+ *             form_params?: array<string, mixed>,
+ *             multipart?: list<mixed>,
+ *             sink?: scalar|Param|null,
+ *             http_errors?: bool|Param,
+ *             expect?: mixed,
+ *             ssl_key?: mixed,
+ *             force_ip_resolve?: mixed, // Default: null
+ *             stream?: bool|Param,
+ *             synchronous?: bool|Param,
+ *             read_timeout?: scalar|Param|null,
+ *             timeout?: scalar|Param|null,
+ *             verify?: mixed,
+ *             cookies?: bool|Param,
+ *             proxy?: string|array{
+ *                 http?: scalar|Param|null,
+ *                 https?: scalar|Param|null,
+ *                 no?: list<scalar|Param|null>,
+ *             },
+ *             version?: scalar|Param|null,
+ *         },
+ *         plugin?: array<mixed>,
+ *     }>,
+ *     logging?: bool|Param, // Default: true
+ *     profiling?: bool|Param, // Default: true
+ *     slow_response_time?: int|Param, // Default: 0
+ * }
  * @psalm-type ConfigType = array{
  *     imports?: ImportsConfig,
  *     parameters?: ParametersConfig,
@@ -1770,6 +1814,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     twig_component?: TwigComponentConfig,
  *     stof_doctrine_extensions?: StofDoctrineExtensionsConfig,
  *     misd_phone_number?: MisdPhoneNumberConfig,
+ *     eight_points_guzzle?: EightPointsGuzzleConfig,
  *     "when@dev"?: array{
  *         imports?: ImportsConfig,
  *         parameters?: ParametersConfig,
@@ -1795,6 +1840,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         twig_component?: TwigComponentConfig,
  *         stof_doctrine_extensions?: StofDoctrineExtensionsConfig,
  *         misd_phone_number?: MisdPhoneNumberConfig,
+ *         eight_points_guzzle?: EightPointsGuzzleConfig,
  *     },
  *     "when@prod"?: array{
  *         imports?: ImportsConfig,
@@ -1818,6 +1864,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         twig_component?: TwigComponentConfig,
  *         stof_doctrine_extensions?: StofDoctrineExtensionsConfig,
  *         misd_phone_number?: MisdPhoneNumberConfig,
+ *         eight_points_guzzle?: EightPointsGuzzleConfig,
  *     },
  *     "when@test"?: array{
  *         imports?: ImportsConfig,
@@ -1842,6 +1889,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         twig_component?: TwigComponentConfig,
  *         stof_doctrine_extensions?: StofDoctrineExtensionsConfig,
  *         misd_phone_number?: MisdPhoneNumberConfig,
+ *         eight_points_guzzle?: EightPointsGuzzleConfig,
  *     },
  *     ...<string, ExtensionType|array{ // extra keys must follow the when@%env% pattern or match an extension alias
  *         imports?: ImportsConfig,

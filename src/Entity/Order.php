@@ -12,6 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber;
 use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Constraints as Assert;
+use App\Validator as CustomAssert;
 
 #[ORM\Entity]
 #[ORM\Table(name: '`order`')]
@@ -108,6 +109,7 @@ class Order {
 
     #[ORM\Column(type: Types::STRING)]
     #[Assert\NotBlank]
+    #[CustomAssert\Street(plzPropertyPath: 'depositorPlz')]
     private string $depositorStreet;
 
     #[ORM\Column(type: Types::STRING)]
@@ -115,7 +117,9 @@ class Order {
     private string $depositorHouseNumber;
 
     #[ORM\Column(type: Types::INTEGER, nullable: true)]
-    private int $depositorPlz;
+    #[Assert\NotNull]
+    #[CustomAssert\Plz(countryPropertyName: 'depositorCountry')]
+    private int|null $depositorPlz = null;
 
     #[ORM\Column(type: Types::STRING)]
     #[Assert\NotBlank]
@@ -385,11 +389,11 @@ class Order {
         return $this;
     }
 
-    public function getDepositorPlz(): int {
+    public function getDepositorPlz(): int|null {
         return $this->depositorPlz;
     }
 
-    public function setDepositorPlz(int $depositorPlz): Order {
+    public function setDepositorPlz(int|null $depositorPlz): Order {
         $this->depositorPlz = $depositorPlz;
         return $this;
     }

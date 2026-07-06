@@ -1,0 +1,2 @@
+"Postal code {{ code }} is outside allowed area.": "PLZ {{ code }} ist außerhalb des Einzugsgebietes."
+"Street {{ name }} is not recognized. Did you misspelled it? {{ related }}": "Der Straßenname {{ name }} wurde nicht erkannt. Liegt ein Tippfehler vor? {{ related }}"
