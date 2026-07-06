@@ -12,6 +12,8 @@ class ExportRequest {
     #[Assert\NotNull]
     public File|null $csv = null;
 
+    public bool $cacheFile = true;
+
     #[Assert\NotBlank]
     #[Assert\Length(max: 1)]
     public string $delimiter = ';';

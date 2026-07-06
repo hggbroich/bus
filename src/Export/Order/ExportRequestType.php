@@ -3,18 +3,33 @@
 namespace App\Export\Order;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Event\SubmitEvent;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvents;
 
 class ExportRequestType extends AbstractType {
+
+    public function __construct(
+        private CacheManager $cacheManager,
+    ) {
+
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void {
         $builder
             ->add('csv', FileType::class, [
                 'label' => 'CSV-Datei',
-                'help' => 'CSV-Datei, die als Vorlage genutzt wird. Alle Spaltenüberschriften werden übernommen. Alle Zeilen werden gelöscht und mit den getätigten Bestellungen ersetzt.'
+                'help' => 'CSV-Datei, die als Vorlage genutzt wird. Alle Spaltenüberschriften werden übernommen. Alle Zeilen werden gelöscht und mit den getätigten Bestellungen ersetzt.',
+                'required' => $this->cacheManager->fileExists() === false
+            ])
+            ->add('cacheFile', CheckboxType::class, [
+                'label' => 'Datei zwischenspeichern',
+                'help' => 'Wenn diese Option aktiv ist, werden die Kopfzeilen für die Export-CSV online gespeichert, damit sie für spätere Zwecke als Eingabe verwendet werden kann (das Feld CSV-Datei ist dann nicht mehr benötigt).',
+                'required' => false
             ])
             ->add('delimiter', TextType::class, [
                 'label' => 'Trennzeichen'
@@ -108,7 +123,20 @@ class ExportRequestType extends AbstractType {
             ])
             ->add('depositorBirthdayHeader', TextType::class, [
                 'label' => 'Geburtstag-Spaltenname (Kontoinhaber)'
-            ]);
+            ])
+            ->addEventListener(FormEvents::SUBMIT, function(SubmitEvent $event) {
+                $data = $event->getData();
+
+                if(!$data instanceof ExportRequest) {
+                    return;
+                }
+
+                if($this->cacheManager->fileExists() !== true) {
+                    return;
+                }
+
+                $data->csv = $this->cacheManager->getFile();
+            });
 
     }
 }

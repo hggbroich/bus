@@ -9,18 +9,25 @@ use App\Settings\ValueDataType;
 use League\Csv\Bom;
 use League\Csv\Reader;
 use League\Csv\Writer;
+use League\Flysystem\FilesystemOperator;
 use libphonenumber\NumberParseException;
 use libphonenumber\PhoneNumberFormat;
 use libphonenumber\PhoneNumberType;
 use libphonenumber\PhoneNumberUtil;
+use Symfony\Component\DependencyInjection\Attribute\Target;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 readonly class Exporter {
+
+
+
     public function __construct(
         private OrderRepositoryInterface $orderRepository,
         private ExportSettings  $exportSettings,
         private PhoneNumberUtil $phoneNumberUtil,
+        private CacheManager $cacheManager
     ) {
 
     }
@@ -53,6 +60,10 @@ readonly class Exporter {
         }
 
         $csv->insertOne($headers);
+
+        if($request->cacheFile && $request->csv instanceof UploadedFile) {
+            $this->cacheManager->writeFile($csv->toString());
+        }
 
         foreach($this->orderRepository->findAllRange($request->startDate, $request->endDate) as $order) {
             if($order->isIncorrect()) { // no not call validator here as it is very slow for many orders!!
@@ -119,7 +130,6 @@ readonly class Exporter {
 
             $csv->insertOne($row);
         }
-
 
         $response = new Response($csv->toString());
         $response->headers->set('Content-Type', 'text/csv');
