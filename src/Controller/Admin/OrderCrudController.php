@@ -288,7 +288,7 @@ class OrderCrudController extends AbstractCrudController
 
     #[AdminRoute('/export')]
     public function export(Exporter $exporter, Request $request): BinaryFileResponse|Response {
-        $exportRequest = new ExportRequest();
+        $exportRequest = $exporter->createDefaultRequest();
         $form = $this->createForm(ExportRequestType::class, $exportRequest);
         $form->handleRequest($request);
 

@@ -4,14 +4,17 @@ namespace App\Export\Order;
 
 use DateTime;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Serializer\Attribute\Ignore;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class ExportRequest {
 
     #[Assert\File]
     #[Assert\NotNull]
+    #[Ignore]
     public File|null $csv = null;
 
+    #[Ignore]
     public bool $cacheFile = true;
 
     #[Assert\NotBlank]
@@ -19,12 +22,15 @@ class ExportRequest {
     public string $delimiter = ';';
 
     #[Assert\NotNull]
+    #[Ignore]
     public DateTime $startDate;
 
     #[Assert\NotNull]
     #[Assert\GreaterThanOrEqual(propertyPath: 'startDate')]
+    #[Ignore]
     public DateTime $endDate;
 
+    #[Ignore]
     public bool $includeOrderId = true;
 
     #[Assert\NotBlank]

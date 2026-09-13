@@ -14,10 +14,11 @@ use libphonenumber\NumberParseException;
 use libphonenumber\PhoneNumberFormat;
 use libphonenumber\PhoneNumberType;
 use libphonenumber\PhoneNumberUtil;
-use Symfony\Component\DependencyInjection\Attribute\Target;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
+use Symfony\Component\Serializer\SerializerInterface;
 
 readonly class Exporter {
 
@@ -27,7 +28,8 @@ readonly class Exporter {
         private OrderRepositoryInterface $orderRepository,
         private ExportSettings  $exportSettings,
         private PhoneNumberUtil $phoneNumberUtil,
-        private CacheManager $cacheManager
+        private CacheManager $cacheManager,
+        private SerializerInterface $serializer
     ) {
 
     }
@@ -42,7 +44,27 @@ readonly class Exporter {
         $row[$columnIdx] = $value;
     }
 
+    public function createDefaultRequest(): ExportRequest {
+        $request = new ExportRequest();
+
+        if($this->cacheManager->requestJsonFileExists()) {
+            $this->serializer->deserialize($this->cacheManager->getRequestJsonFile(), ExportRequest::class, 'json', [
+                AbstractNormalizer::OBJECT_TO_POPULATE => $request,
+            ]);
+        }
+
+        return $request;
+    }
+
+    private function saveJsonRequest(ExportRequest $exportRequest): void {
+        $this->cacheManager->writeRequestJsonFile(
+            $this->serializer->serialize($exportRequest, 'json'),
+        );
+    }
+
     public function export(ExportRequest $request): Response {
+        $this->saveJsonRequest($request);
+
         $csv = Reader::from($request->csv->getRealPath());
         $csv->setHeaderOffset(0);
         $csv->setDelimiter($request->delimiter);
