@@ -84,7 +84,7 @@ readonly class Exporter {
         $csv->insertOne($headers);
 
         if($request->cacheFile && $request->csv instanceof UploadedFile) {
-            $this->cacheManager->writeFile($csv->toString());
+            $this->cacheManager->writeOrdersCsvFile($csv->toString());
         }
 
         foreach($this->orderRepository->findAllRange($request->startDate, $request->endDate) as $order) {

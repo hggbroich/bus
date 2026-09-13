@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\File\File;
 
 class CacheManager {
 
-    public const string LastCreatedFilePath = 'order.csv';
+    public const string LastOrdersFilePath = 'order.csv';
     public const string LastRequestFilePath = 'request.json';
 
     public function __construct(
@@ -16,20 +16,20 @@ class CacheManager {
 
     }
 
-    private function getPath(): string {
-        return sprintf('%s/%s', $this->storageDirectory, self::LastCreatedFilePath);
+    private function getOrdersCsvPath(): string {
+        return sprintf('%s/%s', $this->storageDirectory, self::LastOrdersFilePath);
     }
 
-    public function fileExists(): bool {
-        return file_exists($this->getPath());
+    public function ordersCsvFileExists(): bool {
+        return file_exists($this->getOrdersCsvPath());
     }
 
-    public function getFile(): File {
-        return new File($this->getPath());
+    public function getOrdersCsvFile(): File {
+        return new File($this->getOrdersCsvPath());
     }
 
-    public function writeFile(string $csv): void {
-        $handle = fopen($this->getPath(), 'w');
+    public function writeOrdersCsvFile(string $csv): void {
+        $handle = fopen($this->getOrdersCsvPath(), 'w');
         fwrite($handle, $csv);
         fclose($handle);
     }

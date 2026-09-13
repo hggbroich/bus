@@ -24,7 +24,7 @@ class ExportRequestType extends AbstractType {
             ->add('csv', FileType::class, [
                 'label' => 'CSV-Datei',
                 'help' => 'CSV-Datei, die als Vorlage genutzt wird. Alle Spaltenüberschriften werden übernommen. Alle Zeilen werden gelöscht und mit den getätigten Bestellungen ersetzt.',
-                'required' => $this->cacheManager->fileExists() === false
+                'required' => $this->cacheManager->ordersCsvFileExists() === false
             ])
             ->add('cacheFile', CheckboxType::class, [
                 'label' => 'Datei zwischenspeichern',
@@ -131,7 +131,7 @@ class ExportRequestType extends AbstractType {
                     return;
                 }
 
-                if($this->cacheManager->fileExists() !== true) {
+                if($this->cacheManager->ordersCsvFileExists() !== true) {
                     return;
                 }
 
@@ -139,7 +139,7 @@ class ExportRequestType extends AbstractType {
                     return;
                 }
 
-                $data->csv = $this->cacheManager->getFile();
+                $data->csv = $this->cacheManager->getOrdersCsvFile();
             });
 
     }
