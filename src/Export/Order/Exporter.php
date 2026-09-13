@@ -79,6 +79,8 @@ readonly class Exporter {
 
         if($request->includeOrderId) {
             $headers[] = 'Order_ID';
+        } else if(array_search('Order_ID', $headers) === true) {
+            unset($headers[array_search('Order_ID', $headers)]);
         }
 
         $csv->insertOne($headers);
