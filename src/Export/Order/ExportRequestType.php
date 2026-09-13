@@ -135,6 +135,10 @@ class ExportRequestType extends AbstractType {
                     return;
                 }
 
+                if($data->csv !== null) { // file was uploaded
+                    return;
+                }
+
                 $data->csv = $this->cacheManager->getFile();
             });
 
