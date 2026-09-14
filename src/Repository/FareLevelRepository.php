@@ -14,6 +14,12 @@ class FareLevelRepository extends AbstractTransactionalRepository implements Far
             ->findOneBy(['city' => $city]);
     }
 
+    public function findAll(): array {
+        return $this->em
+            ->getRepository(FareLevel::class)
+            ->findAll();
+    }
+
     #[Override]
     public function persist(FareLevel $fareLevel): void {
         $this->em->persist($fareLevel);

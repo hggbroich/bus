@@ -66,5 +66,8 @@ class DashboardController extends AbstractDashboardController
 
         yield MenuItem::section('Bestellungen')->setPermission('ROLE_ORDER_ADMIN');
         yield MenuItem::linkTo(OrderCrudController::class, 'Bestellungen', 'fa fa-shopping-basket')->setPermission('ROLE_ORDER_ADMIN');
+
+        yield MenuItem::section('API')->setPermission('ROLE_ADMIN');
+        yield MenuItem::linkTo(ApiAccessTokenCrudController::class, 'API-Token', 'fa fa-key')->setPermission('ROLE_ADMIN');
     }
 }

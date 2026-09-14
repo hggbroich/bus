@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
 use Stringable;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Serializer\Attribute\Ignore;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity]
@@ -37,6 +38,7 @@ class Ticket implements Stringable {
      */
     #[ORM\OneToMany(targetEntity: TicketPaymentInterval::class, mappedBy: 'ticket', cascade: ['persist', 'remove'], orphanRemoval: true)]
     #[Assert\Valid]
+    #[Ignore]
     private Collection $paymentIntervals;
 
     public function __construct() {

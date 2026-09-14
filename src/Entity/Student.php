@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
 use Stringable;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Serializer\Attribute\Ignore;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity]
@@ -107,6 +108,7 @@ class Student implements Stringable {
 
     /** @var Collection<int, Order> */
     #[ORM\OneToMany(targetEntity: Order::class, mappedBy: 'student', cascade: ['persist', 'remove'], orphanRemoval: true)]
+    #[Ignore]
     public Collection $orders;
 
     use TimestampableOnCreateTrait;

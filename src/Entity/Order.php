@@ -10,6 +10,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber;
+use Symfony\Component\Serializer\Attribute\Ignore;
 use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Validator as CustomAssert;
@@ -88,11 +89,13 @@ class Order {
         preventEncryptionValuePropertyName: 'preventEncryptionValue'
     )]
     #[Assert\Iban(groups: ['iban'])]
+    #[Ignore]
     private string $iban;
 
     #[ORM\Column(type: Types::TEXT)]
     private string $encryptedIban;
 
+    #[Ignore]
     private string|null $preventEncryptionValue = null;
 
     #[ORM\Column(type: Types::STRING)]

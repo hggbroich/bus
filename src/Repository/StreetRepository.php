@@ -14,6 +14,11 @@ class StreetRepository extends AbstractTransactionalRepository implements Street
     }
 
     #[Override]
+    public function findAll(): array {
+        return $this->em->getRepository(Street::class)->findAll();
+    }
+
+    #[Override]
     public function persist(Street $street): void {
         $this->em->persist($street);
         $this->flushIfNotInTransaction();

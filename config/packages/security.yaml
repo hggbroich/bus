@@ -10,6 +10,11 @@ security:
                 class: App\Entity\User
                 property: idpIdentifier
 
+        databaseByUuid:
+            entity:
+                class: App\Entity\User
+                property: uuid
+
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -18,6 +23,11 @@ security:
             pattern: ^/saml/(login|discovery|metadata.xml)$
         logout:
             pattern: ^/logout/success
+        api:
+            pattern: ^/api
+            provider: databaseByUuid
+            access_token:
+                token_handler: App\Security\Firewall\ApiAccessTokenHandler
         main:
             pattern: ^/
             saml:
