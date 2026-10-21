@@ -5,12 +5,14 @@ namespace App\Order;
 use App\Entity\Order;
 use App\Entity\Student;
 use App\Entity\StudentSibling;
+use App\Repository\SchoolRepositoryInterface;
 use App\Settings\OrderSettings;
 
 readonly class OrderFiller {
 
     public function __construct(
-        private OrderSettings $orderSettings
+        private OrderSettings $orderSettings,
+        private SchoolRepositoryInterface $schoolRepository
     ) { }
 
     public function copyProfileToOrder(Order $order, Student $student): Order{
@@ -48,6 +50,12 @@ readonly class OrderFiller {
         $order->setEncryptedIban($recent->getEncryptedIban());
         $order->setPreventEncryptionValue($recent->getIban());
 
+        // Refresh school so ORM knows about it
+        $ownSchool = null;
+        if($this->orderSettings->school !== null) {
+            $ownSchool = $this->schoolRepository->findById($this->orderSettings->school->getId());
+        }
+
         // Siblings
         foreach($recent->getSiblings() as $sibling) {
             if($sibling->getStudentAtSchool()?->getId() !== $order->getStudent()->getId()) {
@@ -57,7 +65,7 @@ readonly class OrderFiller {
                         ->setLastname($sibling->getLastname())
                         ->setBirthday($sibling->getBirthday())
                         ->setStudentAtSchool($sibling->getStudentAtSchool())
-                        ->setSchool($sibling->getStudentAtSchool() ? $this->orderSettings->school : null)
+                        ->setSchool($sibling->getStudentAtSchool() ? $ownSchool : null)
                 );
             }
         }

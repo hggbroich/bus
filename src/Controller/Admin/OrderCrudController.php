@@ -16,6 +16,9 @@ use App\Export\OrderBezReg\ExportRequestType as BezRegExportRequestType;
 use App\FareLevel\FareLevelSetter;
 use App\Form\ChooseStudentForOrderType;
 use App\Order\Check\OrderChecker;
+use App\Order\Continuation\ContinueOrderManager;
+use App\Order\Continuation\ContinueOrdersRequest;
+use App\Order\Continuation\ContinueOrdersType;
 use App\Order\OrderFiller;
 use App\Repository\StudentRepositoryInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminRoute;
@@ -101,6 +104,10 @@ class OrderCrudController extends AbstractCrudController
             ->linkToCrudAction('showIncorrect')
             ->createAsGlobalAction();
 
+        $continueAction = Action::new('continue', 'Bestellungen fortschreiben')
+            ->linkToCrudAction('continueOrders')
+            ->createAsGlobalAction();
+
         $createAction = Action::new('create', 'Erstellen')
             ->linkToCrudAction('createOrder')
             ->asPrimaryAction()
@@ -113,6 +120,7 @@ class OrderCrudController extends AbstractCrudController
             ->add(Crud::PAGE_INDEX, $exportBezRegAction)
             ->add(Crud::PAGE_INDEX, $checkAction)
             ->add(Crud::PAGE_INDEX, $showInvalidAction)
+            ->add(Crud::PAGE_INDEX, $continueAction)
             ->add(Crud::PAGE_INDEX, Action::DETAIL)
             ->remove(Crud::PAGE_INDEX, Action::NEW)
             ->remove(Crud::PAGE_NEW, Action::SAVE_AND_ADD_ANOTHER);
@@ -378,6 +386,27 @@ class OrderCrudController extends AbstractCrudController
         return $this->render('admin/form.html.twig', [
             'form' => $form->createView(),
             'header' => 'Schüler oder Schülerin auswählen',
+            'action' => 'Weiter'
+        ]);
+    }
+
+    #[AdminRoute('/continue')]
+    public function continueOrders(Request $request, ContinueOrderManager $continueOrderManager): Response {
+        $continueRequest = new ContinueOrdersRequest();
+        $form = $this->createForm(ContinueOrdersType::class, $continueRequest);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()) {
+            $count = $continueOrderManager->continueOrders($continueRequest);
+            $this->addFlash('success', sprintf('Bei %d Bestellungen wird nun im Hintergrund geprüft, ob eine Fortschreibung möglich ist. Falls ja, wird eine Fortschreibung im System hinterlegt. Dieser Prozess läuft asynchron.', $count));
+
+            $url = $this->urlGenerator->setController(OrderCrudController::class)->setAction(Action::INDEX)->generateUrl();
+            return $this->redirect($url);
+        }
+
+        return $this->render('admin/pages/orders/continue.html.twig', [
+            'form' => $form->createView(),
+            'header' => 'Bestellungen fortführen',
             'action' => 'Weiter'
         ]);
     }

@@ -1,0 +1,22 @@
+{% extends "admin/form.html.twig" %}
+
+{% block before_form %}
+    <div class="alert alert-warning mb-4">
+        <p>Vorab bitte folgende Punkte sicherstellen:</p>
+
+        <ul>
+            <li>Die Stammdaten der Schülerinnen und Schüler sind auf dem aktuellsten Stand.</li>
+            <li>Es wurde ein neues Bestellungsfenster erstellt und dieses Fenster ist bereits aktiv.</li>
+            <li>Der Stichtag für die Altersberechnung ist für den neuen Zeitraum angepasst.</li>
+        </ul>
+
+        <p>Wissenswert:</p>
+
+        <ul class="mb-0">
+            <li>Die Bestellung wird dem Benutzer zugeordnet, der die bisherige Bestellung aufgegeben hat.</li>
+            <li>Falls der Benutzer nicht mehr existiert, der die Bestellung aufgegeben hat, wird keine neue Bestellung erstellt. Die Eltern müssen dann wieder aktiv werden.</li>
+            <li>Die Operation kann mehrfach gestartet werden. Sofern es bereits eine Bestellung im aktuellen Zeitfenster gibt, wird keine neue Bestellung angelegt.</li>
+            <li>Bevor eine neue Bestellung angelegt wird, wird - wie bei der manuellen Eingabe einer Bestellung - geprüft, ob dies möglich ist. Es gelten alle Regeln, die für Eltern gelten (bspw. Entfernungen).</li>
+        </ul>
+    </div>
+{% endblock %}

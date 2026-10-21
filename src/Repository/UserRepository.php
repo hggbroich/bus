@@ -5,6 +5,11 @@ namespace App\Repository;
 use App\Entity\User;
 
 class UserRepository extends AbstractRepository implements UserRepositoryInterface {
+
+    public function findOneByUsername(string $username): ?User {
+        return $this->em->getRepository(User::class)->findOneBy(['username' => $username]);
+    }
+
     public function persist(User $user): void {
         $this->em->persist($user);
         $this->em->flush();

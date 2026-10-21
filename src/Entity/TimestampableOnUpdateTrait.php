@@ -21,7 +21,7 @@ trait TimestampableOnUpdateTrait {
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(?DateTime $updatedAt): Book {
+    public function setUpdatedAt(?DateTime $updatedAt): self {
         $this->updatedAt = $updatedAt;
         return $this;
     }
@@ -30,7 +30,7 @@ trait TimestampableOnUpdateTrait {
         return $this->updatedBy;
     }
 
-    public function setUpdatedBy(?string $updatedBy): Book {
+    public function setUpdatedBy(?string $updatedBy): self {
         $this->updatedBy = $updatedBy;
         return $this;
     }
