@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use SortDirection;
 use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -50,7 +51,7 @@ class User implements UserInterface {
     #[ORM\JoinTable]
     #[ORM\JoinColumn(onDelete: 'CASCADE')]
     #[ORM\InverseJoinColumn(onDelete: 'CASCADE')]
-    #[ORM\OrderBy(['lastname' => 'asc', 'firstname' => 'asc'])]
+    #[ORM\OrderBy(['lastname' => SortDirection::Ascending, 'firstname' => SortDirection::Ascending])]
     private Collection $associatedStudents;
 
     public function __construct() {

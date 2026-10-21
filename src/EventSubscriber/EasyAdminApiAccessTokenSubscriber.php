@@ -27,7 +27,7 @@ readonly class EasyAdminApiAccessTokenSubscriber implements EventSubscriberInter
     }
 
     #[Override]
-    public static function getSubscribedEvents() {
+    public static function getSubscribedEvents(): array {
         return [
             BeforeEntityPersistedEvent::class => 'onBeforeEntityPersisted',
         ];
