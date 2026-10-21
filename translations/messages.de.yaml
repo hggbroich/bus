@@ -113,8 +113,11 @@ settings:
 
         effective_date:
             label: Stichtag
-            help: Bei der Geburtstagsstrategie wird das Alter an diesem Stichtag berücksichtigt.
+            help: Bei der Geburtstagsstrategie wird das Alter an diesem Stichtag berücksichtigt. Der Stichtag wird außerdem für die Überprüfung auf Volljährigkeit genutzt.
 
+        legal_date:
+            label: Alter Volljährigkeit
+            help: Der Kontoinhaber muss mindestens so alt wie hier angegeben sein, damit die Bestellung abgegeben werden kann.
 
         minimum_distance_sekI:
             label: Mindest-Distanz (Sekundarstufe I)

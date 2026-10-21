@@ -108,6 +108,7 @@ class Order {
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     #[Assert\NotBlank]
+    #[CustomAssert\NotAMinor]
     private DateTime $depositorBirthday;
 
     #[ORM\Column(type: Types::STRING)]

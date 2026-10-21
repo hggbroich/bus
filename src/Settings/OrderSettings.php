@@ -15,6 +15,7 @@ use Doctrine\ORM\QueryBuilder;
 use Jbtronics\SettingsBundle\ParameterTypes\ArrayType;
 use Jbtronics\SettingsBundle\ParameterTypes\DatetimeType;
 use Jbtronics\SettingsBundle\ParameterTypes\FloatType;
+use Jbtronics\SettingsBundle\ParameterTypes\IntType;
 use Jbtronics\SettingsBundle\ParameterTypes\StringType;
 use Jbtronics\SettingsBundle\Settings\Settings;
 use Jbtronics\SettingsBundle\Settings\SettingsParameter;
@@ -94,6 +95,9 @@ class OrderSettings {
 
     #[SettingsParameter(type: FollowupGradeStrategyType::class, label: 'settings.orders.followup_strategy.label', description: 'settings.orders.followup_strategy.help', nullable: false)]
     public string $followUpStrategy = NrwStrategy::class;
+
+    #[SettingsParameter(type: IntType::class, label: 'settings.orders.legal_date.label', description: 'settings.orders.legal_date.help', nullable: false)]
+    public int $legalAge = 18;
 
     #[SettingsParameter(label: 'settings.orders.effective_date.label', description: 'settings.orders.effective_date.help', formType: DateType::class, nullable: false)]
     public DateTime|null $effectiveDate = null;
