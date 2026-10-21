@@ -74,13 +74,13 @@ class Order {
     #[ORM\JoinColumn(nullable: true)]
     private ?School $publicSchool = null;
 
-    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\Column(type: Types::FLOAT)]
     #[Assert\GreaterThanOrEqual(0)]
-    private int $confirmedDistanceToPublicSchool = 0;
+    private float $confirmedDistanceToPublicSchool = 0.0;
 
-    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\Column(type: Types::FLOAT)]
     #[Assert\GreaterThanOrEqual(0)]
-    private int $confirmedDistanceToSchool = 0;
+    private float $confirmedDistanceToSchool = 0.0;
 
     #[ORM\Column(type: Types::STRING)]
     #[Encrypt(
@@ -302,20 +302,20 @@ class Order {
         return $this;
     }
 
-    public function getConfirmedDistanceToPublicSchool(): int {
+    public function getConfirmedDistanceToPublicSchool(): float {
         return $this->confirmedDistanceToPublicSchool;
     }
 
-    public function setConfirmedDistanceToPublicSchool(int $confirmedDistanceToPublicSchool): Order {
+    public function setConfirmedDistanceToPublicSchool(float $confirmedDistanceToPublicSchool): Order {
         $this->confirmedDistanceToPublicSchool = $confirmedDistanceToPublicSchool;
         return $this;
     }
 
-    public function getConfirmedDistanceToSchool(): int {
+    public function getConfirmedDistanceToSchool(): float {
         return $this->confirmedDistanceToSchool;
     }
 
-    public function setConfirmedDistanceToSchool(int $confirmedDistanceToSchool): Order {
+    public function setConfirmedDistanceToSchool(float $confirmedDistanceToSchool): Order {
         $this->confirmedDistanceToSchool = $confirmedDistanceToSchool;
         return $this;
     }
