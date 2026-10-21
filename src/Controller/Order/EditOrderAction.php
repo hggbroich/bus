@@ -34,7 +34,9 @@ class EditOrderAction extends AbstractController {
         $orderFiller->copyProfileToOrder($order, $order->getStudent());
         $orderFiller->copyConfirmations($order);
 
-        $form = $this->createForm(OrderType::class, $order);
+        $form = $this->createForm(OrderType::class, $order, [
+            'depositor_firstname_warning' => $order->getStudent()->getFirstname()
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

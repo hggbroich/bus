@@ -209,6 +209,8 @@ orders:
         success: Die Bestellung wurde erfolgreich abgeschickt. Sie kann bis zum Stichtag noch bearbeitet werden.
         not_found: Ungültige URL.
 
+        same_name_as_student_warning: 'Der Name ist identisch zum Namen des Kindes. Bitte sicherstellen, dass hier der Vorname des Kontoinhabers eingetragen wird.'
+
     account_information:
         label: Kontodaten
         info: Die folgenden Felder betreffen den Kontoinhaber oder die Kontoinhaberin.

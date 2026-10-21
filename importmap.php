@@ -28,6 +28,10 @@ return [
         'path' => './assets/js/choice.js',
         'entrypoint' => true,
     ],
+    'input-warning' => [
+        'path' => './assets/js/input-warning.js',
+        'entrypoint' => true,
+    ],
     'bootstrap' => [
         'version' => '5.3.8',
     ],

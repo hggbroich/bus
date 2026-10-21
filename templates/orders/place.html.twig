@@ -10,6 +10,16 @@
     </ol>
 {% endblock %}
 
+{% block css %}
+    {{ parent() }}
+
+    <link rel="stylesheet" href="{{ preload(asset('css/input-warning.css')) }}" type="text/css">
+{% endblock %}
+
+{% block importmap %}
+    {{ importmap(['app', 'collection', 'input-warning']) }}
+{% endblock %}
+
 {% block content %}
     {{ form_start(form) }}
 

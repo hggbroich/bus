@@ -1,0 +1,9 @@
+.form-control.has-warning {
+    border-color: var(--bs-warning) !important;
+}
+
+.warning-feedback {
+    color: var(--bs-warning-text-emphasis);
+    margin-top: 0.25rem;
+    width: 100%;
+}

@@ -23,18 +23,21 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class OrderType extends AbstractType {
 
     public function __construct(
         private readonly OrderSettings $orderSettings,
         private readonly FareLevelSetter $fareLevelSetter,
-        private readonly CityRepositoryInterface $cityRepository
+        private readonly CityRepositoryInterface $cityRepository,
+        private readonly TranslatorInterface $translator
     ) {
 
     }
 
     public function configureOptions(OptionsResolver $resolver): void {
+        $resolver->setDefault('depositor_firstname_warning', null);
         $resolver->setDefault('exclude_student', null);
         $resolver->setDefault('validation_groups', function(FormInterface $form): array {
             $order = $form->getData();
@@ -54,7 +57,11 @@ class OrderType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options): void {
         $builder
             ->add('depositorFirstname', TextType::class, [
-                'label' => 'label.firstname'
+                'label' => 'label.firstname',
+                'attr' => [
+                    'data-warning-at-input' => $options['depositor_firstname_warning'],
+                    'data-warning-for-input' => $this->translator->trans('orders.place.same_name_as_student_warning')
+                ]
             ])
             ->add('depositorLastname', TextType::class, [
                 'label' => 'label.lastname'

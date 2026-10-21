@@ -52,7 +52,8 @@ class PlaceOrderAction extends AbstractController {
         $orderDataWasTakenFrom = $this->addRecentOrSiblingData($order, $user);
 
         $form = $this->createForm(OrderType::class, $order, [
-            'exclude_student' => $student
+            'exclude_student' => $student,
+            'depositor_firstname_warning' => $student->getFirstname()
         ]);
         $form->handleRequest($request);
 
