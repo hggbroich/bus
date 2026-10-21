@@ -66,6 +66,11 @@ settings:
                 label: Max. Longitude
                 help: Boundingbox für den Import - nur Stationen innerhalb der Box werden importiert.
 
+        cities:
+            federal_state:
+                label: Bundesland
+                help: Bundesland für das die Straßennamen importiert werden sollen.
+
     export:
         label: Export-Einstellungen
         student_id_prefix:
@@ -132,6 +137,9 @@ settings:
             help: Gibt an, nach welcher Strategie die Folgeklasse bestimmt werden soll.
             nrw: NRW-Bezeichungen verwenden
 
+        sekII_grades:
+            label: Jgst. Sekundarstufe II
+            help: Hier werden alle Jahrgangsstufen/Klassen angegeben, die zur Sekundarstufe II zugehörig sind.
 
 
 

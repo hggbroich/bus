@@ -39,6 +39,6 @@ class ImportSettings {
     #[SettingsParameter(label: 'settings.import.stops.max_long.label', description: 'settings.import.stops.max_long.help', formType: NumberType::class, formOptions: [ 'scale' => 5 ], nullable: true)]
     public float|null $maxLongitude = null;
 
-    #[SettingsParameter(type: FederalStateChoiceType::class, label: 'settings.import.cities.federal_state.label', description: 'settings.import.cities.federal_state.label', nullable: true)]
+    #[SettingsParameter(type: FederalStateChoiceType::class, label: 'settings.import.cities.federal_state.label', description: 'settings.import.cities.federal_state.help', nullable: true)]
     public string|null $federalState = null;
 }
