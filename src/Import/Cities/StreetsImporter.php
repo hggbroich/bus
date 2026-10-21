@@ -6,6 +6,7 @@ use App\Entity\City;
 use App\Entity\Street;
 use App\Repository\CityRepositoryInterface;
 use App\Repository\StreetRepositoryInterface;
+use App\Settings\ImportSettings;
 use App\Utils\ArrayUtils;
 
 class StreetsImporter {
@@ -13,6 +14,7 @@ class StreetsImporter {
         private OpenPlzApiClient $plzApiClient,
         private CityRepositoryInterface $cityRepository,
         private StreetRepositoryInterface $streetRepository,
+        private ImportSettings $importSettings,
     ) { }
 
     public function importAll(): void {
@@ -30,11 +32,12 @@ class StreetsImporter {
         $this->streetRepository->beginTransaction();
 
         foreach($this->getStreets($city->getPlz()) as $street) {
-            $existingStreet = $streets[$street->name] ?? null;
+            $streetName = $this->replacePartsInStreetName($street->name);
+            $existingStreet = $streets[$streetName] ?? null;
 
             if($existingStreet === null) {
                 $existingStreet = new Street();
-                $existingStreet->setName($street->name);
+                $existingStreet->setName($streetName);
                 $existingStreet->setCity($city);
             }
 
@@ -42,6 +45,14 @@ class StreetsImporter {
         }
 
         $this->streetRepository->commit();
+    }
+
+    private function replacePartsInStreetName(string $streetName): string {
+        foreach($this->importSettings->replacements as $replacement) {
+            $streetName = str_replace($replacement->key, $replacement->value, $streetName);
+        }
+
+        return $streetName;
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace App\Settings;
 
 use App\Settings\Type\FederalStateChoiceType;
+use App\Settings\Type\KeyValueType;
 use Jbtronics\SettingsBundle\Settings\Settings;
 use Jbtronics\SettingsBundle\Settings\SettingsParameter;
 use Jbtronics\SettingsBundle\Settings\SettingsTrait;
@@ -41,4 +42,17 @@ class ImportSettings {
 
     #[SettingsParameter(type: FederalStateChoiceType::class, label: 'settings.import.cities.federal_state.label', description: 'settings.import.cities.federal_state.help', nullable: true)]
     public string|null $federalState = null;
+
+    /**
+     * @var array<KeyValuePair>
+     */
+    #[SettingsParameter(type: KeyValueType::class, label: 'settings.import.streets.replacements.label', description: 'settings.import.streets.replacements.help', formOptions: [
+        'required' => false,
+        'entry_options' => [
+            'key_label' => 'Alter Wert',
+            'value_label' => 'Neuer Wert',
+            'has_type_field' => false
+        ]
+    ], nullable: false)]
+    public array $replacements = [ ];
 }
